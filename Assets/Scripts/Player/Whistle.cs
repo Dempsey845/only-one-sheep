@@ -23,6 +23,7 @@ public class Whistle : MonoBehaviour
         if (!canWhistle) return;
 
         bool chase = Random.Range(0, 2) == 1;
+        chase = true;
 
         if (chase) sheepStateController.ChasePlayer(chaseDuration);
         else sheepStateController.Panic(panicDuration);

@@ -5,7 +5,6 @@ public class PlayerThirdPersonCameraController : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 offset = new Vector3(0, 2, -4);
     [SerializeField] private float rotationSpeed = 5f;
-    [SerializeField] private float smoothSpeed = 10f;
     [SerializeField] private float minY = -20f;
     [SerializeField] private float maxY = 60f;
 
@@ -32,8 +31,7 @@ public class PlayerThirdPersonCameraController : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(currentPitch, currentYaw, 0);
         Vector3 desiredPosition = target.position + rotation * offset;
 
-        // Smoothly move to desired position
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+        transform.position = desiredPosition;
 
         // Look at target
         transform.LookAt(target.position + Vector3.up * 1.5f); // Slight height offset for head

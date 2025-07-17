@@ -2,8 +2,19 @@ using UnityEngine;
 
 public class SheepStateController : MonoBehaviour
 {
+    public static SheepStateController Instance { get; private set; }
+    public bool IsSheepCurious { get; private set; }
+    public bool IsSheepPanicking { get; private set; }
+
     [SerializeField] private float startIdleDuration = 2f;
+
     private SheepStateMachine stateMachine;
+    private Interactable interactableThatSheepIsInterestedIn;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -23,6 +34,28 @@ public class SheepStateController : MonoBehaviour
 
     public void Panic(float panicDuration)
     {
+        IsSheepPanicking = true;
         stateMachine.SetState(new SheepPanicState(stateMachine, GetComponent<SheepWander>(), GetComponent<SheepPhysicsNavAgent>(), this));
+    }
+
+    public void StopPanic()
+    {
+        IsSheepPanicking = false;
+    }
+
+    public void Curious(Vector3 interactablesPosition, Interactable interactable, float curiousDuration)
+    {
+        IsSheepCurious = true;
+        interactableThatSheepIsInterestedIn = interactable;
+        stateMachine.SetState(new SheepCuriousState(stateMachine, this, interactablesPosition, curiousDuration));
+    }
+
+    public void NotCuriousAnymore()
+    {
+        interactableThatSheepIsInterestedIn.IgnoreFromSheep = true;
+        interactableThatSheepIsInterestedIn.IsSheepCuriousOfThis = false;
+        interactableThatSheepIsInterestedIn = null;
+
+        IsSheepCurious = false;
     }
 }

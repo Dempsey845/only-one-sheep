@@ -10,7 +10,7 @@ public class SheepPanicState : ISheepState
 
     private readonly float moveSpeedMultiplier;
     private readonly float nextPointRate = 2f;
-    private readonly float wanderRadius = 30f;
+    private readonly float wanderRadius = 15f;
 
     private float panicDuration;
     private float timer;
@@ -57,5 +57,6 @@ public class SheepPanicState : ISheepState
     {
         wander.CanWander = false;
         navAgent.MoveSpeedMultiplier = 1f;
+        SheepStateController.Instance.StopPanic();
     }
 }

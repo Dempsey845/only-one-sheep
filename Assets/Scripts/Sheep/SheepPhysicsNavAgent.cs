@@ -69,11 +69,18 @@ public class SheepPhysicsNavAgent : MonoBehaviour
 
     private void CalculatePath()
     {
-        if (hasTarget && NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path))
+        if (!hasTarget) return;
+
+        if (NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path))
         {
             currentCornerIndex = 0;
         }
+        else
+        {
+            Debug.LogWarning("Failed to calculate path to target: " + targetPosition);
+        }
     }
+
 
     private void FollowPath()
     {
@@ -96,8 +103,19 @@ public class SheepPhysicsNavAgent : MonoBehaviour
 
     public void SetTargetPosition(Vector3 targetPosition)
     {
-        this.targetPosition = targetPosition;
-        hasTarget = true;
+        // Snap the target position to the nearest point on the NavMesh
+        if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        {
+            this.targetPosition = hit.position;
+            hasTarget = true;
+            CalculatePath();
+            repathTimer = 0f;
+        }
+        else
+        {
+            Debug.LogWarning("Target position is not on the NavMesh: " + targetPosition);
+            hasTarget = false;
+        }
     }
 
     public void RemoveTarget()
@@ -110,4 +128,20 @@ public class SheepPhysicsNavAgent : MonoBehaviour
     {
         return Vector3.Distance(transform.position, targetPosition) <= targetTolerance;
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(targetPosition, 0.2f);
+
+        if (path != null && path.corners.Length > 1)
+        {
+            Gizmos.color = Color.green;
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                Gizmos.DrawLine(path.corners[i], path.corners[i + 1]);
+            }
+        }
+    }
+
 }
