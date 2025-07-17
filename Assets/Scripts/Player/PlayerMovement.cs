@@ -1,0 +1,48 @@
+using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]
+public class PlayerMovement : MonoBehaviour
+{
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private Transform cameraTransform;
+
+    private Rigidbody rb;
+    private Vector3 moveDirection;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
+        // Direction relative to camera
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+        forward.y = right.y = 0f; // Ignore vertical
+        forward.Normalize();
+        right.Normalize();
+
+        moveDirection = (forward * v + right * h).normalized;
+
+        // Rotate character to face move direction
+        if (moveDirection.magnitude >= 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        // Physics-based movement
+        Vector3 targetVelocity = moveDirection * moveSpeed;
+        Vector3 velocityChange = targetVelocity - rb.linearVelocity;
+        velocityChange.y = 0; // Don't mess with gravity
+        rb.AddForce(velocityChange, ForceMode.VelocityChange);
+    }
+}

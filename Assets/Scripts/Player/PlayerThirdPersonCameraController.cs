@@ -1,0 +1,41 @@
+using UnityEngine;
+
+public class PlayerThirdPersonCameraController : MonoBehaviour
+{
+    [SerializeField] private Transform target;
+    [SerializeField] private Vector3 offset = new Vector3(0, 2, -4);
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float smoothSpeed = 10f;
+    [SerializeField] private float minY = -20f;
+    [SerializeField] private float maxY = 60f;
+
+    private float currentYaw = 0f;
+    private float currentPitch = 10f;
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void LateUpdate()
+    {
+        // Read mouse input
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        currentYaw += mouseX * rotationSpeed;
+        currentPitch -= mouseY * rotationSpeed;
+        currentPitch = Mathf.Clamp(currentPitch, minY, maxY);
+
+        // Convert yaw/pitch to camera position
+        Quaternion rotation = Quaternion.Euler(currentPitch, currentYaw, 0);
+        Vector3 desiredPosition = target.position + rotation * offset;
+
+        // Smoothly move to desired position
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+
+        // Look at target
+        transform.LookAt(target.position + Vector3.up * 1.5f); // Slight height offset for head
+    }
+}
