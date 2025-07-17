@@ -6526,6 +6526,7 @@ GameObject:
   - component: {fileID: 1770504623}
   - component: {fileID: 1770504625}
   - component: {fileID: 1770504626}
+  - component: {fileID: 1770504627}
   m_Layer: 0
   m_Name: Sheep
   m_TagString: Untagged
@@ -6612,14 +6613,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5eaa517824fc741b3257ad9c4ff1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1896892943}
   moveSpeed: 5
   rotateSpeed: 90
   waypointTolerance: 0.2
   repathRate: 1
-  stepHeight: 1
-  stepDistance: 2
-  checkHeight: 0.2
+--- !u!114 &1770504627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770504622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd7000b921eb9924f8dfd3bd1c8b328d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextPointRate: 6
+  wanderRadius: 15
 --- !u!1 &1896892942
 GameObject:
   m_ObjectHideFlags: 0

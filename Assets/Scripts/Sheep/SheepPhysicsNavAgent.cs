@@ -2,15 +2,15 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PhysicsNavAgent : MonoBehaviour
+public class SheepPhysicsNavAgent : MonoBehaviour
 {
     /* Rigidbody physics movement + Manual NavMesh pathing  */
 
     [Header("Navigation")]
-    [SerializeField] private Transform target; // for testing purposes
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float rotateSpeed = 25f;
     [SerializeField] private float waypointTolerance = 0.2f;
+    [SerializeField] private float targetTolerance = 0.2f;
     [SerializeField] private float repathRate = 1.0f;
 
     private Rigidbody rb;
@@ -20,7 +20,10 @@ public class PhysicsNavAgent : MonoBehaviour
 
     private Vector3 direction;
 
-    private void Start()
+    private Vector3 targetPosition;
+    private bool hasTarget = false;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         path = new NavMeshPath();
@@ -29,15 +32,12 @@ public class PhysicsNavAgent : MonoBehaviour
 
     private void Update()
     {
-        // Calculate direction to the target
-        Vector3 direction = (target.position - transform.position).normalized;
+        if (!hasTarget) return;
 
-        // Ensure rotation is only on the Y-axis (yaw)
-        direction.y = 0;
-
-        // Rotate towards the target smoothly
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+        if (!HasReachedTargetPosition())
+        {
+            RotateTowardsTargetPosition();
+        }
 
         repathTimer += Time.deltaTime;
         if (repathTimer >= repathRate)
@@ -47,6 +47,19 @@ public class PhysicsNavAgent : MonoBehaviour
         }
     }
 
+    private void RotateTowardsTargetPosition()
+    {
+        // Calculate direction to the target
+        Vector3 direction = (targetPosition - transform.position).normalized;
+
+        // Ensure rotation is only on the Y-axis (yaw)
+        direction.y = 0;
+
+        // Rotate towards the target smoothly
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+    }
+
     private void FixedUpdate()
     {
         FollowPath();
@@ -54,7 +67,7 @@ public class PhysicsNavAgent : MonoBehaviour
 
     private void CalculatePath()
     {
-        if (target != null && NavMesh.CalculatePath(transform.position, target.position, NavMesh.AllAreas, path))
+        if (hasTarget && NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path))
         {
             currentCornerIndex = 0;
         }
@@ -77,5 +90,22 @@ public class PhysicsNavAgent : MonoBehaviour
         {
             currentCornerIndex++;
         }
+    }
+
+    public void SetTargetPosition(Vector3 targetPosition)
+    {
+        this.targetPosition = targetPosition;
+        hasTarget = true;
+    }
+
+    public void RemoveTarget()
+    {
+        this.targetPosition = Vector3.zero;
+        hasTarget = false;
+    }
+
+    public bool HasReachedTargetPosition()
+    {
+        return Vector3.Distance(transform.position, targetPosition) <= targetTolerance;
     }
 }

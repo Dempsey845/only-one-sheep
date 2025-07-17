@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Sheep\SheepPhysicsNavAgent.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerThirdPersonCameraController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Sheep\SheepWander.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
