@@ -66,12 +66,14 @@
     <Compile Include="Assets\Scripts\Player\PlayerInputActions.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\ISheepState.cs" />
     <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
+    <Compile Include="Assets\Scripts\Sheep\UI\SheepHealthBar.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepFollowState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepCuriousState.cs" />
     <Compile Include="Assets\Scripts\Interactables\Food.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepWanderState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Sheep\SheepHealth.cs" />
     <Compile Include="Assets\Scripts\Player\Whistle.cs" />
     <Compile Include="Assets\Scripts\Player\Crook.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepPanicState.cs" />
