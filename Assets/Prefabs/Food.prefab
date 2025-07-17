@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkRadius: 8
-  curiousDuration: 5
+  curiousDuration: 8
   ignoreTime: 15
   panicDuration: 10
+  sheepDamage: 5

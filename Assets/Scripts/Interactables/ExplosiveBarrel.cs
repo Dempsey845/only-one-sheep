@@ -6,6 +6,7 @@ public class ExplosiveBarrel : Interactable
     [SerializeField] private float explosionForce = 20f;
     [SerializeField] private float upwardForce = 50f;
     [SerializeField] private LayerMask affectedLayers;
+    [SerializeField] private int sheepDamage = 10;
 
     protected override void Interact()
     {
@@ -37,5 +38,6 @@ public class ExplosiveBarrel : Interactable
             }
         }
 
+        sheepHealth.TakeDamage(sheepDamage);
     }
 }

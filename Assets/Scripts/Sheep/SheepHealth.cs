@@ -17,6 +17,14 @@ public class SheepHealth : MonoBehaviour
         CurrentHealth = startHealth;
     }
 
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.E))
+    //    {
+    //        TakeDamage(10);
+    //    }
+    //}
+
     public void TakeDamage(int damage)
     {
         if (CurrentHealth <= 0) return;

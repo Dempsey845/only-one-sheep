@@ -8,7 +8,6 @@ public class Interactable : MonoBehaviour
 
     private Transform sheepTranform;
 
-
     private float checkRate = 1f;
     private float timer = 0f;
     private float ignoreTimer = 0f;
@@ -17,6 +16,8 @@ public class Interactable : MonoBehaviour
     public bool IgnoreFromSheep { get; set; } = false;
 
     private const string SHEEP_TAG = "Sheep";
+
+    protected SheepHealth sheepHealth;
 
     private void Start()
     {
@@ -77,6 +78,7 @@ public class Interactable : MonoBehaviour
 
         if (!IsSheepCuriousOfThis) { return; }
 
+        sheepHealth = collision.gameObject.GetComponent<SheepHealth>();
         Interact();
     }
 

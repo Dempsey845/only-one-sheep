@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkRadius: 8
-  curiousDuration: 5
+  curiousDuration: 10
   ignoreTime: 15
   explosionRadius: 10
   explosionForce: 7
@@ -132,3 +132,4 @@ MonoBehaviour:
   affectedLayers:
     serializedVersion: 2
     m_Bits: 776
+  sheepDamage: 10
