@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepIdleState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Pen\Pen.cs" />
+    <Compile Include="Assets\Scripts\Interactables\ExplosiveBarrel.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateController.cs" />
   </ItemGroup>
   <ItemGroup>

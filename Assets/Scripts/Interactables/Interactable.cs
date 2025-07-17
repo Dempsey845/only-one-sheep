@@ -16,6 +16,8 @@ public class Interactable : MonoBehaviour
     public bool IsSheepCuriousOfThis { get; set; } = false;
     public bool IgnoreFromSheep { get; set; } = false;
 
+    private const string SHEEP_TAG = "Sheep";
+
     private void Start()
     {
         sheepTranform = SheepStateController.Instance.transform; 
@@ -71,8 +73,17 @@ public class Interactable : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (!collision.gameObject.CompareTag(SHEEP_TAG)) { return; }
+
         if (!IsSheepCuriousOfThis) { return; }
 
         Interact();
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, checkRadius);
+    }
+
 }

@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441fbba2dd042d0459f3c06f295914a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkRadius: 15
+  checkRadius: 8
   curiousDuration: 5
   ignoreTime: 15
   panicDuration: 10
