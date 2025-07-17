@@ -6,9 +6,19 @@ public class Whistle : MonoBehaviour
     [SerializeField] private float whistleCooldownDuration = 5f;
     [SerializeField] private float chaseDuration = 15f;
     [SerializeField] private float panicDuration = 10f;
-    [SerializeField] private SheepStateController sheepStateController; // for testing only
+    [SerializeField] private float panicDistance = 10f;
+    [SerializeField] private float maxWhistleDistance = 25f;
+    
+    private SheepStateController sheepStateController;
+    private Transform sheepTransform;
 
     private bool canWhistle = true;
+
+    private void Start()
+    {
+        sheepStateController = SheepStateController.Instance;
+        sheepTransform = sheepStateController.transform;
+    }
 
     private void Update()
     {
@@ -20,15 +30,23 @@ public class Whistle : MonoBehaviour
 
     private void HandleWhistle()
     {
-        if (!canWhistle) return;
+        if (!canWhistle) { return; }
 
-        bool chase = Random.Range(0, 2) == 1;
-        chase = true;
+        float distanceFromSheep = GetDistanceBetweenPlayerAndSheep();
 
-        if (chase) sheepStateController.ChasePlayer(chaseDuration);
-        else sheepStateController.Panic(panicDuration);
+        if (distanceFromSheep > maxWhistleDistance) { return; }
 
-            StartCoroutine(WhistleCooldown());
+        bool chase = distanceFromSheep > panicDistance;
+
+        if (chase) { sheepStateController.ChasePlayer(chaseDuration); }
+        else { sheepStateController.Panic(panicDuration); }
+
+        StartCoroutine(WhistleCooldown());
+    }
+
+    private float GetDistanceBetweenPlayerAndSheep()
+    {
+        return Vector3.Distance(transform.position, sheepTransform.position);
     }
 
     private IEnumerator WhistleCooldown()

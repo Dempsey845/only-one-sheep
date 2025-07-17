@@ -3363,7 +3363,7 @@ MonoBehaviour:
   offset: {x: 0, y: 5, z: -7}
   rotationSpeed: 0.3
   minY: -20
-  maxY: 40
+  maxY: 45
 --- !u!1001 &336316414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8806,7 +8806,7 @@ MonoBehaviour:
   groundCheck: {fileID: 790844457}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 193
   groundCheckDistance: 0.15
 --- !u!114 &1896892947
 MonoBehaviour:
@@ -8823,7 +8823,8 @@ MonoBehaviour:
   whistleCooldownDuration: 5
   chaseDuration: 15
   panicDuration: 5
-  sheepStateController: {fileID: 1770504629}
+  panicDistance: 10
+  maxWhistleDistance: 25
 --- !u!114 &1896892948
 MonoBehaviour:
   m_ObjectHideFlags: 0
