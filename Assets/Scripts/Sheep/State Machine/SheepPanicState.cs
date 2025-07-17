@@ -49,8 +49,6 @@ public class SheepPanicState : ISheepState
         {
             stateController.Wander();
         }
-
-        Debug.Log("Panic!");
     }
 
     public void Exit()

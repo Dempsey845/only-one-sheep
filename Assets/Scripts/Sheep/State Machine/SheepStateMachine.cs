@@ -12,7 +12,11 @@ public class SheepStateMachine : MonoBehaviour
         currentState = newState;
 
         if (currentState != null)
+        {
             currentState.Enter();
+            Debug.Log("Entering: ");
+            Debug.Log(newState);
+        }
     }
 
     private void Update()

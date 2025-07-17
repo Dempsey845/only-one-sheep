@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepWanderState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateMachine.cs" />
     <Compile Include="Assets\Scripts\Player\Whistle.cs" />
+    <Compile Include="Assets\Scripts\Player\Crook.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepPanicState.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepWander.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputManager.cs" />

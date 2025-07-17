@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerInputManager : MonoBehaviour
 {
@@ -11,6 +10,8 @@ public class PlayerInputManager : MonoBehaviour
     public Vector2 LookInput { get; private set; }
     public bool JumpPressed { get; private set; }
     public bool WhistlePressed { get; private set; }
+    public bool AttackPressed { get; private set; }
+
 
     private void Awake()
     {
@@ -28,6 +29,8 @@ public class PlayerInputManager : MonoBehaviour
         inputActions.Player.Jump.performed += _ => JumpPressed = true;
 
         inputActions.Player.Whistle.performed += _ => WhistlePressed = true;
+
+        inputActions.Player.Attack.performed += ctx => AttackPressed = true;
     }
 
     private void OnEnable()
@@ -45,5 +48,6 @@ public class PlayerInputManager : MonoBehaviour
         // Reset one-time inputs
         JumpPressed = false;
         WhistlePressed = false;
+        AttackPressed = false;
     }
 }

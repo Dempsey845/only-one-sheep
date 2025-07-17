@@ -10,14 +10,12 @@ public class Whistle : MonoBehaviour
     [SerializeField] private float maxWhistleDistance = 25f;
     
     private SheepStateController sheepStateController;
-    private Transform sheepTransform;
 
     private bool canWhistle = true;
 
     private void Start()
     {
         sheepStateController = SheepStateController.Instance;
-        sheepTransform = sheepStateController.transform;
     }
 
     private void Update()
@@ -32,7 +30,7 @@ public class Whistle : MonoBehaviour
     {
         if (!canWhistle) { return; }
 
-        float distanceFromSheep = GetDistanceBetweenPlayerAndSheep();
+        float distanceFromSheep = PlayerManager.Instance.GetDistanceBetweenPlayerAndSheep();
 
         if (distanceFromSheep > maxWhistleDistance) { return; }
 
@@ -42,11 +40,6 @@ public class Whistle : MonoBehaviour
         else { sheepStateController.Panic(panicDuration); }
 
         StartCoroutine(WhistleCooldown());
-    }
-
-    private float GetDistanceBetweenPlayerAndSheep()
-    {
-        return Vector3.Distance(transform.position, sheepTransform.position);
     }
 
     private IEnumerator WhistleCooldown()
