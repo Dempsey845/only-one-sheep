@@ -3,6 +3,8 @@ using UnityEngine.AI;
 
 public class SheepWander : MonoBehaviour
 {
+    [SerializeField] private float minWanderDistance = 2f;
+
     private SheepPhysicsNavAgent sheepPhysicsNavAgent;
     private float timer = 0.0f;
 
@@ -40,7 +42,10 @@ public class SheepWander : MonoBehaviour
 
             if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
             {
-                return hit.position;
+                if (Vector3.Distance(transform.position, hit.position) >= minWanderDistance)
+                {
+                    return hit.position;
+                }
             }
         }
 
