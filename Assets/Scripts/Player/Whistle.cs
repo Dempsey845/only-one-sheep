@@ -11,7 +11,7 @@ public class Whistle : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (PlayerInputManager.Instance.WhistlePressed)
         {
             HandleWhistle();
         }

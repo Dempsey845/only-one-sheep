@@ -21,8 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = PlayerInputManager.Instance.MoveInput.x;
+        float v = PlayerInputManager.Instance.MoveInput.y;
 
         // Direction relative to camera
         Vector3 forward = cameraTransform.forward;
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
 
         // Jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (PlayerInputManager.Instance.JumpPressed && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }

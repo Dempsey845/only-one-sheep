@@ -2245,10 +2245,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1896892943}
   offset: {x: 0, y: 5, z: -7}
-  rotationSpeed: 3
+  rotationSpeed: 0.3
   smoothSpeed: 8
   minY: -20
-  maxY: 60
+  maxY: 40
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -6673,6 +6673,7 @@ GameObject:
   - component: {fileID: 1896892946}
   - component: {fileID: 1896892947}
   - component: {fileID: 1896892948}
+  - component: {fileID: 1896892949}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6761,7 +6762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotationSpeed: 10
-  jumpForce: 7
+  jumpForce: 4
   cameraTransform: {fileID: 330585546}
   groundLayer:
     serializedVersion: 2
@@ -6792,6 +6793,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fd329ab9f4b6ec41ae416d0c5280dcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1896892949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896892942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5c67d09ad1e2c24c86bcb91335be440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1908920098

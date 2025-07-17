@@ -21,8 +21,8 @@ public class PlayerThirdPersonCameraController : MonoBehaviour
     private void LateUpdate()
     {
         // Read mouse input
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        float mouseX = PlayerInputManager.Instance.LookInput.x;
+        float mouseY = PlayerInputManager.Instance.LookInput.y;
 
         currentYaw += mouseX * rotationSpeed;
         currentPitch -= mouseY * rotationSpeed;
