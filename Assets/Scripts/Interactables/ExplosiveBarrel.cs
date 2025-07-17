@@ -7,6 +7,7 @@ public class ExplosiveBarrel : Interactable
     [SerializeField] private float upwardForce = 50f;
     [SerializeField] private LayerMask affectedLayers;
     [SerializeField] private int sheepDamage = 10;
+    [SerializeField] private GameObject explosiveFXPrefab;
 
     protected override void Interact()
     {
@@ -18,6 +19,8 @@ public class ExplosiveBarrel : Interactable
     private void Explode()
     {
         Vector3 explosionPosition = transform.position;
+
+        Instantiate(explosiveFXPrefab, transform.position, Quaternion.identity);
 
         // Get all colliders in radius
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius, affectedLayers);

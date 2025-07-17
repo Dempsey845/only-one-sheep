@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Whistle : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Whistle : MonoBehaviour
     [SerializeField] private float panicDuration = 10f;
     [SerializeField] private float panicDistance = 10f;
     [SerializeField] private float maxWhistleDistance = 25f;
+    [SerializeField] private Image whistleReloadImage;
     
     private SheepStateController sheepStateController;
 
@@ -24,6 +26,11 @@ public class Whistle : MonoBehaviour
         {
             HandleWhistle();
         }
+
+        if (!canWhistle)
+        {
+            whistleReloadImage.fillAmount += Time.deltaTime / whistleCooldownDuration;
+        }
     }
 
     private void HandleWhistle()
@@ -38,6 +45,8 @@ public class Whistle : MonoBehaviour
 
         if (chase) { sheepStateController.ChasePlayer(chaseDuration); }
         else { sheepStateController.Panic(panicDuration); }
+
+        whistleReloadImage.fillAmount = 0;
 
         StartCoroutine(WhistleCooldown());
     }

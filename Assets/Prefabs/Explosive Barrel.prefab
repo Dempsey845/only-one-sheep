@@ -133,3 +133,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 776
   sheepDamage: 10
+  explosiveFXPrefab: {fileID: 1691238363645928365, guid: 00c2a31cbaced524bb7c6544c3572325, type: 3}

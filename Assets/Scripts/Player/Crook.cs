@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Crook : MonoBehaviour
@@ -7,6 +8,7 @@ public class Crook : MonoBehaviour
     [SerializeField] private float attackDistance = 1.5f;
     [SerializeField] private float attackCooldownDuration = 5f;
     [SerializeField] private float chaseDuration = 5f;
+    [SerializeField] private Image reloadFillImage;
 
     private bool canAttack = true;
     private LineRenderer lineRenderer;
@@ -31,6 +33,11 @@ public class Crook : MonoBehaviour
         {
             HandleAttack();
         }
+
+        if (!canAttack)
+        {
+            reloadFillImage.fillAmount += Time.deltaTime / chaseDuration;
+        }
     }
 
     private void HandleAttack()
@@ -45,6 +52,8 @@ public class Crook : MonoBehaviour
             StartCoroutine(ShowChaseLine());
             Debug.Log("Sheep in distance");
         }
+
+        reloadFillImage.fillAmount = 0;
 
         StartCoroutine(AttackCooldown());
     }
