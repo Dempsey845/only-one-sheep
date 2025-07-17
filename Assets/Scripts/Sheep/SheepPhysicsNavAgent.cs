@@ -77,6 +77,7 @@ public class SheepPhysicsNavAgent : MonoBehaviour
         }
         else
         {
+            // If this becomes a bigger issue, set the sheeps position back to spawn position (if it persists for couple of seconds)
             Debug.LogWarning("Failed to calculate path to target: " + targetPosition);
         }
     }

@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerThirdPersonCameraController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputActions.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\ISheepState.cs" />
+    <Compile Include="Assets\Scripts\Level\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
     <Compile Include="Assets\Scripts\Sheep\UI\SheepHealthBar.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepFollowState.cs" />

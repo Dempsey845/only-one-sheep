@@ -8,7 +8,7 @@ public class Pen : MonoBehaviour
     {
         if (other.CompareTag(SHEEP_TAG))
         {
-            Debug.Log("Level Complete!");
+            LevelManager.Instance.CompleteLevel();
         }
     }
 }
