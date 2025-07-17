@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Sheep\UI\SheepHealthBar.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepFollowState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepCuriousState.cs" />
+    <Compile Include="Assets\Scripts\Level\FakeObstacle.cs" />
     <Compile Include="Assets\Scripts\Interactables\Food.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepWanderState.cs" />
