@@ -2074,7 +2074,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.1
+  m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 6352f8f9a1333754f83425e4745e5a55, type: 2}
   m_BuildHeightMesh: 0
@@ -6568,7 +6568,7 @@ Transform:
   m_GameObject: {fileID: 1770504622}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 7.5}
+  m_LocalPosition: {x: 0, y: -0.5, z: 16.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6616,10 +6616,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  rotateSpeed: 90
+  rotateSpeed: 135
   waypointTolerance: 0.2
   targetTolerance: 0.2
-  repathRate: 1
+  repathRate: 0.4
 --- !u!114 &1770504627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6632,8 +6632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7000b921eb9924f8dfd3bd1c8b328d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextPointRate: 6
-  wanderRadius: 15
 --- !u!114 &1770504628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6781,7 +6779,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whistleCooldownDuration: 5
-  chaseDuration: 5
+  chaseDuration: 15
+  panicDuration: 5
   sheepStateController: {fileID: 1770504629}
 --- !u!114 &1896892948
 MonoBehaviour:

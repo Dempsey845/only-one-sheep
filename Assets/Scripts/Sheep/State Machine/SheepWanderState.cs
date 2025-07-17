@@ -6,6 +6,9 @@ public class SheepWanderState : ISheepState
     private readonly SheepStateMachine sheep;
     private readonly SheepWander wander;
 
+    private readonly float nextPointRate = 6f;
+    private readonly float wanderRadius = 20f;
+
     public SheepWanderState(SheepStateMachine sheep, SheepWander wander)
     {
         this.sheep = sheep;
@@ -14,16 +17,18 @@ public class SheepWanderState : ISheepState
 
     public void Enter()
     {
-        wander.SetCanWander(true);
+        wander.CanWander = true;
+        wander.NextPointRate = nextPointRate;
+        wander.WanderRadius = wanderRadius;
     }
 
     public void Update()
     {
-        
+
     }
 
     public void Exit()
     {
-        wander.SetCanWander(false);
+        wander.CanWander = true;
     }
 }

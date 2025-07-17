@@ -11,8 +11,18 @@ public class SheepStateController : MonoBehaviour
         stateMachine.SetState(new SheepIdleState(stateMachine, startIdleDuration));
     }
 
+    public void Wander()
+    {
+        stateMachine.SetState(new SheepWanderState(stateMachine, GetComponent<SheepWander>()));
+    }
+
     public void ChasePlayer(float chaseDuration)
     {
         stateMachine.SetState(new SheepFollowState(stateMachine, chaseDuration));
+    }
+
+    public void Panic(float panicDuration)
+    {
+        stateMachine.SetState(new SheepPanicState(stateMachine, GetComponent<SheepWander>(), GetComponent<SheepPhysicsNavAgent>(), this));
     }
 }

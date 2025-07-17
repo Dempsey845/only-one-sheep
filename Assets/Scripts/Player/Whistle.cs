@@ -4,7 +4,8 @@ using UnityEngine;
 public class Whistle : MonoBehaviour
 {
     [SerializeField] private float whistleCooldownDuration = 5f;
-    [SerializeField] private float chaseDuration = 5f;
+    [SerializeField] private float chaseDuration = 15f;
+    [SerializeField] private float panicDuration = 10f;
     [SerializeField] private SheepStateController sheepStateController; // for testing only
 
     private bool canWhistle = true;
@@ -21,9 +22,12 @@ public class Whistle : MonoBehaviour
     {
         if (!canWhistle) return;
 
-        sheepStateController.ChasePlayer(chaseDuration);
+        bool chase = Random.Range(0, 2) == 1;
 
-        StartCoroutine(WhistleCooldown());
+        if (chase) sheepStateController.ChasePlayer(chaseDuration);
+        else sheepStateController.Panic(panicDuration);
+
+            StartCoroutine(WhistleCooldown());
     }
 
     private IEnumerator WhistleCooldown()

@@ -19,4 +19,6 @@ public class SheepStateMachine : MonoBehaviour
     {
         currentState?.Update();
     }
+
+    public ISheepState GetCurrentState() { return currentState; }
 }

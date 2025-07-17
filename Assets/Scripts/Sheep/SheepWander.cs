@@ -3,30 +3,26 @@ using UnityEngine.AI;
 
 public class SheepWander : MonoBehaviour
 {
-    [Tooltip("How often the sheep picks a new point to wander to")]
-    [SerializeField] private float nextPointRate = 6.0f;
-
-    [Tooltip("Maximum radius the sheep can wander from its current position")]
-    [SerializeField] private float wanderRadius = 50f;
-
     private SheepPhysicsNavAgent sheepPhysicsNavAgent;
     private float timer = 0.0f;
 
-    private bool canWander = false;
+    public bool CanWander { get; set; } = false;
+    public float NextPointRate { get; set; } = 6.0f;
+    public float WanderRadius { get; set; } = 50f;
 
     private void Start()
     {
         sheepPhysicsNavAgent = GetComponent<SheepPhysicsNavAgent>();
-        timer = nextPointRate;
+        timer = NextPointRate;
     }
 
     private void Update()
     {
-        if (!canWander) return;
+        if (!CanWander) return;
 
         timer += Time.deltaTime;
 
-        if (timer > nextPointRate)
+        if (timer > NextPointRate)
         {
             Vector3 newDestination = GetRandomWanderPoint();
             sheepPhysicsNavAgent.SetTargetPosition(newDestination); 
@@ -38,7 +34,7 @@ public class SheepWander : MonoBehaviour
     {
         for (int i = 0; i < 30; i++) // Try up to 30 times
         {
-            Vector3 randomDirection = Random.insideUnitSphere * wanderRadius;
+            Vector3 randomDirection = Random.insideUnitSphere * WanderRadius;
             randomDirection += transform.position;
             randomDirection.y = transform.position.y; // Keep height the same
 
@@ -51,10 +47,5 @@ public class SheepWander : MonoBehaviour
         // If nothing valid found, fallback to current position
         Debug.LogWarning("Sheep couldn't find valid Wander Point");
         return transform.position;
-    }
-
-    public void SetCanWander(bool canWander)
-    {
-        this.canWander = canWander;
     }
 }

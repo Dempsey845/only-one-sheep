@@ -23,6 +23,8 @@ public class SheepPhysicsNavAgent : MonoBehaviour
     private Vector3 targetPosition;
     private bool hasTarget = false;
 
+    public float MoveSpeedMultiplier { get; set; } = 1.0f;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -83,7 +85,7 @@ public class SheepPhysicsNavAgent : MonoBehaviour
 
         // Move the sheep towards the target
         Vector3 move = direction * moveSpeed;
-        rb.MovePosition(rb.position + move * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + move * MoveSpeedMultiplier * Time.fixedDeltaTime);
 
         // Advance to next waypoint if close
         if (Vector3.Distance(transform.position, targetCorner) <= waypointTolerance)
