@@ -5,10 +5,14 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float jumpForce = 7f;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float groundCheckDistance = 0.2f;
 
     private Rigidbody rb;
     private Vector3 moveDirection;
+    private bool isGrounded;
 
     private void Start()
     {
@@ -23,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         // Direction relative to camera
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
-        forward.y = right.y = 0f; // Ignore vertical
+        forward.y = right.y = 0f;
         forward.Normalize();
         right.Normalize();
 
@@ -35,6 +39,15 @@ public class PlayerMovement : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
+
+        // Ground check using Raycast
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+
+        // Jump
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 
     private void FixedUpdate()
@@ -42,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         // Physics-based movement
         Vector3 targetVelocity = moveDirection * moveSpeed;
         Vector3 velocityChange = targetVelocity - rb.linearVelocity;
-        velocityChange.y = 0; // Don't mess with gravity
+        velocityChange.y = 0; // Preserve vertical velocity (jump/gravity)
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
     }
 }
