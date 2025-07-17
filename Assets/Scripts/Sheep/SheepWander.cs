@@ -12,13 +12,18 @@ public class SheepWander : MonoBehaviour
     private SheepPhysicsNavAgent sheepPhysicsNavAgent;
     private float timer = 0.0f;
 
+    private bool canWander = false;
+
     private void Start()
     {
         sheepPhysicsNavAgent = GetComponent<SheepPhysicsNavAgent>();
+        timer = nextPointRate;
     }
 
     private void Update()
     {
+        if (!canWander) return;
+
         timer += Time.deltaTime;
 
         if (timer > nextPointRate)
@@ -46,5 +51,10 @@ public class SheepWander : MonoBehaviour
         // If nothing valid found, fallback to current position
         Debug.LogWarning("Sheep couldn't find valid Wander Point");
         return transform.position;
+    }
+
+    public void SetCanWander(bool canWander)
+    {
+        this.canWander = canWander;
     }
 }

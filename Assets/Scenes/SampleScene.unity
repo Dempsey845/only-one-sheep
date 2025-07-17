@@ -6527,6 +6527,8 @@ GameObject:
   - component: {fileID: 1770504625}
   - component: {fileID: 1770504626}
   - component: {fileID: 1770504627}
+  - component: {fileID: 1770504628}
+  - component: {fileID: 1770504629}
   m_Layer: 0
   m_Name: Sheep
   m_TagString: Untagged
@@ -6616,6 +6618,7 @@ MonoBehaviour:
   moveSpeed: 5
   rotateSpeed: 90
   waypointTolerance: 0.2
+  targetTolerance: 0.2
   repathRate: 1
 --- !u!114 &1770504627
 MonoBehaviour:
@@ -6631,6 +6634,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextPointRate: 6
   wanderRadius: 15
+--- !u!114 &1770504628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770504622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d7f0da6a036d64a9b39f91577fc1c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1770504629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770504622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea81301aa06e3df42a9dc1c366aa7ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startIdleDuration: 2
 --- !u!1 &1896892942
 GameObject:
   m_ObjectHideFlags: 0
@@ -6643,6 +6671,8 @@ GameObject:
   - component: {fileID: 1896892945}
   - component: {fileID: 1896892944}
   - component: {fileID: 1896892946}
+  - component: {fileID: 1896892947}
+  - component: {fileID: 1896892948}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6737,6 +6767,33 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65
   groundCheckDistance: 0.2
+--- !u!114 &1896892947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896892942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6997b0200d68e584bafeae01904fd5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whistleCooldownDuration: 5
+  chaseDuration: 5
+  sheepStateController: {fileID: 1770504629}
+--- !u!114 &1896892948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896892942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd329ab9f4b6ec41ae416d0c5280dcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1908920098
 GameObject:
   m_ObjectHideFlags: 0
