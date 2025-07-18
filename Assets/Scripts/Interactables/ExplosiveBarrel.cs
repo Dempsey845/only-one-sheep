@@ -25,6 +25,13 @@ public class ExplosiveBarrel : Interactable
         // Get all colliders in radius
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius, affectedLayers);
 
+        if (sheepHealth != null)
+        {
+            SheepRagdollController ragdollController;
+            sheepHealth.gameObject.TryGetComponent<SheepRagdollController>(out ragdollController);
+            ragdollController.Collapse(6f);
+        }
+
         foreach (Collider col in colliders)
         {
             Rigidbody rb = col.attachedRigidbody;

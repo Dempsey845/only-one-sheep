@@ -106,6 +106,16 @@ public class Interactable : MonoBehaviour
         Interact();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag(SHEEP_TAG)) { return; }
+
+        if (!IsSheepCuriousOfThis) { return; }
+
+        sheepHealth = other.GetComponent<SheepHealth>();
+        Interact();
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

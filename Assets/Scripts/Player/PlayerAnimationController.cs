@@ -28,10 +28,11 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void Update()
     {
-        float speed = playerMovement.IsSprinting ? 1f : playerMovement.GetMoveDirection().magnitude;
+        float speed = playerMovement.IsSprinting ? 1f : playerMovement.GetMoveDirection().magnitude / 2;
         playerAnimator.SetFloat("Speed", speed, 0.1f, Time.deltaTime);
 
         playerAnimator.SetBool("IsGrounded", playerMovement.IsGrounded);
+        playerAnimator.SetBool("IsFalling", playerMovement.IsFalling);
     }
 
     private void HandleJump()

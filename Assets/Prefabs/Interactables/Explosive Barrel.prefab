@@ -126,9 +126,13 @@ MonoBehaviour:
   checkRadius: 8
   curiousDuration: 10
   ignoreTime: 15
+  movementType: 0
+  spinSpeed: 50
+  pingPongDistance: 1
+  pingPongSpeed: 1
   explosionRadius: 10
-  explosionForce: 7
-  upwardForce: 13
+  explosionForce: 15
+  upwardForce: 25
   affectedLayers:
     serializedVersion: 2
     m_Bits: 776

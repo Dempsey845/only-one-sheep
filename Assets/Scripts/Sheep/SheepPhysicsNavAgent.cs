@@ -25,6 +25,9 @@ public class SheepPhysicsNavAgent : MonoBehaviour
 
     public float MoveSpeedMultiplier { get; set; } = 1.0f;
 
+    private bool isRagdollSheep;
+    private SheepRagdollController sheepRagdollController;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -32,11 +35,16 @@ public class SheepPhysicsNavAgent : MonoBehaviour
         CalculatePath();
     }
 
+    private void Start()
+    {
+        isRagdollSheep = TryGetComponent<SheepRagdollController>(out sheepRagdollController);
+    }
+
     private void Update()
     {
         if (!hasTarget) return;
 
-        if (!HasReachedTargetPosition() && path != null && path.corners.Length > 0 && currentCornerIndex < path.corners.Length)
+        if (!isRagdollSheep && !HasReachedTargetPosition() && path != null && path.corners.Length > 0 && currentCornerIndex < path.corners.Length)
         {
             RotateTowardsTargetPosition(path.corners[currentCornerIndex]); 
         }
@@ -81,8 +89,14 @@ public class SheepPhysicsNavAgent : MonoBehaviour
         Vector3 targetCorner = path.corners[currentCornerIndex];
         direction = (targetCorner - transform.position).normalized;
 
-        // Smoothly move the sheep towards the target corner instead of jumping directly
-        MoveTowardsTarget(targetCorner);
+        if (isRagdollSheep)
+        {
+            sheepRagdollController.SetTarget(targetCorner);
+        } else
+        {
+            // Smoothly move the sheep towards the target corner instead of jumping directly
+            MoveTowardsTarget(targetCorner);
+        }
 
         // Advance to the next waypoint if close enough
         if (Vector3.Distance(transform.position, targetCorner) <= waypointTolerance)

@@ -87,7 +87,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &4067239728039577016
 MonoBehaviour:
@@ -103,9 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotateSpeed: 360
-  waypointTolerance: 0.2
-  targetTolerance: 0.2
-  repathRate: 0.4
+  waypointTolerance: 1
+  targetTolerance: 0.5
+  repathRate: 1
 --- !u!114 &526093843117781351
 MonoBehaviour:
   m_ObjectHideFlags: 0

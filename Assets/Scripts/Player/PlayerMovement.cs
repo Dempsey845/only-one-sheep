@@ -23,8 +23,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsSprinting { get; private set; }
     public bool IsGrounded { get; private set; }
+    public bool IsFalling { get; private set; }
 
-    public event System.Action OnJump;
+    public event Action OnJump;
 
     private void Start()
     {
@@ -47,6 +48,10 @@ public class PlayerMovement : MonoBehaviour
 
         // Ground check using Raycast
         IsGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
+
+        float fallThreshold = -10f;
+        IsFalling = !IsGrounded && rb.linearVelocity.y < fallThreshold;
+
 
         // Jump
         if (canJump && PlayerInputManager.Instance.JumpPressed && IsGrounded)

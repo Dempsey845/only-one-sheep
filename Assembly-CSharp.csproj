@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Sheep\SheepPhysicsNavAgent.cs" />
-    <Compile Include="Assets\Scripts\Sheep\SheepRagdollRecovery.cs" />
     <Compile Include="Assets\Imported Assets\RPG Food &amp; Drinks Pack\Assets\Scripts\Consumer.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerThirdPersonCameraController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputActions.cs" />
@@ -88,6 +87,7 @@
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepPanicState.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepWander.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputManager.cs" />
+    <Compile Include="Assets\Scripts\Sheep\SheepFlipRecovery.cs" />
     <Compile Include="Assets\Imported Assets\RPG Food &amp; Drinks Pack\Assets\Scripts\Rotator.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepIdleState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />

@@ -1,134 +1,109 @@
+using System.Collections;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class SheepRagdollController : MonoBehaviour
 {
+    [Header("Ragdoll Movement")]
+    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float rotateSpeed = 5f;
+    [SerializeField] private Transform forwardDirectionTransform;
+
     [Header("Ragdoll Setup")]
-    public Rigidbody[] ragdollBodies;      // All ragdoll rigidbodies
-    public Rigidbody parentRigidbody;      // Parent's Rigidbody
-    public Collider parentCollider;        // Parent's Collider
-    public Transform rootBone;             // Usually "Hips" or "Pelvis"
+    [SerializeField] private Rigidbody[] ragdollBodies;
+    [SerializeField] private Transform rootBone;
 
-    [Header("Ragdoll Blend Settings")]
-    public float blendDuration = 1f;
+    private Rigidbody rootBody;
+    private SheepFlipRecovery recovery;
 
-    private float blendTimer = 0f;
-    private bool isBlending = false;
+    private bool canMove = true;
 
-    private bool isRagdoll = true;
-
-    private Dictionary<Transform, Vector3> blendStartPositions = new();
-    private Dictionary<Transform, Quaternion> blendStartRotations = new();
-
-    // Cache of initial local positions and rotations
-    private Dictionary<Transform, Vector3> boneLocalPositions = new();
-    private Dictionary<Transform, Quaternion> boneLocalRotations = new();
-
-    private Quaternion rootBoneStartRotation;
+    private Vector3 targetPosition;
+    private Quaternion startRotation;
 
     void Start()
     {
-        rootBoneStartRotation = rootBone.rotation;
-
-        // Store initial local transforms for reset
-        foreach (var rb in ragdollBodies)
-        {
-            Transform t = rb.transform;
-            boneLocalPositions[t] = t.localPosition;
-            boneLocalRotations[t] = t.localRotation;
-        }
-
-        SetRagdoll(true); // Start in ragdoll mode
+        startRotation = transform.rotation;
+        rootBody = GetComponent<Rigidbody>();
+        recovery = GetComponent<SheepFlipRecovery>();
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (!canMove) { return; }
+
+        Vector3 toTarget = targetPosition - transform.position;
+        toTarget.y = 0f;
+
+        if (toTarget.sqrMagnitude > 0.01f)
         {
-            isRagdoll = !isRagdoll;
-            SetRagdoll(isRagdoll);
+            Quaternion currentRot = rootBody.rotation;
+
+            // The sheep's "real" forward axis
+            Vector3 sheepForward = transform.up;
+
+            // Flatten toTarget to horizontal
+            Vector3 flatToTarget = toTarget.normalized;
+
+            // Build rotation that turns sheepForward to face the target
+            Quaternion targetRot = Quaternion.FromToRotation(sheepForward, flatToTarget) * currentRot;
+
+            // Ensure quaternion stays normalized
+            targetRot = Quaternion.Normalize(targetRot);
+
+            // Rotate with physics
+            rootBody.MoveRotation(Quaternion.RotateTowards(currentRot, targetRot, rotateSpeed * Time.fixedDeltaTime));
         }
 
-        if (isBlending)
-        {
-            blendTimer += Time.deltaTime;
-            float t = Mathf.Clamp01(blendTimer / blendDuration);
 
-            foreach (var rb in ragdollBodies)
-            {
-                Transform bone = rb.transform;
 
-                if (blendStartPositions.TryGetValue(bone, out Vector3 startPos) &&
-                    boneLocalPositions.TryGetValue(bone, out Vector3 targetPos))
-                {
-                    bone.localPosition = Vector3.Lerp(startPos, targetPos, t);
-                }
+        Vector3 forward = forwardDirectionTransform.forward;
+        forward.y = 0f;
 
-                if (blendStartRotations.TryGetValue(bone, out Quaternion startRot) &&
-                    boneLocalRotations.TryGetValue(bone, out Quaternion targetRot))
-                {
-                    bone.localRotation = Quaternion.Slerp(startRot, targetRot, t);
-                }
-            }
+        Debug.DrawRay(forwardDirectionTransform.position, forwardDirectionTransform.forward * 2f, Color.green);
 
-            if (t >= 1f)
-            {
-                isBlending = false;
-            }
-        }
+        Vector3 dirToTarget = targetPosition + Vector3.up - transform.position;
+        dirToTarget.y = 0f;
+        dirToTarget = dirToTarget.normalized;
+
+        rootBody.linearVelocity = dirToTarget * moveSpeed;
     }
 
-    void SetRagdoll(bool state)
+
+    private void OnDrawGizmos()
     {
-        // Toggle ragdoll rigidbodies
-        foreach (var rb in ragdollBodies)
+        if (forwardDirectionTransform != null)
         {
-            rb.isKinematic = !state;
-            rb.detectCollisions = state;
-
-            if (state)
-            {
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-            }
+            // Draw forward movement direction
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(forwardDirectionTransform.position, forwardDirectionTransform.forward * 2f);
+            Gizmos.DrawSphere(forwardDirectionTransform.position + forwardDirectionTransform.forward * 2f, 0.05f);
         }
+        
+        // Draw line to target
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, targetPosition);
+        Gizmos.DrawSphere(targetPosition, 0.1f);
+        
+    }
 
-        // Toggle parent Rigidbody and Collider
-        if (parentRigidbody != null)
-        {
-            parentRigidbody.isKinematic = state;
-            parentRigidbody.linearVelocity = Vector3.zero;
-            parentRigidbody.angularVelocity = Vector3.zero;
-        }
+    public void Collapse(float duration)
+    {
+        rootBody.freezeRotation = false;
+        canMove = false;
+        rootBody.linearVelocity = Vector3.zero;
+        StartCoroutine(CollapseTime(duration));
+    }
 
-        if (parentCollider != null)
-        {
-            parentCollider.enabled = !state;
-        }
+    public IEnumerator CollapseTime(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        transform.rotation = startRotation;
+        rootBody.freezeRotation = true;
+        canMove = true;
+    }
 
-        // On disable, align parent and start blend
-        if (!state && rootBone != null)
-        {
-            transform.position = rootBone.position + Vector3.up;
-            transform.rotation = Quaternion.identity;
-
-            // Capture current bone transforms to blend from
-            blendStartPositions.Clear();
-            blendStartRotations.Clear();
-
-            foreach (var rb in ragdollBodies)
-            {
-                Transform t = rb.transform;
-                blendStartPositions[t] = t.localPosition;
-                blendStartRotations[t] = t.localRotation;
-            }
-
-            blendTimer = 0f;
-            isBlending = true;
-
-            // Reset rootBone itself immediately
-            rootBone.localPosition = Vector3.zero;
-            rootBone.localRotation = rootBoneStartRotation;
-        }
+    public void SetTarget(Vector3 targetPosition)
+    {
+        this.targetPosition = targetPosition;
     }
 }

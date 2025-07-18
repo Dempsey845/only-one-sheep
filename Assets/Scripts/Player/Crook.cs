@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,6 +57,11 @@ public class Crook : MonoBehaviour
 
         if (distanceFromSheep < attackDistance)
         {
+            SheepStateMachine stateMachine = SheepStateController.Instance.GetComponent<SheepStateMachine>();
+            ISheepState currentSheepState = stateMachine.GetCurrentState();
+
+            if (currentSheepState is SheepCuriousState || currentSheepState is SheepPanicState) return;
+
             SheepStateController.Instance.ChasePlayer(chaseDuration);
             isChasing = true;
             StartCoroutine(ShowChaseLine());
