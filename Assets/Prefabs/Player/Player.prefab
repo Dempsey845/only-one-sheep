@@ -478,6 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDistance: 1.5
-  attackCooldownDuration: 5
+  attackCooldownDuration: 2.5
   chaseDuration: 5
+  idleDurationAfterCancel: 5
   reloadFillImage: {fileID: 0}

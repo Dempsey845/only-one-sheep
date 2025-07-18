@@ -1,11 +1,15 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float sprintMultiplier = 1.5f;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float jumpForce = 7f;
+    [SerializeField] private float jumpDelay = 4f;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -13,7 +17,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
     private Vector3 moveDirection;
-    private bool isGrounded;
+
+    private bool canJump = true;
+    private bool canMove = true;
+
+    public bool IsSprinting { get; private set; }
+    public bool IsGrounded { get; private set; }
+
+    public event System.Action OnJump;
 
     private void Start()
     {
@@ -35,22 +46,59 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = (forward * v + right * h).normalized;
 
         // Ground check using Raycast
-        isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
+        IsGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
 
         // Jump
-        if (PlayerInputManager.Instance.JumpPressed && isGrounded)
+        if (canJump && PlayerInputManager.Instance.JumpPressed && IsGrounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            OnJump?.Invoke();
+            StartCoroutine(JumpDelay());
         }
+    }
+
+    private IEnumerator JumpDelay()
+    {
+        canJump = false;
+        yield return new WaitForSeconds(jumpDelay);
+        canJump = true;
+    }
+
+    public IEnumerator StartMoveDelay(float delay)
+    {
+        canMove = false;
+        yield return new WaitForSeconds(delay);
+        canMove = true;
+    }
+
+    public void AddJumpForce()
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
     private void FixedUpdate()
     {
+        float currentSpeed = moveSpeed;
+        if (PlayerInputManager.Instance.SprintPressed && moveDirection.magnitude > 0.1f)
+        {
+            currentSpeed *= sprintMultiplier;
+            IsSprinting = true;
+        } else
+        {
+            IsSprinting = false;
+        }
+
         // Physics-based movement
-        Vector3 targetVelocity = moveDirection * moveSpeed;
-        Vector3 velocityChange = targetVelocity - rb.linearVelocity;
-        velocityChange.y = 0; // Preserve vertical velocity (jump/gravity)
-        rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        if (canMove)
+        {
+            Vector3 targetVelocity = moveDirection * currentSpeed;
+            Vector3 velocityChange = targetVelocity - rb.linearVelocity;
+            velocityChange.y = 0; // Preserve vertical velocity (jump/gravity)
+            rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        }
+        else
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
 
         // Rotate character to face move direction
         if (moveDirection.magnitude >= 0.1f)
@@ -60,5 +108,10 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = lookRotation;
         }
 
+    }
+
+    public Vector3 GetMoveDirection()
+    {
+        return moveDirection;
     }
 }

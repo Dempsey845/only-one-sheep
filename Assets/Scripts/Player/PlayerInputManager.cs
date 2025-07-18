@@ -11,6 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool JumpPressed { get; private set; }
     public bool WhistlePressed { get; private set; }
     public bool AttackPressed { get; private set; }
+    public bool SprintPressed { get; private set; }
 
 
     private void Awake()
@@ -31,6 +32,9 @@ public class PlayerInputManager : MonoBehaviour
         inputActions.Player.Whistle.performed += _ => WhistlePressed = true;
 
         inputActions.Player.Attack.performed += ctx => AttackPressed = true;
+
+        inputActions.Player.Sprint.performed += ctx => SprintPressed = true;
+        inputActions.Player.Sprint.canceled += ctx => SprintPressed = false;
     }
 
     private void OnEnable()
