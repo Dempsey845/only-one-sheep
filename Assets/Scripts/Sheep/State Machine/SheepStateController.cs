@@ -58,4 +58,9 @@ public class SheepStateController : MonoBehaviour
 
         IsSheepCurious = false;
     }
+
+    public void Idle(float idleDuration)
+    {
+        stateMachine.SetState(new SheepIdleState(stateMachine, idleDuration));
+    }
 }

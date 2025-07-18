@@ -2,15 +2,36 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
+    public enum MovementType
+    {
+        None,
+        Spin,
+        PingPong
+    }
+
+
+
+    [Header("Interactable")]
     [SerializeField] private float checkRadius = 15f;
     [SerializeField] private float curiousDuration = 5f;
     [SerializeField] private float ignoreTime = 15f; // How long the interactable should be ignored for after sheep loses interes
+
+    [Header("Movement")]
+    [SerializeField] private MovementType movementType = MovementType.None;
+
+    [SerializeField] private float spinSpeed = 50f;
+
+    [SerializeField] private float pingPongDistance = 1f;
+    [SerializeField] private float pingPongSpeed = 1f;
+
 
     private Transform sheepTranform;
 
     private float checkRate = 1f;
     private float timer = 0f;
     private float ignoreTimer = 0f;
+
+    private Vector3 startPosition;
 
     public bool IsSheepCuriousOfThis { get; set; } = false;
     public bool IgnoreFromSheep { get; set; } = false;
@@ -21,7 +42,8 @@ public class Interactable : MonoBehaviour
 
     private void Start()
     {
-        sheepTranform = SheepStateController.Instance.transform; 
+        sheepTranform = SheepStateController.Instance.transform;
+        startPosition = transform.position;
     }
 
     protected virtual void Interact()
@@ -31,6 +53,8 @@ public class Interactable : MonoBehaviour
 
     private void Update()
     {
+        HandleMovement();
+
         if (sheepTranform == null) { return; }
 
         if (IgnoreFromSheep)
@@ -86,6 +110,25 @@ public class Interactable : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, checkRadius);
+    }
+
+    private void HandleMovement()
+    {
+        switch (movementType)
+        {
+            case MovementType.Spin:
+                transform.Rotate(Vector3.up, spinSpeed * Time.deltaTime);
+                break;
+
+            case MovementType.PingPong:
+                float offset = Mathf.PingPong(Time.time * pingPongSpeed, pingPongDistance);
+                transform.position = startPosition + new Vector3(0f, offset, 0f); // move up/down
+                break;
+
+            case MovementType.None:
+            default:
+                break;
+        }
     }
 
 }

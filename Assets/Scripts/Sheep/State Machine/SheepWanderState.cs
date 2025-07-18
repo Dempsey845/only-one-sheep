@@ -6,7 +6,7 @@ public class SheepWanderState : ISheepState
     private readonly SheepStateMachine sheep;
     private readonly SheepWander wander;
 
-    private readonly float nextPointRate = 6f;
+    private readonly float nextPointRate = 3f;
     private readonly float wanderRadius = 10f;
 
     public SheepWanderState(SheepStateMachine sheep, SheepWander wander)

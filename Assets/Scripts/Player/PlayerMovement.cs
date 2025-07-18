@@ -34,14 +34,6 @@ public class PlayerMovement : MonoBehaviour
 
         moveDirection = (forward * v + right * h).normalized;
 
-        // Rotate character to face move direction
-        if (moveDirection.magnitude >= 0.1f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            Quaternion lookRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            transform.rotation = lookRotation;
-        }
-
         // Ground check using Raycast
         isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
 
@@ -59,5 +51,14 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocityChange = targetVelocity - rb.linearVelocity;
         velocityChange.y = 0; // Preserve vertical velocity (jump/gravity)
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
+
+        // Rotate character to face move direction
+        if (moveDirection.magnitude >= 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            Quaternion lookRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+            transform.rotation = lookRotation;
+        }
+
     }
 }

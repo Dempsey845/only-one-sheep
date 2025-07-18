@@ -36,52 +36,42 @@ public class SheepPhysicsNavAgent : MonoBehaviour
     {
         if (!hasTarget) return;
 
-        if (!HasReachedTargetPosition())
+        if (!HasReachedTargetPosition() && path != null && path.corners.Length > 0 && currentCornerIndex < path.corners.Length)
         {
-            RotateTowardsTargetPosition();
+            RotateTowardsTargetPosition(path.corners[currentCornerIndex]); 
         }
 
         repathTimer += Time.deltaTime;
         if (repathTimer >= repathRate)
         {
-            CalculatePath();
-            repathTimer = 0f;
+            // Only recalculate the path if the target position has moved significantly
+            if (Vector3.Distance(transform.position, targetPosition) > 1f)
+            {
+                CalculatePath();
+                repathTimer = 0f;
+            }
         }
-    }
-
-    private void RotateTowardsTargetPosition()
-    {
-        // Calculate direction to the target
-        Vector3 direction = (targetPosition - transform.position).normalized;
-
-        // Ensure rotation is only on the Y-axis (yaw)
-        direction.y = 0;
-
-        // Rotate towards the target smoothly
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-    }
-
-    private void FixedUpdate()
-    {
-        FollowPath();
     }
 
     private void CalculatePath()
     {
         if (!hasTarget) return;
 
+        // Recalculate the path from the sheep's current position to the target position
         if (NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path))
         {
             currentCornerIndex = 0;
         }
         else
         {
-            // If this becomes a bigger issue, set the sheeps position back to spawn position (if it persists for couple of seconds)
             Debug.LogWarning("Failed to calculate path to target: " + targetPosition);
         }
     }
 
+    private void FixedUpdate()
+    {
+        FollowPath();
+    }
 
     private void FollowPath()
     {
@@ -91,16 +81,37 @@ public class SheepPhysicsNavAgent : MonoBehaviour
         Vector3 targetCorner = path.corners[currentCornerIndex];
         direction = (targetCorner - transform.position).normalized;
 
-        // Move the sheep towards the target
-        Vector3 move = direction * moveSpeed;
-        rb.MovePosition(rb.position + move * MoveSpeedMultiplier * Time.fixedDeltaTime);
+        // Smoothly move the sheep towards the target corner instead of jumping directly
+        MoveTowardsTarget(targetCorner);
 
-        // Advance to next waypoint if close
+        // Advance to the next waypoint if close enough
         if (Vector3.Distance(transform.position, targetCorner) <= waypointTolerance)
         {
             currentCornerIndex++;
         }
     }
+
+    private void MoveTowardsTarget(Vector3 target)
+    {
+        // Smooth movement to prevent sudden jumps
+        Vector3 smoothMove = Vector3.MoveTowards(transform.position, target, moveSpeed * MoveSpeedMultiplier * Time.fixedDeltaTime);
+        rb.MovePosition(smoothMove);
+    }
+
+    private void RotateTowardsTargetPosition(Vector3 targetPosition)
+    {
+        Vector3 direction = (targetPosition - transform.position).normalized;
+        direction.y = 0;
+
+        if (direction.sqrMagnitude < 0.001f)
+            return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        Quaternion newRotation = Quaternion.RotateTowards(rb.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
+        rb.MoveRotation(newRotation); 
+    }
+
 
     public void SetTargetPosition(Vector3 targetPosition)
     {
@@ -144,5 +155,4 @@ public class SheepPhysicsNavAgent : MonoBehaviour
             }
         }
     }
-
 }

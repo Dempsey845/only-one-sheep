@@ -8,9 +8,11 @@ public class Crook : MonoBehaviour
     [SerializeField] private float attackDistance = 1.5f;
     [SerializeField] private float attackCooldownDuration = 5f;
     [SerializeField] private float chaseDuration = 5f;
+    [SerializeField] private float idleDurationAfterCancel = 3f;
     [SerializeField] private Image reloadFillImage;
 
     private bool canAttack = true;
+    private bool isChasing = false;
     private LineRenderer lineRenderer;
 
     SheepStateMachine stateMachine;
@@ -29,14 +31,20 @@ public class Crook : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerInputManager.Instance.AttackPressed)
+        if (PlayerInputManager.Instance.AttackPressed && !isChasing)
         {
             HandleAttack();
+        }
+        else if (PlayerInputManager.Instance.AttackPressed && isChasing)
+        {
+            CancelChase();
+            SheepStateController.Instance.Idle(idleDurationAfterCancel);
+            SheepStateController.Instance.GetComponent<SheepPhysicsNavAgent>().SetTargetPosition(SheepStateController.Instance.transform.position);
         }
 
         if (!canAttack)
         {
-            reloadFillImage.fillAmount += Time.deltaTime / chaseDuration;
+            reloadFillImage.fillAmount += Time.deltaTime / attackCooldownDuration;
         }
     }
 
@@ -49,12 +57,11 @@ public class Crook : MonoBehaviour
         if (distanceFromSheep < attackDistance)
         {
             SheepStateController.Instance.ChasePlayer(chaseDuration);
+            isChasing = true;
             StartCoroutine(ShowChaseLine());
-            Debug.Log("Sheep in distance");
         }
 
         reloadFillImage.fillAmount = 0;
-
         StartCoroutine(AttackCooldown());
     }
 
@@ -75,6 +82,7 @@ public class Crook : MonoBehaviour
 
             if (currentState is not SheepFollowState)
             {
+                isChasing = false;
                 break;
             }
 
@@ -82,7 +90,13 @@ public class Crook : MonoBehaviour
             yield return null;
         }
 
+        CancelChase();
+    }
+
+    private void CancelChase()
+    {
         lineRenderer.enabled = false;
+        isChasing = false;
     }
 
     private IEnumerator AttackCooldown()
