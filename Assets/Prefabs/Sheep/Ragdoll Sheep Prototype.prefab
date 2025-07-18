@@ -1167,14 +1167,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3285274237157013690}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8f5810650840df4fa28681e2e1a69e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   feetDirectionTransform: {fileID: 5804639137350901475}
-  upsideDownDotThreshold: 0.5
-  checkDelay: 3
+  upsideDownDotThreshold: 0
+  checkDelay: 4
   uprightTorque: 10
   uprightDuration: 3
   checkDistance: 0.5

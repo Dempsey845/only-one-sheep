@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2037161169555334417}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Watermelon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 9000951660767434617}
   - component: {fileID: 3991749530367359617}
   - component: {fileID: 5140154088398902244}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Watermelon4/4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

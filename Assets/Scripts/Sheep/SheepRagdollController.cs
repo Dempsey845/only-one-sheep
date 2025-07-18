@@ -14,6 +14,7 @@ public class SheepRagdollController : MonoBehaviour
 
     private Rigidbody rootBody;
     private SheepFlipRecovery recovery;
+    private SheepPhysicsNavAgent physicsNavAgent;
 
     private bool canMove = true;
 
@@ -25,6 +26,7 @@ public class SheepRagdollController : MonoBehaviour
         startRotation = transform.rotation;
         rootBody = GetComponent<Rigidbody>();
         recovery = GetComponent<SheepFlipRecovery>();
+        physicsNavAgent = GetComponent<SheepPhysicsNavAgent>();
         StartCoroutine(RotationCheckRoutine());
     }
 
@@ -65,7 +67,7 @@ public class SheepRagdollController : MonoBehaviour
         dirToTarget.y = 0f;
         dirToTarget = dirToTarget.normalized;
 
-        rootBody.linearVelocity = dirToTarget * moveSpeed;
+        rootBody.linearVelocity = dirToTarget * moveSpeed * physicsNavAgent.MoveSpeedMultiplier;
     }
 
 
@@ -113,7 +115,7 @@ public class SheepRagdollController : MonoBehaviour
 
     private IEnumerator RotationCheckRoutine()
     {
-        const float checkInterval = 15f;
+        const float checkInterval = 5f;
         const float angleThreshold = 100f;
 
         while (true)

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
@@ -8,22 +9,28 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private Vector3 jumpFeetPosition;
 
     private PlayerMovement playerMovement;
-
-    private Vector3 startFeetPosition;
+    private Crook crook;
 
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        crook = GetComponent<Crook>();
 
         playerMovement.OnJump += HandleJump;
+        crook.OnPerformedCrook += HandleCrook;
+    }
 
-        startFeetPosition = groundCheckPoint.transform.localPosition;
+    private void HandleCrook()
+    {
+        playerAnimator.SetTrigger("Pet");
     }
 
     private void OnDestroy()
     {
         if (playerMovement != null)
             playerMovement.OnJump -= HandleJump;
+        if (crook != null)
+            crook.OnPerformedCrook -= HandleCrook;
     }
 
     private void Update()

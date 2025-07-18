@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class Crook : MonoBehaviour
     private LineRenderer lineRenderer;
 
     SheepStateMachine stateMachine;
+
+    public event Action OnPerformedCrook;
 
     private void Awake()
     {
@@ -66,6 +69,8 @@ public class Crook : MonoBehaviour
             isChasing = true;
             StartCoroutine(ShowChaseLine());
         }
+
+        OnPerformedCrook?.Invoke();
 
         reloadFillImage.fillAmount = 0;
         StartCoroutine(AttackCooldown());

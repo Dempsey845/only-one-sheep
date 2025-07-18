@@ -9,7 +9,7 @@ public class SheepPanicState : ISheepState
     private readonly SheepStateController stateController;
 
     private readonly float moveSpeedMultiplier;
-    private readonly float nextPointRate = 1.5f;
+    private readonly float nextPointRate = .5f;
     private readonly float wanderRadius = 15f;
 
     private float panicDuration;
