@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     private bool canJump = true;
     private bool canMove = true;
 
+    private float fallTimer = 0f;
+    private const float fallThreshold = -1f;
+    private const float fallTime = 0.4f;
+
     public bool IsSprinting { get; private set; }
     public bool IsGrounded { get; private set; }
     public bool IsFalling { get; private set; }
@@ -49,9 +53,19 @@ public class PlayerMovement : MonoBehaviour
         // Ground check using Raycast
         IsGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
 
-        float fallThreshold = -10f;
-        IsFalling = !IsGrounded && rb.linearVelocity.y < fallThreshold;
+        if (!IsGrounded)
+        {
+            fallTimer += Time.deltaTime;
 
+            if (fallTimer > fallTime)
+            {
+                IsFalling = rb.linearVelocity.y < fallThreshold;
+                fallTimer = 0f;
+            }
+        } else
+        {
+            IsFalling = false;
+        }
 
         // Jump
         if (canJump && PlayerInputManager.Instance.JumpPressed && IsGrounded)

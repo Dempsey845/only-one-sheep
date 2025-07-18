@@ -25,6 +25,7 @@ public class SheepRagdollController : MonoBehaviour
         startRotation = transform.rotation;
         rootBody = GetComponent<Rigidbody>();
         recovery = GetComponent<SheepFlipRecovery>();
+        StartCoroutine(RotationCheckRoutine());
     }
 
     private void FixedUpdate()
@@ -53,7 +54,6 @@ public class SheepRagdollController : MonoBehaviour
             // Rotate with physics
             rootBody.MoveRotation(Quaternion.RotateTowards(currentRot, targetRot, rotateSpeed * Time.fixedDeltaTime));
         }
-
 
 
         Vector3 forward = forwardDirectionTransform.forward;
@@ -106,4 +106,25 @@ public class SheepRagdollController : MonoBehaviour
     {
         this.targetPosition = targetPosition;
     }
+
+    private IEnumerator RotationCheckRoutine()
+    {
+        const float checkInterval = 2f;
+        const float angleThreshold = 5f; // degrees off before correcting
+
+        while (true)
+        {
+            yield return new WaitForSeconds(checkInterval);
+
+            if (!canMove) continue; // Don't auto-fix while collapsed
+
+            float angleDifference = Quaternion.Angle(transform.rotation, startRotation);
+            if (angleDifference > angleThreshold)
+            {
+                Debug.Log($"[SheepRagdollController] Fixing rotation. Angle off by {angleDifference}°");
+                transform.rotation = startRotation;
+            }
+        }
+    }
+
 }
