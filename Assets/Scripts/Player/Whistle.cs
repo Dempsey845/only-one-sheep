@@ -39,16 +39,16 @@ public class Whistle : MonoBehaviour
 
         float distanceFromSheep = PlayerManager.Instance.GetDistanceBetweenPlayerAndSheep();
 
+        whistleReloadImage.fillAmount = 0;
+
+        StartCoroutine(WhistleCooldown());
+
         if (distanceFromSheep > maxWhistleDistance) { return; }
 
         bool chase = distanceFromSheep > panicDistance;
 
         if (chase) { sheepStateController.ChasePlayer(chaseDuration); }
         else { sheepStateController.Panic(panicDuration); }
-
-        whistleReloadImage.fillAmount = 0;
-
-        StartCoroutine(WhistleCooldown());
     }
 
     private IEnumerator WhistleCooldown()

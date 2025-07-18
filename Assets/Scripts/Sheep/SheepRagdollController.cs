@@ -97,7 +97,11 @@ public class SheepRagdollController : MonoBehaviour
     public IEnumerator CollapseTime(float duration)
     {
         yield return new WaitForSeconds(duration);
-        transform.rotation = startRotation;
+
+        Quaternion current = transform.rotation;
+        Quaternion target = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, current.eulerAngles.z);
+        transform.rotation = target;
+
         rootBody.freezeRotation = true;
         canMove = true;
     }
@@ -115,28 +119,33 @@ public class SheepRagdollController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(checkInterval);
-
-            if (!canMove) continue;
-
-            // Get the current and target rotation (only using X and Z axes for comparison)
-            Quaternion current = transform.rotation;
-            Quaternion target = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, current.eulerAngles.z);
-
-            // Calculate the angle difference (ignoring Y rotation)
-            float angleDifference = Quaternion.Angle(current, target);
-
-            if (angleDifference > angleThreshold)
+            bool flowControl = FixRotation(angleThreshold);
+            if (!flowControl)
             {
-                Debug.Log($"[SheepRagdollController] Fixing rotation. Pitch/Roll off by {angleDifference:F2}°");
-
-                // Only apply correction when there's a significant angle difference
-                transform.rotation = target;
+                continue;
             }
         }
     }
 
+    private bool FixRotation(float angleThreshold)
+    {
+        if (!canMove) return false;
 
+        // Get the current and target rotation (only using X and Z axes for comparison)
+        Quaternion current = transform.rotation;
+        Quaternion target = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, current.eulerAngles.z);
 
+        // Calculate the angle difference (ignoring Y rotation)
+        float angleDifference = Quaternion.Angle(current, target);
 
+        if (angleDifference > angleThreshold)
+        {
+            Debug.Log($"[SheepRagdollController] Fixing rotation. Pitch/Roll off by {angleDifference:F2}°");
 
+            // Only apply correction when there's a significant angle difference
+            transform.rotation = target;
+        }
+
+        return true;
+    }
 }
