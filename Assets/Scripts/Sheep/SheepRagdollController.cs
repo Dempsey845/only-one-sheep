@@ -109,22 +109,34 @@ public class SheepRagdollController : MonoBehaviour
 
     private IEnumerator RotationCheckRoutine()
     {
-        const float checkInterval = 2f;
-        const float angleThreshold = 5f; // degrees off before correcting
+        const float checkInterval = 15f;
+        const float angleThreshold = 100f;
 
         while (true)
         {
             yield return new WaitForSeconds(checkInterval);
 
-            if (!canMove) continue; // Don't auto-fix while collapsed
+            if (!canMove) continue;
 
-            float angleDifference = Quaternion.Angle(transform.rotation, startRotation);
+            // Get the current and target rotation (only using X and Z axes for comparison)
+            Quaternion current = transform.rotation;
+            Quaternion target = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, current.eulerAngles.z);
+
+            // Calculate the angle difference (ignoring Y rotation)
+            float angleDifference = Quaternion.Angle(current, target);
+
             if (angleDifference > angleThreshold)
             {
-                Debug.Log($"[SheepRagdollController] Fixing rotation. Angle off by {angleDifference}°");
-                transform.rotation = startRotation;
+                Debug.Log($"[SheepRagdollController] Fixing rotation. Pitch/Roll off by {angleDifference:F2}°");
+
+                // Only apply correction when there's a significant angle difference
+                transform.rotation = target;
             }
         }
     }
+
+
+
+
 
 }
