@@ -155,6 +155,8 @@ public class SheepPhysicsNavAgent : MonoBehaviour
         return Vector3.Distance(transform.position, targetPosition) <= targetTolerance;
     }
 
+    public bool HasTarget() { return hasTarget; }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

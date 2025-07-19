@@ -67,11 +67,13 @@
     <Compile Include="Assets\Scripts\Player\PlayerInputActions.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\ISheepState.cs" />
     <Compile Include="Assets\Scripts\Level\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
     <Compile Include="Assets\Scripts\Sheep\UI\SheepHealthBar.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepFollowState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepCuriousState.cs" />
     <Compile Include="Assets\Scripts\Level\FakeObstacle.cs" />
+    <Compile Include="Assets\Scripts\Level\LevelTransitionUI.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimationEventHandler.cs" />
     <Compile Include="Assets\Scripts\Interactables\Food.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Assets\Scripts\Player\Whistle.cs" />
     <Compile Include="Assets\Imported Assets\Symphonie\BasicCharacterController\Scripts\MathUtils.cs" />
     <Compile Include="Assets\Scripts\Player\Crook.cs" />
+    <Compile Include="Assets\Scripts\Level\LevelTransitionManager.cs" />
     <Compile Include="Assets\Imported Assets\Symphonie\BasicCharacterController\Scripts\AIController.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepPanicState.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepWander.cs" />
@@ -95,6 +98,7 @@
     <Compile Include="Assets\Scripts\Pen\Pen.cs" />
     <Compile Include="Assets\Scripts\Interactables\ExplosiveBarrel.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateController.cs" />
+    <Compile Include="Assets\Scripts\Level\LevelComplete.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepRagdollController.cs" />
     <Compile Include="Assets\Imported Assets\Symphonie\BasicCharacterController\Scripts\SimpleQuadrupedSloper.cs" />
     <Compile Include="Assets\Imported Assets\Symphonie\BasicCharacterController\Scripts\TransformUtils.cs" />

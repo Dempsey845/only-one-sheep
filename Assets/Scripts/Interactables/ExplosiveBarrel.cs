@@ -5,6 +5,7 @@ public class ExplosiveBarrel : Interactable
     [SerializeField] private float explosionRadius = 10f;
     [SerializeField] private float explosionForce = 20f;
     [SerializeField] private float upwardForce = 50f;
+    [SerializeField] private float collapseSheepTime = 10f;
     [SerializeField] private LayerMask affectedLayers;
     [SerializeField] private int sheepDamage = 10;
     [SerializeField] private GameObject explosiveFXPrefab;
@@ -29,7 +30,7 @@ public class ExplosiveBarrel : Interactable
         {
             SheepRagdollController ragdollController;
             sheepHealth.gameObject.TryGetComponent<SheepRagdollController>(out ragdollController);
-            ragdollController.Collapse(6f);
+            ragdollController.Collapse(collapseSheepTime);
         }
 
         foreach (Collider col in colliders)

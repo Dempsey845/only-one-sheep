@@ -125,7 +125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkRadius: 8
   curiousDuration: 10
-  ignoreTime: 15
+  ignoreTime: 5
+  interactEvenWhenNotInterested: 1
   movementType: 0
   spinSpeed: 50
   pingPongDistance: 1
@@ -133,6 +134,7 @@ MonoBehaviour:
   explosionRadius: 10
   explosionForce: 15
   upwardForce: 25
+  collapseSheepTime: 10
   affectedLayers:
     serializedVersion: 2
     m_Bits: 776

@@ -1,22 +1,29 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class SheepRagdollController : MonoBehaviour
 {
     [Header("Ragdoll Movement")]
     [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private float rotateSpeed = 5f;
+    [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private Transform forwardDirectionTransform;
+
+    [Header("Ragdoll Fix Rotation")]
+    [SerializeField] private Transform feetDirection;
+    [SerializeField] private float feetRaycastDistance = 2f;
+    [SerializeField] private LayerMask uprightCheckMask;
+    [SerializeField] private float fixRotateSpeed = 180f;
 
     [Header("Ragdoll Setup")]
     [SerializeField] private Rigidbody[] ragdollBodies;
     [SerializeField] private Transform rootBone;
 
     private Rigidbody rootBody;
-    private SheepFlipRecovery recovery;
     private SheepPhysicsNavAgent physicsNavAgent;
 
     private bool canMove = true;
+    private bool fixingRotation = false;
 
     private Vector3 targetPosition;
     private Quaternion startRotation;
@@ -25,14 +32,28 @@ public class SheepRagdollController : MonoBehaviour
     {
         startRotation = transform.rotation;
         rootBody = GetComponent<Rigidbody>();
-        recovery = GetComponent<SheepFlipRecovery>();
         physicsNavAgent = GetComponent<SheepPhysicsNavAgent>();
         StartCoroutine(RotationCheckRoutine());
     }
 
     private void FixedUpdate()
     {
+        if (fixingRotation)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, startRotation, fixRotateSpeed * Time.deltaTime);
+
+            if (Quaternion.Angle(transform.rotation, startRotation) < 1f)
+            {
+                Debug.Log("Fixed rotation");
+                fixingRotation = false;
+            }
+
+            return;
+        }
+
         if (!canMove) { return; }
+
+        if (!physicsNavAgent.HasTarget()) { return; }
 
         Vector3 toTarget = targetPosition - transform.position;
         toTarget.y = 0f;
@@ -92,12 +113,8 @@ public class SheepRagdollController : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
 
-        Quaternion current = transform.rotation;
-        Quaternion target = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, current.eulerAngles.z);
-        transform.rotation = target;
-
-        rootBody.freezeRotation = true;
-        canMove = true;
+        fixingRotation = true;
+        StartCoroutine(StopMovement(5f));
     }
 
     public void SetTarget(Vector3 targetPosition)
@@ -107,12 +124,15 @@ public class SheepRagdollController : MonoBehaviour
 
     private IEnumerator RotationCheckRoutine()
     {
-        const float checkInterval = 5f;
+        const float checkInterval = 2f;
         const float angleThreshold = 100f;
 
         while (true)
         {
             yield return new WaitForSeconds(checkInterval);
+
+            if (fixingRotation) continue;
+
             bool flowControl = FixRotation(angleThreshold);
             if (!flowControl)
             {
@@ -123,23 +143,34 @@ public class SheepRagdollController : MonoBehaviour
 
     private bool FixRotation(float angleThreshold)
     {
-        if (!canMove) return false;
+        if (feetDirection == null) return false;
 
-        // Get the current and target rotation (only using X and Z axes for comparison)
-        Quaternion current = transform.rotation;
-        Quaternion target = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y, current.eulerAngles.z);
+        // Raycast downwards from the feet to check if the sheep is upright
+        Vector3 origin = feetDirection.position;
+        Vector3 direction = -feetDirection.up;
 
-        // Calculate the angle difference (ignoring Y rotation)
-        float angleDifference = Quaternion.Angle(current, target);
+        Debug.DrawRay(origin, direction * feetRaycastDistance, Color.red, 1.5f);
 
-        if (angleDifference > angleThreshold)
+        if (!Physics.Raycast(origin, direction, feetRaycastDistance, uprightCheckMask))
         {
-            Debug.Log($"[SheepRagdollController] Fixing rotation. Pitch/Roll off by {angleDifference:F2}°");
+            StartCoroutine(StopMovement(2f));
 
-            // Only apply correction when there's a significant angle difference
-            transform.rotation = target;
+            Debug.Log("Fixing rotation");
+            fixingRotation = true;
+            
+            return true;
         }
 
-        return true;
+        // If raycast hit something, sheep is likely upright — do nothing
+        return false;
+    }
+
+    private IEnumerator StopMovement(float duration)
+    {
+        canMove = false;
+        rootBody.freezeRotation = false;
+        yield return new WaitForSeconds(duration);
+        canMove = true;
+        rootBody.freezeRotation = true;
     }
 }

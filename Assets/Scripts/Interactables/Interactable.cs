@@ -15,6 +15,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] private float checkRadius = 15f;
     [SerializeField] private float curiousDuration = 5f;
     [SerializeField] private float ignoreTime = 15f; // How long the interactable should be ignored for after sheep loses interes
+    [SerializeField] private bool interactEvenWhenNotInterested = false;
 
     [Header("Movement")]
     [SerializeField] private MovementType movementType = MovementType.None;
@@ -100,7 +101,7 @@ public class Interactable : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag(SHEEP_TAG)) { return; }
 
-        if (!IsSheepCuriousOfThis) { return; }
+        if (!interactEvenWhenNotInterested && !IsSheepCuriousOfThis) { return; }
 
         sheepHealth = collision.gameObject.GetComponent<SheepHealth>();
         Interact();
@@ -110,7 +111,7 @@ public class Interactable : MonoBehaviour
     {
         if (!other.CompareTag(SHEEP_TAG)) { return; }
 
-        if (!IsSheepCuriousOfThis) { return; }
+        if (!interactEvenWhenNotInterested && !IsSheepCuriousOfThis) { return; }
 
         sheepHealth = other.GetComponent<SheepHealth>();
         Interact();

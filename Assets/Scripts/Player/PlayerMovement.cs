@@ -22,8 +22,8 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
 
     private float fallTimer = 0f;
-    private const float fallThreshold = -1f;
-    private const float fallTime = 0.4f;
+    private const float fallThreshold = -.5f;
+    private const float fallTime = 0.2f;
 
     public bool IsSprinting { get; private set; }
     public bool IsGrounded { get; private set; }

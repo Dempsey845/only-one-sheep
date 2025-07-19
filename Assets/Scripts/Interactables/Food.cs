@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Food : Interactable
 {
+    [Header("Food")]
     [SerializeField] private float panicDuration = 10f;
     [SerializeField] private int sheepDamage = 5;
 

@@ -124,9 +124,10 @@ MonoBehaviour:
   checkRadius: 8
   curiousDuration: 8
   ignoreTime: 15
+  interactEvenWhenNotInterested: 0
   movementType: 0
   spinSpeed: 50
   pingPongDistance: 1
   pingPongSpeed: 1
-  panicDuration: 10
+  panicDuration: 5
   sheepDamage: 5

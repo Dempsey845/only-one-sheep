@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,19 +30,28 @@ public class LevelManager : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        System.TimeSpan timeSpan = System.TimeSpan.FromSeconds(timer);
-        timerText.text = timeSpan.ToString(@"mm\:ss");
+        timerText.text = FormatTimeString();
     }
 
+    private string FormatTimeString()
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(timer);
+        return timeSpan.ToString(@"mm\:ss");
+    }
 
     private void HandleDied()
     {
         sheepHealth.OnDied -= HandleDied;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        int nextSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        LevelTransitionManager.Instance.TransitionOutOfScene(nextSceneBuildIndex);
     }
 
     public void CompleteLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.PreviousLevelTime = FormatTimeString();
+
+        int nextSceneBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        LevelTransitionManager.Instance.TransitionOutOfScene(nextSceneBuildIndex);
     }
 }

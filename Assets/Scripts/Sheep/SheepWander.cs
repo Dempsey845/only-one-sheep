@@ -29,6 +29,12 @@ public class SheepWander : MonoBehaviour
             Vector3 newDestination = GetRandomWanderPoint();
             sheepPhysicsNavAgent.SetTargetPosition(newDestination); 
             timer = 0.0f;
+        } else
+        {
+            if (sheepPhysicsNavAgent.HasReachedTargetPosition())
+            {
+                sheepPhysicsNavAgent.RemoveTarget();
+            }
         }
     }
 
