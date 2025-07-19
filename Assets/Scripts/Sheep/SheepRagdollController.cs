@@ -55,19 +55,11 @@ public class SheepRagdollController : MonoBehaviour
 
             // Rotate with physics
             rootBody.MoveRotation(Quaternion.RotateTowards(currentRot, targetRot, rotateSpeed * Time.fixedDeltaTime));
+
+            Debug.DrawRay(forwardDirectionTransform.position, sheepForward * 2f, Color.green);
+
+            rootBody.linearVelocity = flatToTarget * moveSpeed * physicsNavAgent.MoveSpeedMultiplier;
         }
-
-
-        Vector3 forward = forwardDirectionTransform.forward;
-        forward.y = 0f;
-
-        Debug.DrawRay(forwardDirectionTransform.position, forwardDirectionTransform.forward * 2f, Color.green);
-
-        Vector3 dirToTarget = targetPosition + Vector3.up - transform.position;
-        dirToTarget.y = 0f;
-        dirToTarget = dirToTarget.normalized;
-
-        rootBody.linearVelocity = dirToTarget * moveSpeed * physicsNavAgent.MoveSpeedMultiplier;
     }
 
 
