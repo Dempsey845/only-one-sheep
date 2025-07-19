@@ -5,6 +5,7 @@ public class SheepStateController : MonoBehaviour
     public static SheepStateController Instance { get; private set; }
     public bool IsSheepCurious { get; private set; }
     public bool IsSheepPanicking { get; private set; }
+    public bool IsSheepBeingDragged { get; set; }
 
     [SerializeField] private float startIdleDuration = 2f;
 
@@ -57,6 +58,12 @@ public class SheepStateController : MonoBehaviour
         interactableThatSheepIsInterestedIn = null;
 
         IsSheepCurious = false;
+    }
+
+    public void Drag(float dragDuration)
+    {
+        IsSheepBeingDragged = true;
+        stateMachine.SetState(new SheepDraggedState(dragDuration));
     }
 
     public void Idle(float idleDuration)

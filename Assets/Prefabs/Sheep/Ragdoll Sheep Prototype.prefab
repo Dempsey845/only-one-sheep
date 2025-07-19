@@ -1048,13 +1048,15 @@ GameObject:
   - component: {fileID: 5283109621269821453}
   - component: {fileID: 8692114187343126551}
   - component: {fileID: 3542897620200983717}
-  - component: {fileID: 5339804484738127557}
   - component: {fileID: 4857072441287080460}
   - component: {fileID: 6600294448050613724}
   - component: {fileID: 6403531679431944751}
   - component: {fileID: 586050967543396906}
   - component: {fileID: 5443114054808705320}
+  - component: {fileID: 4245159200424836464}
   - component: {fileID: 154435496105829546}
+  - component: {fileID: 4049650594078937644}
+  - component: {fileID: 1204049673375071639}
   m_Layer: 8
   m_Name: Ragdoll Sheep Prototype
   m_TagString: Sheep
@@ -1082,6 +1084,7 @@ Transform:
   - {fileID: 3736345391194969657}
   - {fileID: 8820788179496775161}
   - {fileID: 4552962932412210162}
+  - {fileID: 4319419929331738086}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 88.383, y: 0.017, z: 0.017}
 --- !u!65 &5283109621269821453
@@ -1145,8 +1148,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  rotateSpeed: 300
+  rotateSpeed: 360
   forwardDirectionTransform: {fileID: 2916430480945149036}
+  feetDirection: {fileID: 2916430480945149036}
+  feetRaycastDistance: 1
+  uprightCheckMask:
+    serializedVersion: 2
+    m_Bits: 65
+  fixRotateSpeed: 90
   ragdollBodies:
   - {fileID: 9031699603754411720}
   - {fileID: 1819260681746021171}
@@ -1160,27 +1169,6 @@ MonoBehaviour:
   - {fileID: 2761231497354554512}
   - {fileID: 5361103325179875121}
   rootBone: {fileID: 8435837364563761972}
---- !u!114 &5339804484738127557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3285274237157013690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8f5810650840df4fa28681e2e1a69e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  feetDirectionTransform: {fileID: 5804639137350901475}
-  upsideDownDotThreshold: 0
-  checkDelay: 4
-  uprightTorque: 10
-  uprightDuration: 3
-  checkDistance: 0.5
-  checkMask:
-    serializedVersion: 2
-    m_Bits: 65
 --- !u!114 &4857072441287080460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,8 +1236,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6b509e572844049904892d722ca431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 100
-  maxHealth: 100
+  startHealth: 50
+  maxHealth: 50
+--- !u!114 &4245159200424836464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285274237157013690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7dabe87716c7294dbc57799047e65d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sheepCanvasPoint: {fileID: 4319419929331738086}
 --- !u!136 &154435496105829546
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1273,6 +1274,41 @@ CapsuleCollider:
   m_Height: 1.3106375
   m_Direction: 1
   m_Center: {x: 2.1461076e-14, y: 0.35175222, z: -5.0051702e-11}
+--- !u!114 &4049650594078937644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285274237157013690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc739c0a3de265b40beb8b9a284c8064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emojiesInOrder:
+  - {fileID: -1479155367, guid: 3a425eddf72089e43a7007cefbff8ffd, type: 3}
+  - {fileID: -769691575, guid: 3a425eddf72089e43a7007cefbff8ffd, type: 3}
+  - {fileID: 267731997, guid: 3a425eddf72089e43a7007cefbff8ffd, type: 3}
+  - {fileID: 1976170465, guid: 3a425eddf72089e43a7007cefbff8ffd, type: 3}
+  - {fileID: -736162612, guid: 3a425eddf72089e43a7007cefbff8ffd, type: 3}
+  - {fileID: -948059530, guid: 3a425eddf72089e43a7007cefbff8ffd, type: 3}
+  - {fileID: 1063124100, guid: 3a425eddf72089e43a7007cefbff8ffd, type: 3}
+  - {fileID: -1489264244, guid: 3a425eddf72089e43a7007cefbff8ffd, type: 3}
+--- !u!114 &1204049673375071639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285274237157013690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0b17236c4b2534bac35bb1e44b1a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragSpeed: 5
+  stopDistance: 1.5
 --- !u!1 &3350756147326574934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,6 +1881,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8845772097886562376}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5809310728177319513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4319419929331738086}
+  m_Layer: 8
+  m_Name: Canvas Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4319419929331738086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5809310728177319513}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.241, z: -0.076}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8435837364563761972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5882060613370421805
 GameObject:

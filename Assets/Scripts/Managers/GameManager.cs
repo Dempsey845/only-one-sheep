@@ -10,12 +10,13 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
             Debug.LogWarning("Multiple GameManagers found");
         }
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

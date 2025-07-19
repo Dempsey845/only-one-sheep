@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float jumpForce = 7f;
     [SerializeField] private float jumpDelay = 4f;
+    [SerializeField] private float gravityMultiplier = 2f;
+    [SerializeField] private float fallGravityMultiplier = 3f;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -22,8 +24,8 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
 
     private float fallTimer = 0f;
-    private const float fallThreshold = -.5f;
-    private const float fallTime = 0.2f;
+    private const float fallThreshold = -1f;
+    private const float fallTime = 0.25f;
 
     public bool IsSprinting { get; private set; }
     public bool IsGrounded { get; private set; }
@@ -53,18 +55,19 @@ public class PlayerMovement : MonoBehaviour
         // Ground check using Raycast
         IsGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
 
-        if (!IsGrounded)
+        if (!IsGrounded && rb.linearVelocity.y < fallThreshold)
         {
             fallTimer += Time.deltaTime;
 
-            if (fallTimer > fallTime)
+            if (fallTimer >= fallTime)
             {
-                IsFalling = rb.linearVelocity.y < fallThreshold;
-                fallTimer = 0f;
+                IsFalling = true;
             }
-        } else
+        }
+        else
         {
             IsFalling = false;
+            fallTimer = 0f;
         }
 
         // Jump
@@ -127,6 +130,11 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = lookRotation;
         }
 
+        if (!IsGrounded)
+        {
+            float multiplier = rb.linearVelocity.y < 0 ? fallGravityMultiplier : gravityMultiplier;
+            rb.AddForce(Physics.gravity * (multiplier - 1f), ForceMode.Acceleration);
+        }
     }
 
     public Vector3 GetMoveDirection()

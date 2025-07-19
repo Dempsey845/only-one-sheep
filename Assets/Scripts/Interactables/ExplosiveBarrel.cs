@@ -26,11 +26,11 @@ public class ExplosiveBarrel : Interactable
         // Get all colliders in radius
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius, affectedLayers);
 
-        if (sheepHealth != null)
+        if (SheepManager.Instance != null)
         {
-            SheepRagdollController ragdollController;
-            sheepHealth.gameObject.TryGetComponent<SheepRagdollController>(out ragdollController);
-            ragdollController.Collapse(collapseSheepTime);
+            SheepManager.Instance.RagdollController.Collapse(collapseSheepTime);
+
+            SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Sad);
         }
 
         foreach (Collider col in colliders)

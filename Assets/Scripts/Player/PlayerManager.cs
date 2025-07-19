@@ -14,7 +14,6 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         sheepTransform = SheepStateController.Instance.transform;
-
     }
 
     public Vector3 GetPosition()

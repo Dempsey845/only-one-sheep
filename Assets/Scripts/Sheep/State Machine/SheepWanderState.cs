@@ -20,6 +20,8 @@ public class SheepWanderState : ISheepState
         wander.CanWander = true;
         wander.NextPointRate = nextPointRate;
         wander.WanderRadius = wanderRadius;
+
+        SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Happy);
     }
 
     public void Update()

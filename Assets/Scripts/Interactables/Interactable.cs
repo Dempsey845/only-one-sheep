@@ -83,10 +83,11 @@ public class Interactable : MonoBehaviour
 
     private void CheckIfSheepInRange()
     {
+        if (SheepStateController.Instance.IsSheepBeingDragged) { return; }
+
         // If the Sheep isn't curious, isn't already curious of this interactable and is in range
         if (!SheepStateController.Instance.IsSheepPanicking && !SheepStateController.Instance.IsSheepCurious && !IsSheepCuriousOfThis && IsSheepInRange())
         {
-            Debug.Log("Sheep is curious!");
             SheepStateController.Instance.Curious(transform.position, this, curiousDuration);
             IsSheepCuriousOfThis = true;
         }

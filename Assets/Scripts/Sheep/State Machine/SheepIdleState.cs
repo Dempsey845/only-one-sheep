@@ -15,6 +15,8 @@ public class SheepIdleState : ISheepState
     public void Enter()
     {
         timer = 0f;
+
+        SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Happy);
     }
 
     public void Update()

@@ -9,15 +9,15 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private Vector3 jumpFeetPosition;
 
     private PlayerMovement playerMovement;
-    private Crook crook;
+    private Pet crook;
 
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        crook = GetComponent<Crook>();
+        crook = GetComponent<Pet>();
 
         playerMovement.OnJump += HandleJump;
-        crook.OnPerformedCrook += HandleCrook;
+        crook.OnPerformedPet += HandleCrook;
     }
 
     private void HandleCrook()
@@ -30,7 +30,7 @@ public class PlayerAnimationController : MonoBehaviour
         if (playerMovement != null)
             playerMovement.OnJump -= HandleJump;
         if (crook != null)
-            crook.OnPerformedCrook -= HandleCrook;
+            crook.OnPerformedPet -= HandleCrook;
     }
 
     private void Update()

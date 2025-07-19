@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +8,14 @@ public class LevelComplete : MonoBehaviour
 
     private void Start()
     {
-        levelCompleteText.text = "Time taken: " + GameManager.Instance.PreviousLevelTime;
+        if (GameManager.Instance != null) { levelCompleteText.text = "Time taken: " + GameManager.Instance.PreviousLevelTime; }
+
+        StartCoroutine(BackToMainMenu());
+    }
+
+    private IEnumerator BackToMainMenu()
+    {
+        yield return new WaitForSeconds(5f);
+        LevelTransitionManager.Instance.TransitionOutOfScene(0);
     }
 }

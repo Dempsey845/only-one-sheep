@@ -47,8 +47,18 @@ public class Whistle : MonoBehaviour
 
         bool chase = distanceFromSheep > panicDistance;
 
-        if (chase) { sheepStateController.ChasePlayer(chaseDuration); }
-        else { sheepStateController.Panic(panicDuration); }
+        if (chase) 
+        {
+            sheepStateController.ChasePlayer(chaseDuration);
+
+            SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Annoyed);
+        }
+        else 
+        { 
+            sheepStateController.Panic(panicDuration);
+
+            SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Angry);
+        }
     }
 
     private IEnumerator WhistleCooldown()

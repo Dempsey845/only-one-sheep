@@ -24,6 +24,7 @@ public class SheepRagdollController : MonoBehaviour
 
     private bool canMove = true;
     private bool fixingRotation = false;
+    private bool fixRotation = true;
 
     private Vector3 targetPosition;
     private Quaternion startRotation;
@@ -38,7 +39,7 @@ public class SheepRagdollController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (fixingRotation)
+        if (fixRotation && fixingRotation)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, startRotation, fixRotateSpeed * Time.deltaTime);
 
@@ -124,7 +125,7 @@ public class SheepRagdollController : MonoBehaviour
 
     private IEnumerator RotationCheckRoutine()
     {
-        const float checkInterval = 2f;
+        const float checkInterval = 0.5f;
         const float angleThreshold = 100f;
 
         while (true)
@@ -165,12 +166,19 @@ public class SheepRagdollController : MonoBehaviour
         return false;
     }
 
-    private IEnumerator StopMovement(float duration)
+    public IEnumerator StopMovement(float duration)
     {
         canMove = false;
         rootBody.freezeRotation = false;
         yield return new WaitForSeconds(duration);
         canMove = true;
         rootBody.freezeRotation = true;
+    }
+
+    public IEnumerator StopRotationFix(float duration)
+    {
+        fixRotation = false;
+        yield return new WaitForSeconds(duration);
+        fixRotation = true;
     }
 }

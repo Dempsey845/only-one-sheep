@@ -27,6 +27,8 @@ public class SheepCuriousState : ISheepState
         navAgent = sheep.gameObject.GetComponent<SheepPhysicsNavAgent>();
 
         navAgent.SetTargetPosition(interactablePosition);
+
+        SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Confused);
     }
 
     public void Update()

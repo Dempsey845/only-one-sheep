@@ -8,8 +8,14 @@ public class Food : Interactable
 
     protected override void Interact()
     {
+        if (SheepManager.Instance == null || SheepStateController.Instance == null) { return; }
+
         SheepStateController.Instance.Panic(panicDuration);
+
         sheepHealth.TakeDamage(sheepDamage);
+
+        SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Sick);
+
         base.Interact();
     }
 }
