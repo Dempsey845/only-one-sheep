@@ -19,9 +19,7 @@ public class SheepManager : MonoBehaviour
 
         EmojiManager = GetComponent<SheepEmojiManager>();
 
-        // Try get for Ragdoll Controller, in case using non ragdoll version of sheep
-        TryGetComponent(out SheepRagdollController sheepRagdollController);
-        RagdollController = sheepRagdollController;
+        RagdollController = GetComponent<SheepRagdollController>();
 
         StateMachine = GetComponent<SheepStateMachine>();
 

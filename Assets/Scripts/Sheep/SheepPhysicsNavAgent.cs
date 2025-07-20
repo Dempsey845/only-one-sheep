@@ -4,11 +4,9 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Rigidbody))]
 public class SheepPhysicsNavAgent : MonoBehaviour
 {
-    /* Rigidbody physics movement + Manual NavMesh pathing  */
+    /* Manual NavMesh pathing for Rigidbody physics movement  */
 
     [Header("Navigation")]
-    [SerializeField] private float moveSpeed = 3f;
-    [SerializeField] private float rotateSpeed = 25f;
     [SerializeField] private float waypointTolerance = 0.2f;
     [SerializeField] private float targetTolerance = 0.2f;
     [SerializeField] private float repathRate = 1.0f;
@@ -25,7 +23,6 @@ public class SheepPhysicsNavAgent : MonoBehaviour
 
     public float MoveSpeedMultiplier { get; set; } = 1.0f;
 
-    private bool isRagdollSheep;
     private SheepRagdollController sheepRagdollController;
 
     private void Awake()
@@ -37,17 +34,12 @@ public class SheepPhysicsNavAgent : MonoBehaviour
 
     private void Start()
     {
-        isRagdollSheep = TryGetComponent<SheepRagdollController>(out sheepRagdollController);
+        sheepRagdollController = GetComponent<SheepRagdollController>();
     }
 
     private void Update()
     {
         if (!hasTarget) return;
-
-        if (!isRagdollSheep && !HasReachedTargetPosition() && path != null && path.corners.Length > 0 && currentCornerIndex < path.corners.Length)
-        {
-            RotateTowardsTargetPosition(path.corners[currentCornerIndex]); 
-        }
 
         repathTimer += Time.deltaTime;
         if (repathTimer >= repathRate)
@@ -89,14 +81,7 @@ public class SheepPhysicsNavAgent : MonoBehaviour
         Vector3 targetCorner = path.corners[currentCornerIndex];
         direction = (targetCorner - transform.position).normalized;
 
-        if (isRagdollSheep)
-        {
-            sheepRagdollController.SetTarget(targetCorner);
-        } else
-        {
-            // Smoothly move the sheep towards the target corner instead of jumping directly
-            MoveTowardsTarget(targetCorner);
-        }
+        sheepRagdollController.SetTarget(targetCorner);
 
         // Advance to the next waypoint if close enough
         if (Vector3.Distance(transform.position, targetCorner) <= waypointTolerance)
@@ -104,28 +89,6 @@ public class SheepPhysicsNavAgent : MonoBehaviour
             currentCornerIndex++;
         }
     }
-
-    private void MoveTowardsTarget(Vector3 target)
-    {
-        // Smooth movement to prevent sudden jumps
-        Vector3 smoothMove = Vector3.MoveTowards(transform.position, target, moveSpeed * MoveSpeedMultiplier * Time.fixedDeltaTime);
-        rb.MovePosition(smoothMove);
-    }
-
-    private void RotateTowardsTargetPosition(Vector3 targetPosition)
-    {
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        direction.y = 0;
-
-        if (direction.sqrMagnitude < 0.001f)
-            return;
-
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        Quaternion newRotation = Quaternion.RotateTowards(rb.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
-        rb.MoveRotation(newRotation); 
-    }
-
 
     public void SetTargetPosition(Vector3 targetPosition)
     {

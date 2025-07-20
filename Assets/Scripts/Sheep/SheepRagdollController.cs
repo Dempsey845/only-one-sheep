@@ -24,7 +24,7 @@ public class SheepRagdollController : MonoBehaviour
 
     private bool canMove = true;
     private bool fixingRotation = false;
-    private bool fixRotation = true;
+    private bool canFixRotation = true;
     private bool isBeingDragged = false;
 
     private Vector3 targetPosition;
@@ -42,67 +42,55 @@ public class SheepRagdollController : MonoBehaviour
     {
         if (isBeingDragged) { return; }
 
-        if (fixRotation && fixingRotation)
+        if (canFixRotation && fixingRotation)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, startRotation, fixRotateSpeed * Time.deltaTime);
-
-            if (Quaternion.Angle(transform.rotation, startRotation) < 1f)
-            {
-                Debug.Log("Fixed rotation");
-                fixingRotation = false;
-            }
+            FixRotation();
 
             return;
         }
 
-        if (!canMove) { return; }
-
-        if (!physicsNavAgent.HasTarget()) { return; }
+        if (!canMove || !physicsNavAgent.HasTarget()) { return; }
 
         Vector3 toTarget = targetPosition - transform.position;
         toTarget.y = 0f;
 
         if (toTarget.sqrMagnitude > 0.01f)
         {
-            Quaternion currentRot = rootBody.rotation;
-
-            // The sheep's "real" forward axis
-            Vector3 sheepForward = transform.up;
-
-            // Flatten toTarget to horizontal
-            Vector3 flatToTarget = toTarget.normalized;
-
-            // Build rotation that turns sheepForward to face the target
-            Quaternion targetRot = Quaternion.FromToRotation(sheepForward, flatToTarget) * currentRot;
-
-            // Ensure quaternion stays normalized
-            targetRot = Quaternion.Normalize(targetRot);
-
-            // Rotate with physics
-            rootBody.MoveRotation(Quaternion.RotateTowards(currentRot, targetRot, rotateSpeed * Time.fixedDeltaTime));
-
-            Debug.DrawRay(forwardDirectionTransform.position, sheepForward * 2f, Color.green);
-
-            rootBody.linearVelocity = flatToTarget * moveSpeed * physicsNavAgent.MoveSpeedMultiplier;
+            MoveAndRotateTowardsTarget(toTarget);
         }
     }
 
-
-    private void OnDrawGizmos()
+    private void FixRotation()
     {
-        if (forwardDirectionTransform != null)
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, startRotation, fixRotateSpeed * Time.deltaTime);
+
+        if (Quaternion.Angle(transform.rotation, startRotation) < 1f)
         {
-            // Draw forward movement direction
-            Gizmos.color = Color.green;
-            Gizmos.DrawRay(forwardDirectionTransform.position, forwardDirectionTransform.forward * 2f);
-            Gizmos.DrawSphere(forwardDirectionTransform.position + forwardDirectionTransform.forward * 2f, 0.05f);
+            Debug.Log("Fixed rotation");
+            fixingRotation = false;
         }
+    }
 
-        // Draw line to target
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, targetPosition);
-        Gizmos.DrawSphere(targetPosition, 0.1f);
+    private void MoveAndRotateTowardsTarget(Vector3 toTarget)
+    {
+        Quaternion currentRot = rootBody.rotation;
 
+        // The sheep's "real" forward axis
+        Vector3 sheepForward = transform.up;
+
+        // Flatten toTarget to horizontal
+        Vector3 flatToTarget = toTarget.normalized;
+
+        // Build rotation that turns sheepForward to face the target
+        Quaternion targetRot = Quaternion.FromToRotation(sheepForward, flatToTarget) * currentRot;
+
+        // Ensure quaternion stays normalized
+        targetRot = Quaternion.Normalize(targetRot);
+
+        // Rotate with physics
+        rootBody.MoveRotation(Quaternion.RotateTowards(currentRot, targetRot, rotateSpeed * Time.fixedDeltaTime));
+
+        rootBody.linearVelocity = flatToTarget * moveSpeed * physicsNavAgent.MoveSpeedMultiplier;
     }
 
     public void Collapse(float duration)
@@ -135,9 +123,9 @@ public class SheepRagdollController : MonoBehaviour
         {
             yield return new WaitForSeconds(checkInterval);
 
-            if (fixingRotation || !fixRotation) continue;
+            if (fixingRotation || !canFixRotation) continue;
 
-            bool flowControl = FixRotation(angleThreshold);
+            bool flowControl = IsSheepUpright(angleThreshold);
             if (!flowControl)
             {
                 continue;
@@ -145,9 +133,9 @@ public class SheepRagdollController : MonoBehaviour
         }
     }
 
-    private bool FixRotation(float angleThreshold)
+    private bool IsSheepUpright(float angleThreshold)
     {
-        if (feetDirection == null || !fixRotation) return false;
+        if (feetDirection == null || !canFixRotation) return false;
 
         // Raycast downwards from the feet to check if the sheep is upright
         Vector3 origin = feetDirection.position;
@@ -180,19 +168,36 @@ public class SheepRagdollController : MonoBehaviour
 
     public IEnumerator StartDrag(float duration)
     {
-        fixRotation = false;
+        canFixRotation = false;
         rootBody.freezeRotation = false;
         isBeingDragged = true;
         yield return new WaitForSeconds(duration);
         rootBody.freezeRotation = true;
-        fixRotation = true;
+        canFixRotation = true;
         isBeingDragged = false;
     }
 
     public IEnumerator StopRotationFix(float duration)
     {
-        fixRotation = false;
+        canFixRotation = false;
         yield return new WaitForSeconds(duration);
-        fixRotation = true;
+        canFixRotation = true;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (forwardDirectionTransform != null)
+        {
+            // Draw forward movement direction
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(forwardDirectionTransform.position, forwardDirectionTransform.forward * 2f);
+            Gizmos.DrawSphere(forwardDirectionTransform.position + forwardDirectionTransform.forward * 2f, 0.05f);
+        }
+
+        // Draw line to target
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, targetPosition);
+        Gizmos.DrawSphere(targetPosition, 0.1f);
+
     }
 }
