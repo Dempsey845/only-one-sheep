@@ -25,6 +25,7 @@ public class SheepRagdollController : MonoBehaviour
     private bool canMove = true;
     private bool fixingRotation = false;
     private bool fixRotation = true;
+    private bool isBeingDragged = false;
 
     private Vector3 targetPosition;
     private Quaternion startRotation;
@@ -39,6 +40,8 @@ public class SheepRagdollController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isBeingDragged) { return; }
+
         if (fixRotation && fixingRotation)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, startRotation, fixRotateSpeed * Time.deltaTime);
@@ -94,12 +97,12 @@ public class SheepRagdollController : MonoBehaviour
             Gizmos.DrawRay(forwardDirectionTransform.position, forwardDirectionTransform.forward * 2f);
             Gizmos.DrawSphere(forwardDirectionTransform.position + forwardDirectionTransform.forward * 2f, 0.05f);
         }
-        
+
         // Draw line to target
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, targetPosition);
         Gizmos.DrawSphere(targetPosition, 0.1f);
-        
+
     }
 
     public void Collapse(float duration)
@@ -132,7 +135,7 @@ public class SheepRagdollController : MonoBehaviour
         {
             yield return new WaitForSeconds(checkInterval);
 
-            if (fixingRotation) continue;
+            if (fixingRotation || !fixRotation) continue;
 
             bool flowControl = FixRotation(angleThreshold);
             if (!flowControl)
@@ -144,7 +147,7 @@ public class SheepRagdollController : MonoBehaviour
 
     private bool FixRotation(float angleThreshold)
     {
-        if (feetDirection == null) return false;
+        if (feetDirection == null || !fixRotation) return false;
 
         // Raycast downwards from the feet to check if the sheep is upright
         Vector3 origin = feetDirection.position;
@@ -173,6 +176,17 @@ public class SheepRagdollController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         canMove = true;
         rootBody.freezeRotation = true;
+    }
+
+    public IEnumerator StartDrag(float duration)
+    {
+        fixRotation = false;
+        rootBody.freezeRotation = false;
+        isBeingDragged = true;
+        yield return new WaitForSeconds(duration);
+        rootBody.freezeRotation = true;
+        fixRotation = true;
+        isBeingDragged = false;
     }
 
     public IEnumerator StopRotationFix(float duration)

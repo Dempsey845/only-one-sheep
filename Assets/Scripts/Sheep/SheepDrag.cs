@@ -55,8 +55,8 @@ public class SheepDrag : MonoBehaviour
     public void StartDragging(float duration)
     {
         isDragging = true;
-        StartCoroutine(ragdollController.StopMovement(duration));
-        StartCoroutine(ragdollController.StopRotationFix(duration));
+        StartCoroutine(ragdollController.StartDrag(duration));
+        rb.linearVelocity = Vector3.zero;
         StartCoroutine(DragTime(duration));
     }
 

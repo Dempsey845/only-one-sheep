@@ -10,14 +10,22 @@ public class PlayerAnimationController : MonoBehaviour
 
     private PlayerMovement playerMovement;
     private Pet crook;
+    private Whistle whistle;
 
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         crook = GetComponent<Pet>();
+        whistle = GetComponent<Whistle>();
 
         playerMovement.OnJump += HandleJump;
         crook.OnPerformedPet += HandleCrook;
+        whistle.OnPerformedWhistle += HandleWhistle;
+    }
+
+    private void HandleWhistle()
+    {
+        playerAnimator.SetTrigger("Whistle");
     }
 
     private void HandleCrook()

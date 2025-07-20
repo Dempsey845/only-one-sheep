@@ -10,7 +10,7 @@ public class Leash : MonoBehaviour
 
     private bool canUseLeash = true;
     private float interactRange = 3f;
-    private float maxDragDistance = 15f;
+    private float maxDragDistance = 30f;
     private bool dragging = false;
 
     private LineRenderer lineRenderer;

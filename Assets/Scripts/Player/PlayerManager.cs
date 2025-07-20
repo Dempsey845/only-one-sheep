@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         sheepTransform = SheepStateController.Instance.transform;
+        Application.targetFrameRate = 60;
     }
 
     public Vector3 GetPosition()

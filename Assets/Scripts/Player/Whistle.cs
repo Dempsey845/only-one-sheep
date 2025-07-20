@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class Whistle : MonoBehaviour
     private SheepStateController sheepStateController;
 
     private bool canWhistle = true;
+
+    public event Action OnPerformedWhistle;
 
     private void Start()
     {
@@ -59,6 +62,8 @@ public class Whistle : MonoBehaviour
 
             SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Angry);
         }
+
+        OnPerformedWhistle?.Invoke();
     }
 
     private IEnumerator WhistleCooldown()
