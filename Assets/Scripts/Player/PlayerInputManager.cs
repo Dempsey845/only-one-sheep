@@ -11,7 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool JumpPressed { get; private set; }
     public bool WhistlePressed { get; private set; }
     public bool AttackPressed { get; private set; }
-    public bool LeashPressed { get; private set; }
+    public bool SecondaryPressed { get; private set; }
     public bool SprintPressed { get; private set; }
 
 
@@ -34,7 +34,7 @@ public class PlayerInputManager : MonoBehaviour
 
         inputActions.Player.Attack.performed += ctx => AttackPressed = true;
 
-        inputActions.Player.Leash.performed += ctx => LeashPressed = true;
+        inputActions.Player.Secondary.performed += ctx => SecondaryPressed = true;
 
         inputActions.Player.Sprint.performed += ctx => SprintPressed = true;
         inputActions.Player.Sprint.canceled += ctx => SprintPressed = false;
@@ -56,6 +56,6 @@ public class PlayerInputManager : MonoBehaviour
         JumpPressed = false;
         WhistlePressed = false;
         AttackPressed = false;
-        LeashPressed = false;
+        SecondaryPressed = false;
     }
 }

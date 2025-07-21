@@ -62,11 +62,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Sheep\SheepPhysicsNavAgent.cs" />
+    <Compile Include="Assets\Scripts\Fox\FoxChaseState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerThirdPersonCameraController.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepEmojiManager.cs" />
+    <Compile Include="Assets\Scripts\Fox\FoxAgent.cs" />
     <Compile Include="Assets\Scripts\Other\Billboard.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputActions.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\ISheepState.cs" />
+    <Compile Include="Assets\Scripts\Fox\FoxStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Fox\FoxStateBackToHome.cs" />
     <Compile Include="Assets\Scripts\Level\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
@@ -74,6 +78,7 @@
     <Compile Include="Assets\Scripts\Sheep\UI\SheepHealthBar.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepDrag.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepDraggedState.cs" />
+    <Compile Include="Assets\Scripts\Fox\FoxStateController.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepFollowState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepCuriousState.cs" />
     <Compile Include="Assets\Scripts\Level\FakeObstacle.cs" />
@@ -89,6 +94,7 @@
     <Compile Include="Assets\Scripts\Player\Leash.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepHealth.cs" />
     <Compile Include="Assets\Scripts\Player\Whistle.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerActionManager.cs" />
     <Compile Include="Assets\Scripts\Level\LevelTransitionManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepPanicState.cs" />
     <Compile Include="Assets\Scripts\Menu\PlayButtonDestructable.cs" />
@@ -99,10 +105,15 @@
     <Compile Include="Assets\Scripts\Player\PlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\Pen\Pen.cs" />
     <Compile Include="Assets\Scripts\Interactables\ExplosiveBarrel.cs" />
+    <Compile Include="Assets\Scripts\Fox\FoxIdleState.cs" />
+    <Compile Include="Assets\Scripts\Fox\IFoxState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateController.cs" />
     <Compile Include="Assets\Scripts\Other\KillSheepOnTrigger.cs" />
+    <Compile Include="Assets\Scripts\Player\AxeCollision.cs" />
     <Compile Include="Assets\Scripts\Level\LevelComplete.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepRagdollController.cs" />
+    <Compile Include="Assets\Scripts\Fox\FoxAnimationController.cs" />
+    <Compile Include="Assets\Scripts\Player\Axe.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

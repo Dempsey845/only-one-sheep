@@ -13,10 +13,16 @@ public class Whistle : MonoBehaviour
     [SerializeField] private Image whistleReloadImage;
     
     private SheepStateController sheepStateController;
+    private PlayerActionManager playerActionManager;
 
     private bool canWhistle = true;
 
     public event Action OnPerformedWhistle;
+
+    private void Awake()
+    {
+        playerActionManager = GetComponent<PlayerActionManager>();
+    }
 
     private void Start()
     {
@@ -25,7 +31,7 @@ public class Whistle : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerInputManager.Instance.WhistlePressed)
+        if (PlayerInputManager.Instance.WhistlePressed && !playerActionManager.IsPerformingAction)
         {
             HandleWhistle();
         }
@@ -46,6 +52,9 @@ public class Whistle : MonoBehaviour
 
         StartCoroutine(WhistleCooldown());
 
+        playerActionManager.StartAction();
+        OnPerformedWhistle?.Invoke();
+
         if (distanceFromSheep > maxWhistleDistance) { return; }
 
         bool chase = distanceFromSheep > panicDistance;
@@ -62,8 +71,6 @@ public class Whistle : MonoBehaviour
 
             SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Angry);
         }
-
-        OnPerformedWhistle?.Invoke();
     }
 
     private IEnumerator WhistleCooldown()

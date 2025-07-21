@@ -11,6 +11,7 @@ public class PlayerAnimationController : MonoBehaviour
     private PlayerMovement playerMovement;
     private Pet crook;
     private Whistle whistle;
+    private Axe axe;
 
     private void Start()
     {
@@ -18,9 +19,19 @@ public class PlayerAnimationController : MonoBehaviour
         crook = GetComponent<Pet>();
         whistle = GetComponent<Whistle>();
 
+        if (TryGetComponent(out axe))
+        {
+            axe.OnPerformedAxe += HandleAxe;
+        }
+
         playerMovement.OnJump += HandleJump;
-        crook.OnPerformedPet += HandleCrook;
+        crook.OnPerformedPet += HandlePet;
         whistle.OnPerformedWhistle += HandleWhistle;
+    }
+
+    private void HandleAxe()
+    {
+        playerAnimator.SetTrigger("Axe");
     }
 
     private void HandleWhistle()
@@ -28,7 +39,7 @@ public class PlayerAnimationController : MonoBehaviour
         playerAnimator.SetTrigger("Whistle");
     }
 
-    private void HandleCrook()
+    private void HandlePet()
     {
         playerAnimator.SetTrigger("Pet");
     }
@@ -38,7 +49,7 @@ public class PlayerAnimationController : MonoBehaviour
         if (playerMovement != null)
             playerMovement.OnJump -= HandleJump;
         if (crook != null)
-            crook.OnPerformedPet -= HandleCrook;
+            crook.OnPerformedPet -= HandlePet;
     }
 
     private void Update()

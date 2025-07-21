@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Leash",
+                    "name": "Secondary",
                     "type": "Button",
                     "id": "a99db87d-0380-4857-bf5d-ef2042724690",
                     "expectedControlType": "",
@@ -291,7 +291,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Leash",
+                    "action": "Secondary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -302,7 +302,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Leash",
+                    "action": "Secondary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -15,19 +15,20 @@ public class Pet : MonoBehaviour
     private bool canAttack = true;
     private bool isChasing = false;
 
-    SheepStateMachine stateMachine;
+    private SheepStateMachine stateMachine;
+    private PlayerActionManager playerActionManager;
 
     public event Action OnPerformedPet;
-
 
     private void Start()
     {
         stateMachine = SheepStateController.Instance.GetComponent<SheepStateMachine>();
+        playerActionManager = GetComponent<PlayerActionManager>();
     }
 
     private void Update()
     {
-        if (PlayerInputManager.Instance.AttackPressed && !isChasing)
+        if (PlayerInputManager.Instance.SecondaryPressed && !isChasing && !playerActionManager.IsPerformingAction)
         {
             HandleAttack();
         }
@@ -52,6 +53,8 @@ public class Pet : MonoBehaviour
     {
         if (!canAttack) return;
 
+        playerActionManager.StartAction();
+
         if (SheepManager.Instance != null)
         {
             float distanceFromSheep = PlayerManager.Instance.GetDistanceBetweenPlayerAndSheep();
@@ -68,7 +71,6 @@ public class Pet : MonoBehaviour
                 SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Love);
             }
         }
-
 
         OnPerformedPet?.Invoke();
 

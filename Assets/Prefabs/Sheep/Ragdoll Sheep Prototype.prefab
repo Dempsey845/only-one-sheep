@@ -1181,8 +1181,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5eaa517824fc741b3257ad9c4ff1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rotateSpeed: 360
   waypointTolerance: 1.5
   targetTolerance: 0.7
   repathRate: 1
@@ -1307,7 +1305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0b17236c4b2534bac35bb1e44b1a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 5
+  dragSpeed: 10
   stopDistance: 1.5
 --- !u!1 &3350756147326574934
 GameObject:

@@ -14,29 +14,24 @@ public class Leash : MonoBehaviour
     private bool dragging = false;
 
     private LineRenderer lineRenderer;
+    private PlayerActionManager playerActionManager;
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
         lineRenderer.enabled = false;
+
+        playerActionManager = GetComponent<PlayerActionManager>();
     }
 
     private void Update()
     {
         float distanceToSheep = PlayerManager.Instance.GetDistanceBetweenPlayerAndSheep();
 
-        if (PlayerInputManager.Instance.LeashPressed && canUseLeash)
+        if (PlayerInputManager.Instance.AttackPressed && canUseLeash && !playerActionManager.IsPerformingAction)
         {
-
-            if (distanceToSheep <= interactRange)
-            {
-                SheepStateController.Instance.Drag(dragDuration);
-                SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Annoyed);
-                leashReloadImage.fillAmount = 0f;
-                StartCoroutine(LeashCooldown());
-                StartCoroutine(ShowLeashLine());
-            }
+            HandleLeash(distanceToSheep);
         }
 
         if (!canUseLeash)
@@ -52,6 +47,22 @@ public class Leash : MonoBehaviour
 
             lineRenderer.enabled = false;
             dragging = false;
+
+            playerActionManager.StopAction();
+
+        }
+    }
+
+    private void HandleLeash(float distanceToSheep)
+    {
+        if (distanceToSheep <= interactRange)
+        {
+            playerActionManager.StartAction();
+            SheepStateController.Instance.Drag(dragDuration);
+            SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Annoyed);
+            leashReloadImage.fillAmount = 0f;
+            StartCoroutine(LeashCooldown());
+            StartCoroutine(ShowLeashLine());
         }
     }
 
@@ -59,6 +70,7 @@ public class Leash : MonoBehaviour
     {
         canUseLeash = false;
         yield return new WaitForSeconds(leashCooldownDuration);
+        playerActionManager.StopAction();
         canUseLeash = true;
     }
 
