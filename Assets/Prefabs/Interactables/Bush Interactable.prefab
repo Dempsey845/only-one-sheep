@@ -428,12 +428,14 @@ MonoBehaviour:
   checkRadius: 10
   curiousDuration: 5
   ignoreTime: 15
+  interactEvenWhenNotInterested: 0
   movementType: 0
   spinSpeed: 50
   pingPongDistance: 1
   pingPongSpeed: 1
   panicDuration: 10
   sheepDamage: 5
+  interactFX: {fileID: 4760010056759930673, guid: dbdc87f2c01bd0249baf2d9e72c659eb, type: 3}
 --- !u!136 &3100810020612996818
 CapsuleCollider:
   m_ObjectHideFlags: 0

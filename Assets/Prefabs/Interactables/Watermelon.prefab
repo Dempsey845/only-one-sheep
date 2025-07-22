@@ -174,15 +174,47 @@ PrefabInstance:
       propertyPath: movementType
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3308024321848127225, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3488881750610028901, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4031219737503864738, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2037161169555334417}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7154820130502630785, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6733916859836099171}
   m_SourcePrefab: {fileID: 100100000, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
+--- !u!1 &1847634984786304405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7154820130502630785, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
+  m_PrefabInstance: {fileID: 8858326731252678676}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6733916859836099171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847634984786304405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441fbba2dd042d0459f3c06f295914a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkRadius: 10
+  curiousDuration: 5
+  ignoreTime: 5
+  interactEvenWhenNotInterested: 0
+  movementType: 0
+  spinSpeed: 50
+  pingPongDistance: 1
+  pingPongSpeed: 1
+  panicDuration: 10
+  sheepDamage: 5
+  interactFX: {fileID: 4760010056759930673, guid: dbdc87f2c01bd0249baf2d9e72c659eb, type: 3}
 --- !u!4 &5557122827223553974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4031219737503864738, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}

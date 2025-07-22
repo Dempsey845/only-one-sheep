@@ -148,6 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4070405044059991131, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
+    - {fileID: 3308024321848127225, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3488881750610028901, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
     m_AddedGameObjects:
@@ -158,6 +159,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7154820130502630785, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5344461746305064137}
+    - targetCorrespondingSourceObject: {fileID: 7154820130502630785, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4098434138887747173}
   m_SourcePrefab: {fileID: 100100000, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
 --- !u!1 &1847634984786304405 stripped
 GameObject:
@@ -185,6 +189,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.66, y: 0.2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4098434138887747173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847634984786304405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441fbba2dd042d0459f3c06f295914a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkRadius: 10
+  curiousDuration: 5
+  ignoreTime: 10
+  interactEvenWhenNotInterested: 0
+  movementType: 0
+  spinSpeed: 50
+  pingPongDistance: 1
+  pingPongSpeed: 1
+  panicDuration: 10
+  sheepDamage: 5
+  interactFX: {fileID: 4760010056759930673, guid: dbdc87f2c01bd0249baf2d9e72c659eb, type: 3}
 --- !u!4 &5557122827223553974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4031219737503864738, guid: 2451cbf4d8d6a0448a87f3670a99eac9, type: 3}
