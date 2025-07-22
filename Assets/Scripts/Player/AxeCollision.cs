@@ -4,6 +4,8 @@ using UnityEngine;
 public class AxeCollision : MonoBehaviour
 {
     [SerializeField] private int damage = 1;
+    [SerializeField] private GameObject axeHitFxPrefab;
+    [SerializeField] private GameObject foxHitFxPrefab;
 
     private bool canBeHit = true;
 
@@ -22,6 +24,9 @@ public class AxeCollision : MonoBehaviour
             foxHealth.TakeDamage(damage);
 
             Debug.Log("Hit fox!");
+
+            Instantiate(axeHitFxPrefab, transform.position, Quaternion.identity);
+            Instantiate(foxHitFxPrefab, transform.position, Quaternion.identity);
 
             StartCoroutine(HitCooldown());
         }

@@ -96,12 +96,14 @@
     <Compile Include="Assets\Scripts\Player\Leash.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepHealth.cs" />
     <Compile Include="Assets\Scripts\Player\Whistle.cs" />
+    <Compile Include="Assets\Scripts\Terrain\WalkParticleSystem.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerActionManager.cs" />
     <Compile Include="Assets\Scripts\Level\LevelTransitionManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepPanicState.cs" />
     <Compile Include="Assets\Scripts\Menu\PlayButtonDestructable.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxBiteZone.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepWander.cs" />
+    <Compile Include="Assets\Scripts\Terrain\TerrainColorSampler.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepIdleState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
