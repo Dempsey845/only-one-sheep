@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerAnimationEventHandler : MonoBehaviour
 {
+    [SerializeField] private PetHand petHand;
+
     private PlayerAnimationController controller;
     private PlayerActionManager actionManager;
 
@@ -15,4 +17,7 @@ public class PlayerAnimationEventHandler : MonoBehaviour
     public void OnLand() { controller.OnLand(); }
 
     public void StopAction() { actionManager.StopAction(); }
+
+    public void StopPet() { petHand.StopPet(); }
+    public void StartPet() { petHand.StartPet(); }
 }

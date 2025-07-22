@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepFollowState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepCuriousState.cs" />
     <Compile Include="Assets\Scripts\Level\FakeObstacle.cs" />
+    <Compile Include="Assets\Scripts\Player\PetHand.cs" />
     <Compile Include="Assets\Scripts\Level\LevelTransitionUI.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimationEventHandler.cs" />
     <Compile Include="Assets\Scripts\Interactables\Food.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Assets\Scripts\Sheep\SheepWander.cs" />
     <Compile Include="Assets\Scripts\Terrain\TerrainColorSampler.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputManager.cs" />
+    <Compile Include="Assets\Scripts\Sheep\State Machine\SheepFleeState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepIdleState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxManager.cs" />

@@ -12,7 +12,7 @@ public class Pet : MonoBehaviour
     [SerializeField] private float chaseDuration = 5f;
     [SerializeField] private Image reloadFillImage;
 
-    private bool canAttack = true;
+    private bool canPet = true;
     private bool isChasing = false;
 
     private SheepStateMachine stateMachine;
@@ -30,7 +30,7 @@ public class Pet : MonoBehaviour
     {
         if (PlayerInputManager.Instance.SecondaryPressed && !isChasing && !playerActionManager.IsPerformingAction)
         {
-            HandleAttack();
+            HandlePet();
         }
        
         if (isChasing)
@@ -43,34 +43,17 @@ public class Pet : MonoBehaviour
             }
         }
 
-        if (!canAttack)
+        if (!canPet)
         {
             reloadFillImage.fillAmount += Time.deltaTime / attackCooldownDuration;
         }
     }
 
-    private void HandleAttack()
+    private void HandlePet()
     {
-        if (!canAttack) return;
+        if (!canPet) return;
 
         playerActionManager.StartAction();
-
-        if (SheepManager.Instance != null)
-        {
-            float distanceFromSheep = PlayerManager.Instance.GetDistanceBetweenPlayerAndSheep();
-
-            if (distanceFromSheep < attackDistance)
-            {
-                ISheepState currentSheepState = SheepManager.Instance.StateMachine.GetCurrentState();
-
-                if (currentSheepState is SheepCuriousState || currentSheepState is SheepPanicState || currentSheepState is SheepDraggedState) return;
-
-                SheepStateController.Instance.ChasePlayer(chaseDuration);
-                isChasing = true;
-
-                SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Love);
-            }
-        }
 
         OnPerformedPet?.Invoke();
 
@@ -78,10 +61,25 @@ public class Pet : MonoBehaviour
         StartCoroutine(AttackCooldown());
     }
 
+    public bool TryPetSheep()
+    {
+        if (isChasing) { return false; }
+
+        ISheepState currentSheepState = SheepManager.Instance.StateMachine.GetCurrentState();
+
+        if (currentSheepState is SheepCuriousState || currentSheepState is SheepPanicState || currentSheepState is SheepDraggedState) return false;
+
+        SheepStateController.Instance.ChasePlayer(chaseDuration);
+        isChasing = true;
+
+        SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Love);
+        return true;
+    }
+
     private IEnumerator AttackCooldown()
     {
-        canAttack = false;
+        canPet = false;
         yield return new WaitForSeconds(attackCooldownDuration);
-        canAttack = true;
+        canPet = true;
     }
 }
