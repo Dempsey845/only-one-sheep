@@ -115,6 +115,38 @@ public class SheepRagdollController : MonoBehaviour
         this.targetPosition = targetPosition;
     }
 
+    public IEnumerator Gravitate(float duration)
+    {
+        canMove = false;
+        rootBody.freezeRotation = false;
+        canFixRotation = false;
+
+        rootBody.linearVelocity = Vector3.zero;
+
+        foreach (Rigidbody rb in ragdollBodies)
+        {
+            rb.useGravity = false;
+        }
+
+        rootBody.angularVelocity = Vector3.right * 50f;
+
+        yield return new WaitForSeconds(duration);
+
+        foreach (Rigidbody rb in ragdollBodies)
+        {
+            rb.useGravity = true;
+        }
+
+        canMove = true;
+        rootBody.freezeRotation = true;
+        canFixRotation = true;
+    }
+
+    public void GravitateForDuration(float duration)
+    {
+        StartCoroutine(Gravitate(duration));
+    }
+
     private IEnumerator RotationCheckRoutine()
     {
         const float checkInterval = 0.5f;

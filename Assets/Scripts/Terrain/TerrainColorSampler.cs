@@ -24,7 +24,7 @@ public class TerrainColorSampler : MonoBehaviour
         }
         catch (ArgumentException)
         {
-            Debug.LogWarning("Invalid argument for GetAlphaMaps");
+            //Debug.LogWarning("Invalid argument for GetAlphaMaps
         }
     }
 

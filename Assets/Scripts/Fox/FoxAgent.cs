@@ -16,13 +16,13 @@ public class FoxAgent : MonoBehaviour
     private FoxStateController stateController;
 
     private Vector3 targetPosition;
-    private float timer = 0f;
+    private float timer;
     private bool chaseSheep = false;
     private float startSpeed;
 
     private bool hasFleePoint = false;
-    private float fleePointTimer = 0f;
-    private float fleeTimer = 0f;
+    private float fleePointTimer;
+    private float fleeTimer;
     private float predictedTimeToFleePoint;
 
     private const float FLEE_POINT_TOLERANCE = 1f;

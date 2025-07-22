@@ -7,7 +7,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(LineRenderer))]
 public class Pet : MonoBehaviour
 {
-    [SerializeField] private float attackDistance = 3f;
     [SerializeField] private float attackCooldownDuration = 5f;
     [SerializeField] private float chaseDuration = 5f;
     [SerializeField] private Image reloadFillImage;

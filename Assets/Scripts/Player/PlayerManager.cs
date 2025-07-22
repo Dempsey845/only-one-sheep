@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
+
     public bool HasKey { get; private set; }
 
     private Transform sheepTransform;
@@ -25,6 +26,11 @@ public class PlayerManager : MonoBehaviour
 
     public float GetDistanceBetweenPlayerAndSheep()
     {
+        if (transform.position == null || sheepTransform == null)
+        {
+            return 0f;
+        }
+
         return Vector3.Distance(transform.position, sheepTransform.position);
     }
 

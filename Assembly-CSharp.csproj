@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\Sheep\SheepDrag.cs" />
     <Compile Include="Assets\Scripts\Player\Key.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepDraggedState.cs" />
+    <Compile Include="Assets\Scripts\Interactables\GravitatePotion.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxStateController.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepFollowState.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepCuriousState.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepWanderState.cs" />
+    <Compile Include="Assets\Scripts\Sheep\State Machine\SheepGravitateState.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenuUIManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateMachine.cs" />
     <Compile Include="Assets\Scripts\Player\Pet.cs" />

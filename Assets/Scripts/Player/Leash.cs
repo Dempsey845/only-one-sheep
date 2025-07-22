@@ -88,14 +88,22 @@ public class Leash : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < dragDuration)
         {
-            Transform player = PlayerManager.Instance.transform;
-            Transform sheep = SheepStateController.Instance.transform;
+            if (PlayerManager.Instance != null && SheepStateController.Instance != null)
+            {
+                Transform player = PlayerManager.Instance.transform;
+                Transform sheep = SheepStateController.Instance.transform;
 
-            lineRenderer.SetPosition(0, player.position + Vector3.up);
-            lineRenderer.SetPosition(1, sheep.position + Vector3.up);
+                lineRenderer.SetPosition(0, player.position + Vector3.up);
+                lineRenderer.SetPosition(1, sheep.position + Vector3.up);
 
-            elapsed += Time.deltaTime;
-            yield return null;
+                elapsed += Time.deltaTime;
+
+            } else
+            {
+                yield return null;
+            }
+
+             yield return null;
         }
 
         lineRenderer.enabled = false;

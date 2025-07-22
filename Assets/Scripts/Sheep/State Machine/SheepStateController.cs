@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SheepStateController : MonoBehaviour
@@ -77,5 +78,11 @@ public class SheepStateController : MonoBehaviour
     public void Flee(Transform fleeTarget)
     {
         stateMachine.SetState(new SheepFleeState(fleeTarget, transform, physicsNavAgent, this));
+    }
+
+    public void Gravitate(float duration)
+    {
+        stateMachine.SetState(new SheepGravitateState(duration));
+        SheepManager.Instance.RagdollController.GravitateForDuration(duration);
     }
 }

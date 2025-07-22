@@ -131,3 +131,4 @@ MonoBehaviour:
   pingPongSpeed: 1
   panicDuration: 5
   sheepDamage: 5
+  interactFX: {fileID: 4760010056759930673, guid: dbdc87f2c01bd0249baf2d9e72c659eb, type: 3}
