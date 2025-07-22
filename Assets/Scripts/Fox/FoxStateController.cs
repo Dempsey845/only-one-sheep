@@ -9,12 +9,13 @@ public class FoxStateController : MonoBehaviour
     private FoxAgent agent;
     private FoxAnimationController animationController;
 
-    private float checkTimer;
-    private float toFarFromHomeTimer;
-    private bool isToFarFromHome = false;
+    private float distanceCheckTimer;
+    private float farFromHomeTimer;
+    private bool isFarFromHome = false;
+    private bool isFleeing = false;
 
-    private const float IS_TOO_FAR_FROM_HOME_CHECK_RATE = 1f;
-    private const float TOO_FAR_FROM_HOME_MAX_TIME = 10f;
+    private const float IS_FAR_FROM_HOME_CHECK_RATE = 1f;
+    private const float FAR_FROM_HOME_MAX_TIME = 10f;
 
     private void Awake()
     {
@@ -30,23 +31,23 @@ public class FoxStateController : MonoBehaviour
 
     private void Update()
     {
-        checkTimer += Time.deltaTime;
+        distanceCheckTimer += Time.deltaTime;
 
-        if (checkTimer >= IS_TOO_FAR_FROM_HOME_CHECK_RATE)
+        if (distanceCheckTimer >= IS_FAR_FROM_HOME_CHECK_RATE)
         {
-            isToFarFromHome = Vector3.Distance(transform.position, homePoint.position) >= maxDistanceFromHome;
+            isFarFromHome = Vector3.Distance(transform.position, homePoint.position) >= maxDistanceFromHome;
 
-            checkTimer = 0f;
+            distanceCheckTimer = 0f;
         }
 
-        if (isToFarFromHome)
+        if (!isFleeing && isFarFromHome)
         {
-            toFarFromHomeTimer += Time.deltaTime;
+            farFromHomeTimer += Time.deltaTime;
 
-            if (toFarFromHomeTimer >= TOO_FAR_FROM_HOME_MAX_TIME)
+            if (farFromHomeTimer >= FAR_FROM_HOME_MAX_TIME)
             {
                 GoHome();
-                toFarFromHomeTimer = 0f;
+                farFromHomeTimer = 0f;
             }
         }
     }
@@ -70,6 +71,17 @@ public class FoxStateController : MonoBehaviour
 
     public void GoHome()
     {
-        stateMachine.SetState(new FoxStateBackToHome(this, agent, homePoint.position));
+        stateMachine.SetState(new FoxStateBackToHome(this, agent, animationController, homePoint.position));
+    }
+
+    public void TryFlee()
+    {
+        if (isFleeing) { return; }
+        stateMachine.SetState(new FoxFleeState(agent, animationController));
+    }
+
+    public void SetIsFleeing(bool isFleeing)
+    {
+        this.isFleeing = isFleeing;
     }
 }

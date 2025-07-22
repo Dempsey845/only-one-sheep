@@ -8,6 +8,10 @@ public class FoxChaseState : IFoxState
     private readonly float duration;
 
     private float timer;
+    private bool canAttack = true;
+    private float attackTimer = 0f;
+
+    private const float ATTACK_COOLDOWN = 1f;
 
     public FoxChaseState(FoxStateController stateController, FoxAnimationController animationController, FoxAgent agent, float duration)
     {
@@ -20,12 +24,14 @@ public class FoxChaseState : IFoxState
     public void Enter()
     {
         agent.StartChasingSheep();
-        animationController.PlayChase();
+        animationController.PlayRunAnimation();
+        agent.OnFoxReachedSheepDuringChase += HandleFoxAttack;
     }
 
     public void Exit()
     {
         agent.StopChasingSheep();
+        agent.OnFoxReachedSheepDuringChase -= HandleFoxAttack;
     }
 
     public void Update()
@@ -37,5 +43,25 @@ public class FoxChaseState : IFoxState
             stateController.Idle();
             timer = 0;
         }
+
+        if (!canAttack)
+        {
+            attackTimer += Time.deltaTime;
+
+            if (attackTimer >= ATTACK_COOLDOWN)
+            {
+                canAttack = true;
+                attackTimer = 0f;
+            }
+        }
+    }
+
+    private void HandleFoxAttack()
+    {
+        if (!canAttack) { return; }
+
+        animationController.PlayAttackAnimation();
+
+        canAttack = false;
     }
 }

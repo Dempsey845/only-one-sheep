@@ -36,6 +36,7 @@ public class Interactable : MonoBehaviour
 
     public bool IsSheepCuriousOfThis { get; set; } = false;
     public bool IgnoreFromSheep { get; set; } = false;
+    public bool IsInteractable { get; set; } = true;
 
     private const string SHEEP_TAG = "Sheep";
 
@@ -83,7 +84,7 @@ public class Interactable : MonoBehaviour
 
     private void CheckIfSheepInRange()
     {
-        if (SheepStateController.Instance.IsSheepBeingDragged) { return; }
+        if (!IsInteractable || SheepStateController.Instance.IsSheepBeingDragged) { return; }
 
         // If the Sheep isn't curious, isn't already curious of this interactable and is in range
         if (!SheepStateController.Instance.IsSheepPanicking && !SheepStateController.Instance.IsSheepCurious && !IsSheepCuriousOfThis && IsSheepInRange())

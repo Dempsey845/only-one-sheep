@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sheep
   - Fox
+  - Shed
   layers:
   - Default
   - TransparentFX

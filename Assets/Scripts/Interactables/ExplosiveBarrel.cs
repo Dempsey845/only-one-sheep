@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ExplosiveBarrel : Interactable
@@ -9,6 +10,8 @@ public class ExplosiveBarrel : Interactable
     [SerializeField] private LayerMask affectedLayers;
     [SerializeField] private int sheepDamage = 10;
     [SerializeField] private GameObject explosiveFXPrefab;
+
+    public event Action OnExplode;
 
     protected override void Interact()
     {
@@ -48,6 +51,8 @@ public class ExplosiveBarrel : Interactable
                 rb.AddForce(force, ForceMode.Impulse);
             }
         }
+
+        OnExplode?.Invoke();
 
         sheepHealth.TakeDamage(sheepDamage);
     }

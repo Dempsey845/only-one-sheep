@@ -19,7 +19,7 @@ public class FoxIdleState : IFoxState
 
     public void Enter()
     {
-        animationController.PlayIdle();
+        animationController.PlayIdleAnimation();
     }
 
     public void Exit()

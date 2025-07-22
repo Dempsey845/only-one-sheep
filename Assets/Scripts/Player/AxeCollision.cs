@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class AxeCollision : MonoBehaviour
 {
+    [SerializeField] private int damage = 1;
+
     private bool canBeHit = true;
 
     private const float HIT_RATE = 0.3f;
@@ -13,7 +15,14 @@ public class AxeCollision : MonoBehaviour
 
         if (other.CompareTag("Fox"))
         {
+            FoxStateController foxStateController = other.GetComponent<FoxStateController>();
+            foxStateController.TryFlee();
+
+            FoxHealth foxHealth = other.GetComponent<FoxHealth>();
+            foxHealth.TakeDamage(damage);
+
             Debug.Log("Hit fox!");
+
             StartCoroutine(HitCooldown());
         }
     }

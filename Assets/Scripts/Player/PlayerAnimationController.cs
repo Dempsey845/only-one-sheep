@@ -50,6 +50,10 @@ public class PlayerAnimationController : MonoBehaviour
             playerMovement.OnJump -= HandleJump;
         if (crook != null)
             crook.OnPerformedPet -= HandlePet;
+        if (whistle != null)
+            whistle.OnPerformedWhistle -= HandleWhistle;
+        if (axe != null)
+            axe.OnPerformedAxe -= HandleAxe;
     }
 
     private void Update()
