@@ -11,6 +11,7 @@ public class SheepStateController : MonoBehaviour
 
     private SheepStateMachine stateMachine;
     private Interactable interactableThatSheepIsInterestedIn;
+    private SheepPhysicsNavAgent physicsNavAgent;
 
     private void Awake()
     {
@@ -21,6 +22,8 @@ public class SheepStateController : MonoBehaviour
     {
         stateMachine = GetComponent<SheepStateMachine>();
         stateMachine.SetState(new SheepIdleState(stateMachine, startIdleDuration));
+
+        physicsNavAgent = GetComponent<SheepPhysicsNavAgent>();
     }
 
     public void Wander()
@@ -69,5 +72,10 @@ public class SheepStateController : MonoBehaviour
     public void Idle(float idleDuration)
     {
         stateMachine.SetState(new SheepIdleState(stateMachine, idleDuration));
+    }
+
+    public void Flee(Transform fleeTarget)
+    {
+        stateMachine.SetState(new SheepFleeState(fleeTarget, transform, physicsNavAgent, this));
     }
 }

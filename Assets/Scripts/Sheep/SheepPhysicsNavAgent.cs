@@ -16,8 +16,6 @@ public class SheepPhysicsNavAgent : MonoBehaviour
     private int currentCornerIndex = 0;
     private float repathTimer;
 
-    private Vector3 direction;
-
     private Vector3 targetPosition;
     private bool hasTarget = false;
 
@@ -79,7 +77,6 @@ public class SheepPhysicsNavAgent : MonoBehaviour
             return;
 
         Vector3 targetCorner = path.corners[currentCornerIndex];
-        direction = (targetCorner - transform.position).normalized;
 
         sheepRagdollController.SetTarget(targetCorner);
 
