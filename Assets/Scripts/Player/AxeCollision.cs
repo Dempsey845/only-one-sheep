@@ -15,8 +15,8 @@ public class AxeCollision : MonoBehaviour
 
         if (other.CompareTag("Fox"))
         {
-            FoxStateController foxStateController = other.GetComponent<FoxStateController>();
-            foxStateController.TryFlee();
+            //FoxStateController foxStateController = other.GetComponent<FoxStateController>();
+            //foxStateController.TryFlee();
 
             FoxHealth foxHealth = other.GetComponent<FoxHealth>();
             foxHealth.TakeDamage(damage);

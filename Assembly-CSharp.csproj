@@ -76,7 +76,9 @@
     <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
     <Compile Include="Assets\Scripts\Sheep\UI\SheepCanvas.cs" />
     <Compile Include="Assets\Scripts\Sheep\UI\SheepHealthBar.cs" />
+    <Compile Include="Assets\Scripts\Other\Barn.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepDrag.cs" />
+    <Compile Include="Assets\Scripts\Player\Key.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepDraggedState.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxStateController.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepFollowState.cs" />
@@ -89,7 +91,6 @@
     <Compile Include="Assets\Scripts\Sheep\SheepManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepWanderState.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenuUIManager.cs" />
-    <Compile Include="Assets\Scripts\Interactables\FoxInteractable.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateMachine.cs" />
     <Compile Include="Assets\Scripts\Player\Pet.cs" />
     <Compile Include="Assets\Scripts\Player\Leash.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerInputManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepIdleState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
+    <Compile Include="Assets\Scripts\Fox\FoxManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\Pen\Pen.cs" />
     <Compile Include="Assets\Scripts\Interactables\ExplosiveBarrel.cs" />

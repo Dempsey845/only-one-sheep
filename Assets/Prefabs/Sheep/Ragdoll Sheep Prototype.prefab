@@ -1156,6 +1156,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65
   fixRotateSpeed: 90
+  fixAngleThreshold: 300
   ragdollBodies:
   - {fileID: 9031699603754411720}
   - {fileID: 1819260681746021171}

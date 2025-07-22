@@ -7,6 +7,7 @@ public class Leash : MonoBehaviour
     [SerializeField] private float dragDuration = 10f;
     [SerializeField] private float leashCooldownDuration = 45f;
     [SerializeField] private Image leashReloadImage;
+    [SerializeField] private Sprite leashIconSprite;
 
     private bool canUseLeash = true;
     private float interactRange = 3f;
@@ -23,6 +24,11 @@ public class Leash : MonoBehaviour
         lineRenderer.enabled = false;
 
         playerActionManager = GetComponent<PlayerActionManager>();
+    }
+
+    private void OnEnable()
+    {
+        leashReloadImage.sprite = leashIconSprite;
     }
 
     private void Update()

@@ -14,6 +14,7 @@ public class SheepRagdollController : MonoBehaviour
     [SerializeField] private float feetRaycastDistance = 2f;
     [SerializeField] private LayerMask uprightCheckMask;
     [SerializeField] private float fixRotateSpeed = 180f;
+    [SerializeField] private float fixAngleThreshold = 200f;
 
     [Header("Ragdoll Setup")]
     [SerializeField] private Rigidbody[] ragdollBodies;
@@ -117,7 +118,6 @@ public class SheepRagdollController : MonoBehaviour
     private IEnumerator RotationCheckRoutine()
     {
         const float checkInterval = 0.5f;
-        const float angleThreshold = 100f;
 
         while (true)
         {
@@ -125,7 +125,7 @@ public class SheepRagdollController : MonoBehaviour
 
             if (fixingRotation || !canFixRotation) continue;
 
-            bool flowControl = IsSheepUpright(angleThreshold);
+            bool flowControl = IsSheepUpright(fixAngleThreshold);
             if (!flowControl)
             {
                 continue;

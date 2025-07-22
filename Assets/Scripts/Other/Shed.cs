@@ -1,27 +1,26 @@
 using System;
 using UnityEngine;
 
-public class Shed : MonoBehaviour
+public class Shed : Interactable
 {
+    [Header("Shed")]
     [SerializeField] private ExplosiveBarrel explosiveBarrel;
     [SerializeField] private GameObject shedExplodeFXPrefab;
-    [SerializeField] private FoxHealth foxHealth;
+    [SerializeField] private GameObject foxPrefab;
+    [SerializeField] private Transform foxHome;
+    
+    private FoxHealth foxHealth;
 
-    private void OnEnable()
+    protected override void Start()
     {
-        explosiveBarrel.OnExplode += HandleExplosion;
-        foxHealth.OnDeath += HandleFoxDeath;
+        explosiveBarrel.IsInteractable = false;
+        base.Start();
     }
 
     private void OnDisable()
     {
         explosiveBarrel.OnExplode -= HandleExplosion;
-        foxHealth.OnDeath -= HandleFoxDeath;
-    }
-
-    private void Start()
-    {
-        explosiveBarrel.IsInteractable = false;
+        if (foxHealth != null) { foxHealth.OnDeath -= HandleFoxDeath; }
     }
 
     private void HandleExplosion()
@@ -32,5 +31,20 @@ public class Shed : MonoBehaviour
     private void HandleFoxDeath()
     {
         explosiveBarrel.IsInteractable = true;
+    }
+
+    protected override void Interact()
+    {
+        if (!IsInteractable) { return; }
+
+        FoxManager foxManager = Instantiate(foxPrefab, foxHome.position, Quaternion.identity).GetComponent<FoxManager>();
+        foxManager.Init(foxHome);
+
+        foxHealth = foxManager.FoxHealth;
+
+        explosiveBarrel.OnExplode += HandleExplosion;
+        foxHealth.OnDeath += HandleFoxDeath;
+
+        IsInteractable = false;
     }
 }

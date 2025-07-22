@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private SheepHealth sheepHealth;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private int nextSceneBuildIndex = 2;
 
     private float timer;
 
@@ -51,7 +52,6 @@ public class LevelManager : MonoBehaviour
     {
         GameManager.Instance.PreviousLevelTime = FormatTimeString();
 
-        int nextSceneBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
         LevelTransitionManager.Instance.TransitionOutOfScene(nextSceneBuildIndex);
     }
 }

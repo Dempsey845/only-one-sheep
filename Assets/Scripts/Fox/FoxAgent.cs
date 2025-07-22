@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +18,7 @@ public class FoxAgent : MonoBehaviour
     private Vector3 targetPosition;
     private float timer = 0f;
     private bool chaseSheep = false;
+    private float startSpeed;
 
     private bool hasFleePoint = false;
     private float fleePointTimer = 0f;
@@ -34,6 +36,7 @@ public class FoxAgent : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         stateController = GetComponent<FoxStateController>();
         StopChasingSheep();
+        startSpeed = agent.speed;
     }
 
     private void Update()
@@ -170,4 +173,10 @@ public class FoxAgent : MonoBehaviour
         stateController.GoHome();
     }
 
+    public IEnumerator StopMovement(float duration)
+    {
+        agent.speed = 0f;
+        yield return new WaitForSeconds(duration);
+        agent.speed = startSpeed; 
+    }
 }

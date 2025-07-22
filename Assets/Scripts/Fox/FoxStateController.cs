@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class FoxStateController : MonoBehaviour
 {
-    [SerializeField] private Transform homePoint;
     [SerializeField] private float maxDistanceFromHome = 20f;
+    [SerializeField] private bool returnHome = false;
 
     private FoxStateMachine stateMachine;
     private FoxAgent agent;
     private FoxAnimationController animationController;
+    private Vector3 homePoint;
 
     private float distanceCheckTimer;
     private float farFromHomeTimer;
@@ -26,16 +27,21 @@ public class FoxStateController : MonoBehaviour
 
     private void Start()
     {
-        Idle();
+        Chase(500f);
     }
 
     private void Update()
     {
+        if (!returnHome || homePoint == Vector3.zero)
+        {
+            return;
+        }
+
         distanceCheckTimer += Time.deltaTime;
 
         if (distanceCheckTimer >= IS_FAR_FROM_HOME_CHECK_RATE)
         {
-            isFarFromHome = Vector3.Distance(transform.position, homePoint.position) >= maxDistanceFromHome;
+            isFarFromHome = Vector3.Distance(transform.position, homePoint) >= maxDistanceFromHome;
 
             distanceCheckTimer = 0f;
         }
@@ -50,6 +56,11 @@ public class FoxStateController : MonoBehaviour
                 farFromHomeTimer = 0f;
             }
         }
+    }
+
+    public void Init(Transform foxHome)
+    {
+        homePoint = foxHome.position;
     }
 
     public void Idle()
@@ -71,7 +82,7 @@ public class FoxStateController : MonoBehaviour
 
     public void GoHome()
     {
-        stateMachine.SetState(new FoxStateBackToHome(this, agent, animationController, homePoint.position));
+        stateMachine.SetState(new FoxStateBackToHome(this, agent, animationController, homePoint));
     }
 
     public void TryFlee()

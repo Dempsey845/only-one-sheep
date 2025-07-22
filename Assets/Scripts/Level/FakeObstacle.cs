@@ -13,6 +13,11 @@ public class FakeObstacle : MonoBehaviour
 
     private void Start()
     {
+        if (fakeObstacle == null)
+        {
+            Destroy(this);
+        }
+
         stateMachine = FindFirstObjectByType<SheepStateMachine>();
     }
 

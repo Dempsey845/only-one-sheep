@@ -42,7 +42,7 @@ public class Interactable : MonoBehaviour
 
     protected SheepHealth sheepHealth;
 
-    private void Start()
+    protected virtual void Start()
     {
         sheepTranform = SheepStateController.Instance.transform;
         startPosition = transform.position;

@@ -7,6 +7,7 @@ public class Axe : MonoBehaviour
 {
     [SerializeField] private float attackCooldown = 3f;
     [SerializeField] private Image attackReloadImage;
+    [SerializeField] private Sprite axeIconSpirte;
 
     private bool canAttack = true;
 
@@ -17,6 +18,11 @@ public class Axe : MonoBehaviour
     private void Awake()
     {
         playerActionManager = GetComponent<PlayerActionManager>();
+    }
+
+    private void OnEnable()
+    {
+        attackReloadImage.sprite = axeIconSpirte;
     }
 
     private void Update()
