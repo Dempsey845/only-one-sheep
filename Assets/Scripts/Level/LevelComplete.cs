@@ -5,17 +5,17 @@ using UnityEngine;
 public class LevelComplete : MonoBehaviour
 {
     [SerializeField] private TMP_Text levelCompleteText;
-
+    
     private void Start()
     {
         if (GameManager.Instance != null) { levelCompleteText.text = "Time taken: " + GameManager.Instance.PreviousLevelTime; }
 
-        StartCoroutine(BackToMainMenu());
+        StartCoroutine(LoadNextLevel(GameManager.Instance.NextLevelBuildIndex));
     }
 
-    private IEnumerator BackToMainMenu()
+    private IEnumerator LoadNextLevel(int nextLevelBuildIndex)
     {
         yield return new WaitForSeconds(5f);
-        LevelTransitionManager.Instance.TransitionOutOfScene(0);
+        LevelTransitionManager.Instance.TransitionOutOfScene(nextLevelBuildIndex);
     }
 }

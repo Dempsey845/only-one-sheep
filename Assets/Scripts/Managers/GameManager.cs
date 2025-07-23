@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public string PreviousLevelTime { get; set; }
+    public int NextLevelBuildIndex { get; set; }
 
     private void Awake()
     {

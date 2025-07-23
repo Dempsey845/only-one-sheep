@@ -12,6 +12,7 @@ public class SheepFleeState : ISheepState
     private const float FLEE_CHECK_RADIUS = 20f;
     private const float FLEE_DISTANCE = 20f;
     private const float FLEE_RATE = 3f;
+    private const float MOVE_SPEED_MULTIPLIER = 2f;
 
     private float timer = 0f;
 
@@ -26,10 +27,12 @@ public class SheepFleeState : ISheepState
     public void Enter()
     {
         timer = FLEE_RATE;
+        sheepPhysicsNavAgent.MoveSpeedMultiplier = MOVE_SPEED_MULTIPLIER;
     }
 
     public void Exit()
     {
+        sheepPhysicsNavAgent.MoveSpeedMultiplier = 1f;
     }
 
     public void Update()
