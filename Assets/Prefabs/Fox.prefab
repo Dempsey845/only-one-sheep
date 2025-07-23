@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 5345595328839363933}
   - component: {fileID: 7784449894083187443}
   - component: {fileID: 7258416777005405945}
+  - component: {fileID: 6821604305382136732}
   m_Layer: 0
   m_Name: Fox
   m_TagString: Fox
@@ -188,6 +189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  foxHurtSFXPrefab: {fileID: 2311698787923588849, guid: bb683c81f2b740f418163571acdae35d, type: 3}
+  mainCollider: {fileID: 7258416777005405945}
 --- !u!195 &7784449894083187443
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -229,10 +232,107 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.40374547
-  m_Height: 3.2924767
+  m_Radius: 0.4740368
+  m_Height: 3.292477
   m_Direction: 2
-  m_Center: {x: 0.019014299, y: 1.1409078, z: -0.08235359}
+  m_Center: {x: 0.019014299, y: 1.2111992, z: -0.08235359}
+--- !u!82 &6821604305382136732
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7110992020952365185}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -2359118262675614102, guid: 439783523caf04745b9d2aaf4a509daa, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 6c29063703c36294ea599900d88868de, type: 3}
+  m_Resource: {fileID: 8300000, guid: 6c29063703c36294ea599900d88868de, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 10
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &5521880476064944268
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -970,6 +1070,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foxBiteZone: {fileID: 5370399316559700849}
+  foxAttackSFXPrefab: {fileID: 2311698787923588849, guid: ffb0f90691bfacf4fbe418d31198392a, type: 3}
+  foxBiteSFXPrefab: {fileID: 2311698787923588849, guid: 67ed6bfa7435e3443a75d6b88920e62b, type: 3}
 --- !u!4 &5416441067559548775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3bead5f7368b9b446b5f96dd4634bead, type: 3}

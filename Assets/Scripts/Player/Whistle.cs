@@ -11,6 +11,7 @@ public class Whistle : MonoBehaviour
     [SerializeField] private float panicDistance = 10f;
     [SerializeField] private float maxWhistleDistance = 25f;
     [SerializeField] private Image whistleReloadImage;
+    [SerializeField] private GameObject whistleSFXPrefab;
     
     private SheepStateController sheepStateController;
     private PlayerActionManager playerActionManager;
@@ -50,6 +51,8 @@ public class Whistle : MonoBehaviour
 
         whistleReloadImage.fillAmount = 0;
 
+        Instantiate(whistleSFXPrefab, transform.position, Quaternion.identity);
+
         StartCoroutine(WhistleCooldown());
 
         playerActionManager.StartAction();
@@ -64,12 +67,14 @@ public class Whistle : MonoBehaviour
             sheepStateController.ChasePlayer(chaseDuration);
 
             SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Annoyed);
+            SheepManager.Instance.EnqueueRandomSheepClip();
         }
         else 
         { 
             sheepStateController.Panic(panicDuration);
 
             SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Angry);
+            SheepManager.Instance.EnqueueRandomSheepClip();
         }
     }
 

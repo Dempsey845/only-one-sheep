@@ -8,6 +8,7 @@ public class Axe : MonoBehaviour
     [SerializeField] private float attackCooldown = 3f;
     [SerializeField] private Image attackReloadImage;
     [SerializeField] private Sprite axeIconSpirte;
+    [SerializeField] private GameObject axeSwingSFXPrefab;
 
     private bool canAttack = true;
 
@@ -30,6 +31,8 @@ public class Axe : MonoBehaviour
         if (PlayerInputManager.Instance.AttackPressed && canAttack && !playerActionManager.IsPerformingAction)
         {
             playerActionManager.StartAction();
+
+            Instantiate(axeSwingSFXPrefab, transform.position, Quaternion.identity);
 
             attackReloadImage.fillAmount = 0f;
             OnPerformedAxe?.Invoke();

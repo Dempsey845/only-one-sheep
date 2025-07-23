@@ -8,14 +8,19 @@ public class Leash : MonoBehaviour
     [SerializeField] private float leashCooldownDuration = 45f;
     [SerializeField] private Image leashReloadImage;
     [SerializeField] private Sprite leashIconSprite;
+    [SerializeField] private GameObject leashStartSFXPrefab;
+    [SerializeField] private GameObject leashBreakSFXPrefab;
 
     private bool canUseLeash = true;
     private float interactRange = 3f;
     private float maxDragDistance = 30f;
     private bool dragging = false;
+    private bool isBreaking = false;
 
     private LineRenderer lineRenderer;
     private PlayerActionManager playerActionManager;
+
+    private const float BREAK_LEASH_SFX_DURATION = 1.6f;
 
     private void Awake()
     {
@@ -45,18 +50,26 @@ public class Leash : MonoBehaviour
             leashReloadImage.fillAmount += Time.deltaTime / leashCooldownDuration;
         } 
         
-        if (dragging && distanceToSheep > maxDragDistance)
+        if (!isBreaking && dragging && distanceToSheep > maxDragDistance)
         {
-            Debug.Log("Sheep to far, exiting drag");
+            Instantiate(leashBreakSFXPrefab, transform.position, Quaternion.identity);
+            isBreaking = true;
 
-            SheepManager.Instance.SheepDrag.StopDrag();
-
-            lineRenderer.enabled = false;
-            dragging = false;
-
-            playerActionManager.StopAction();
-
+            StartCoroutine(BreakLeash());
         }
+    }
+
+    private IEnumerator BreakLeash()
+    {
+        yield return new WaitForSeconds(BREAK_LEASH_SFX_DURATION);
+
+        SheepManager.Instance.SheepDrag.StopDrag();
+
+        lineRenderer.enabled = false;
+        dragging = false;
+        isBreaking = false;
+
+        playerActionManager.StopAction();
     }
 
     private void HandleLeash(float distanceToSheep)
@@ -64,6 +77,7 @@ public class Leash : MonoBehaviour
         if (distanceToSheep <= interactRange)
         {
             playerActionManager.StartAction();
+            Instantiate(leashStartSFXPrefab, transform.position, Quaternion.identity);
             SheepStateController.Instance.Drag(dragDuration);
             SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Annoyed);
             leashReloadImage.fillAmount = 0f;
@@ -85,8 +99,10 @@ public class Leash : MonoBehaviour
         lineRenderer.enabled = true;
         dragging = true;
 
+        StartCoroutine(StopLeash());
+
         float elapsed = 0f;
-        while (elapsed < dragDuration)
+        while (elapsed < dragDuration + BREAK_LEASH_SFX_DURATION)
         {
             if (PlayerManager.Instance != null && SheepStateController.Instance != null)
             {
@@ -98,15 +114,21 @@ public class Leash : MonoBehaviour
 
                 elapsed += Time.deltaTime;
 
-            } else
+            }
+            else
             {
                 yield return null;
             }
 
-             yield return null;
+            yield return null;
         }
+    }
 
-        lineRenderer.enabled = false;
-        dragging = false;
+    private IEnumerator StopLeash()
+    {
+        yield return new WaitForSeconds(dragDuration);
+        Instantiate(leashBreakSFXPrefab, transform.position, Quaternion.identity);
+        isBreaking = true;
+        StartCoroutine(BreakLeash());
     }
 }

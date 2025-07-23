@@ -9,13 +9,12 @@ public class Interactable : MonoBehaviour
         PingPong
     }
 
-
-
     [Header("Interactable")]
     [SerializeField] private float checkRadius = 15f;
     [SerializeField] private float curiousDuration = 5f;
     [SerializeField] private float ignoreTime = 15f; // How long the interactable should be ignored for after sheep loses interes
     [SerializeField] private bool interactEvenWhenNotInterested = false;
+    [SerializeField] private GameObject interactSFXPrefab;
 
     [Header("Movement")]
     [SerializeField] private MovementType movementType = MovementType.None;
@@ -50,6 +49,8 @@ public class Interactable : MonoBehaviour
 
     protected virtual void Interact()
     {
+        SheepManager.Instance.EnqueueRandomSheepClip();
+        if (interactSFXPrefab != null) { Instantiate(interactSFXPrefab, transform.position, Quaternion.identity); }
         Destroy(gameObject);
     }
 

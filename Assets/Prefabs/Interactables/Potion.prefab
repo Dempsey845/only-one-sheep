@@ -360,6 +360,7 @@ MonoBehaviour:
   curiousDuration: 5
   ignoreTime: 5
   interactEvenWhenNotInterested: 0
+  interactSFXPrefab: {fileID: 2311698787923588849, guid: dd8815274c10a544385150bfe1f4f90b, type: 3}
   movementType: 1
   spinSpeed: 50
   pingPongDistance: 1

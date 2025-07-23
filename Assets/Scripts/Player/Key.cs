@@ -6,6 +6,7 @@ public class Key : MonoBehaviour
     [SerializeField] private float pingPongSpeed = 5f;
     [SerializeField] private float pingPongDistance = 0.5f;
     [SerializeField] private float spinSpeed = 25f;
+    [SerializeField] private GameObject pickupSFXPrefab;
 
     private Vector3 startPosition;
 
@@ -24,6 +25,8 @@ public class Key : MonoBehaviour
         if (!other.CompareTag("Player")) { return; }
 
         PlayerManager.Instance.OnPickupKey();
+
+        Instantiate(pickupSFXPrefab, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

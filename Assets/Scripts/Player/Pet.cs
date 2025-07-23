@@ -10,6 +10,7 @@ public class Pet : MonoBehaviour
     [SerializeField] private float attackCooldownDuration = 5f;
     [SerializeField] private float chaseDuration = 5f;
     [SerializeField] private Image reloadFillImage;
+    [SerializeField] private GameObject petSFXPrefab;
 
     private bool canPet = true;
     private bool isChasing = false;
@@ -72,6 +73,9 @@ public class Pet : MonoBehaviour
         isChasing = true;
 
         SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Love);
+        SheepManager.Instance.EnqueueRandomSheepClip();
+        Instantiate(petSFXPrefab, transform.position, Quaternion.identity);
+
         return true;
     }
 

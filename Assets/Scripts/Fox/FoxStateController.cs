@@ -95,4 +95,9 @@ public class FoxStateController : MonoBehaviour
     {
         this.isFleeing = isFleeing;
     }
+
+    public void Die()
+    {
+        stateMachine.SetState(new FoxDieState(animationController, agent));
+    }
 }

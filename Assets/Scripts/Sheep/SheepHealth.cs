@@ -12,9 +12,12 @@ public class SheepHealth : MonoBehaviour
     public event Action<int> OnHealed;        
     public event Action OnDied;
 
+    private SheepManager manager;
+
     private void Awake()
     {
         CurrentHealth = startHealth;
+        manager = GetComponent<SheepManager>();
     }
 
     //private void Update()
@@ -32,6 +35,8 @@ public class SheepHealth : MonoBehaviour
         CurrentHealth -= damage;
         OnDamaged?.Invoke(CurrentHealth);
 
+        manager.EnqueueRandomSheepClip();
+
         if (CurrentHealth <= 0)
         {
             HandleDeath();
@@ -43,6 +48,8 @@ public class SheepHealth : MonoBehaviour
         if (CurrentHealth <= 0) return;
 
         CurrentHealth += healAmount;
+
+        manager.EnqueueRandomSheepClip();
 
         if (CurrentHealth > maxHealth)
         {

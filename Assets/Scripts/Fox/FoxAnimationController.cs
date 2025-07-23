@@ -19,4 +19,9 @@ public class FoxAnimationController : MonoBehaviour
     {
         animator.SetTrigger("Attack");
     }
+
+    public void PlayDeathAnimation()
+    {
+        animator.SetTrigger("Die");
+    }
 }
