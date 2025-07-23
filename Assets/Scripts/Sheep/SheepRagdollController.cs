@@ -8,6 +8,7 @@ public class SheepRagdollController : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private Transform forwardDirectionTransform;
+    [SerializeField] private float stopDistance = 2f;
 
     [Header("Ragdoll Fix Rotation")]
     [SerializeField] private Transform feetDirection;
@@ -67,7 +68,6 @@ public class SheepRagdollController : MonoBehaviour
 
         if (Quaternion.Angle(transform.rotation, startRotation) < 1f)
         {
-            Debug.Log("Fixed rotation");
             fixingRotation = false;
         }
     }
@@ -75,6 +75,13 @@ public class SheepRagdollController : MonoBehaviour
     private void MoveAndRotateTowardsTarget(Vector3 toTarget)
     {
         Quaternion currentRot = rootBody.rotation;
+
+        // Stop moving if close enough
+        if (toTarget.sqrMagnitude < stopDistance * 2)
+        {
+            rootBody.linearVelocity = Vector3.zero;
+            return;
+        }
 
         // The sheep's "real" forward axis
         Vector3 sheepForward = transform.up;
@@ -177,9 +184,8 @@ public class SheepRagdollController : MonoBehaviour
 
         if (!Physics.Raycast(origin, direction, feetRaycastDistance, uprightCheckMask))
         {
-            StartCoroutine(StopMovement(2f));
+            StartCoroutine(StopMovement(0.5f));
 
-            Debug.Log("Fixing rotation");
             fixingRotation = true;
             
             return true;

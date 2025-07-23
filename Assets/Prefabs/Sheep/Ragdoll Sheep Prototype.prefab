@@ -5961,7 +5961,7 @@ Rigidbody:
   m_GameObject: {fileID: 3285274237157013690}
   serializedVersion: 5
   m_Mass: 3.125
-  m_LinearDamping: 1
+  m_LinearDamping: 0.1
   m_AngularDamping: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -5994,6 +5994,7 @@ MonoBehaviour:
   moveSpeed: 7
   rotateSpeed: 360
   forwardDirectionTransform: {fileID: 2916430480945149036}
+  stopDistance: 2
   feetDirection: {fileID: 2916430480945149036}
   feetRaycastDistance: 1
   uprightCheckMask:
@@ -6179,8 +6180,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 5
-  MaxDistance: 40
+  MinDistance: 1
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

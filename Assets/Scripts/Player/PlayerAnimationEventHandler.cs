@@ -3,19 +3,18 @@ using UnityEngine;
 public class PlayerAnimationEventHandler : MonoBehaviour
 {
     [SerializeField] private PetHand petHand;
-    [SerializeField] private AudioClip[] footstepClips;
+    [SerializeField] private GameObject[] footstepSFXPrefabs;
     [SerializeField] private GameObject axeSwingSFXPrefab;
 
     private PlayerAnimationController controller;
     private PlayerActionManager actionManager;
 
-    private AudioSource audioSource;
+    private int lastFootstep = 0;
 
     private void Start()
     {
         controller = GetComponentInParent<PlayerAnimationController>();
         actionManager = GetComponentInParent<PlayerActionManager>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     public void OnJump() { controller.OnJump(); }
@@ -28,8 +27,13 @@ public class PlayerAnimationEventHandler : MonoBehaviour
 
     public void PlayFootstepSound()
     {
-        AudioClip randomClip = footstepClips[Random.Range(0, footstepClips.Length)];
-        audioSource.PlayOneShot(randomClip);
+        GameObject randomSFX = footstepSFXPrefabs[lastFootstep];
+        Instantiate(randomSFX, transform.position, Quaternion.identity);
+        lastFootstep++;
+        if (lastFootstep >= footstepSFXPrefabs.Length)
+        {
+            lastFootstep = 0;
+        }
     }
 
     public void PlayAxeSwingSFX()

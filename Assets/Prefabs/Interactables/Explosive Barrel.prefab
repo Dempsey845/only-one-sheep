@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4267022420783471566}
-  - component: {fileID: 1299331915470984677}
-  - component: {fileID: 3880752888610810414}
   - component: {fileID: 4167821769689640947}
   - component: {fileID: 3020624355749527633}
   m_Layer: 7
@@ -32,24 +30,111 @@ Transform:
   m_LocalPosition: {x: -17.84043, y: 0.501, z: 1.12995}
   m_LocalScale: {x: 1, y: 0.86934, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3772408671391393004}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1299331915470984677
+--- !u!136 &4167821769689640947
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104880233130949115}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.55
+  m_Height: 2.4222178
+  m_Direction: 1
+  m_Center: {x: 0.00000005964879, y: 1, z: -0.000000059604645}
+--- !u!114 &3020624355749527633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104880233130949115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce66c7dfedc5b5b43af9dc7641b61c18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkRadius: 8
+  curiousDuration: 10
+  ignoreTime: 5
+  interactEvenWhenNotInterested: 1
+  interactSFXPrefab: {fileID: 2311698787923588849, guid: 40ceb6cee14cd14418fe9837b0e7b768, type: 3}
+  movementType: 0
+  spinSpeed: 50
+  pingPongDistance: 1
+  pingPongSpeed: 1
+  explosionRadius: 10
+  explosionForce: 15
+  upwardForce: 25
+  collapseSheepTime: 10
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 776
+  sheepDamage: 10
+  explosiveFXPrefab: {fileID: 1691238363645928365, guid: 00c2a31cbaced524bb7c6544c3572325, type: 3}
+--- !u!1 &2589865730058601617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3772408671391393004}
+  - component: {fileID: 4526385037029643570}
+  - component: {fileID: 9095653081633443622}
+  m_Layer: 7
+  m_Name: Cylinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3772408671391393004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589865730058601617}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4267022420783471566}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4526385037029643570
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104880233130949115}
+  m_GameObject: {fileID: 2589865730058601617}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3880752888610810414
+--- !u!23 &9095653081633443622
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104880233130949115}
+  m_GameObject: {fileID: 2589865730058601617}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -88,56 +173,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4167821769689640947
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104880233130949115}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.55
-  m_Height: 2.4222178
-  m_Direction: 1
-  m_Center: {x: 0.00000005964879, y: -0.20389116, z: -0.000000059604645}
---- !u!114 &3020624355749527633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104880233130949115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce66c7dfedc5b5b43af9dc7641b61c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkRadius: 8
-  curiousDuration: 10
-  ignoreTime: 5
-  interactEvenWhenNotInterested: 1
-  interactSFXPrefab: {fileID: 2311698787923588849, guid: 40ceb6cee14cd14418fe9837b0e7b768, type: 3}
-  movementType: 0
-  spinSpeed: 50
-  pingPongDistance: 1
-  pingPongSpeed: 1
-  explosionRadius: 10
-  explosionForce: 15
-  upwardForce: 25
-  collapseSheepTime: 10
-  affectedLayers:
-    serializedVersion: 2
-    m_Bits: 776
-  sheepDamage: 10
-  explosiveFXPrefab: {fileID: 1691238363645928365, guid: 00c2a31cbaced524bb7c6544c3572325, type: 3}

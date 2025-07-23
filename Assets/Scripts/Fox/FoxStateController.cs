@@ -4,6 +4,7 @@ public class FoxStateController : MonoBehaviour
 {
     [SerializeField] private float maxDistanceFromHome = 20f;
     [SerializeField] private bool returnHome = false;
+    [SerializeField] private bool fleeOnHit = false;
 
     private FoxStateMachine stateMachine;
     private FoxAgent agent;
@@ -27,7 +28,7 @@ public class FoxStateController : MonoBehaviour
 
     private void Start()
     {
-        Chase(500f);
+        Wander();
     }
 
     private void Update()
@@ -73,6 +74,11 @@ public class FoxStateController : MonoBehaviour
         stateMachine.SetState(new FoxChaseState(this, animationController, agent, chaseDuration));
     }
 
+    public void Wander()
+    {
+        stateMachine.SetState(new FoxWanderState(agent, transform, animationController, this));
+    }
+
     public bool IsSheepInRange(float range)
     {
         if (SheepManager.Instance == null) { return false; }
@@ -87,6 +93,7 @@ public class FoxStateController : MonoBehaviour
 
     public void TryFlee()
     {
+        if (!fleeOnHit) { return; }
         if (isFleeing) { return; }
         stateMachine.SetState(new FoxFleeState(agent, animationController));
     }
@@ -99,5 +106,10 @@ public class FoxStateController : MonoBehaviour
     public void Die()
     {
         stateMachine.SetState(new FoxDieState(animationController, agent));
+    }
+    
+    public bool CanReturnHome()
+    {
+        return returnHome;
     }
 }

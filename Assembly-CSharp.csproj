@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Level\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
+    <Compile Include="Assets\Scripts\Fox\FoxWanderState.cs" />
     <Compile Include="Assets\Scripts\Sheep\UI\SheepCanvas.cs" />
     <Compile Include="Assets\Scripts\Sheep\UI\SheepHealthBar.cs" />
     <Compile Include="Assets\Scripts\Other\Barn.cs" />

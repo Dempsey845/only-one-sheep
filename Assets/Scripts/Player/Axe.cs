@@ -7,6 +7,7 @@ public class Axe : MonoBehaviour
 {
     [SerializeField] private float attackCooldown = 3f;
     [SerializeField] private Image attackReloadImage;
+    [SerializeField] private Image attackBackgroundReloadImage;
     [SerializeField] private Sprite axeIconSpirte;
     [SerializeField] private GameObject axeSwingSFXPrefab;
 
@@ -21,9 +22,10 @@ public class Axe : MonoBehaviour
         playerActionManager = GetComponent<PlayerActionManager>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         attackReloadImage.sprite = axeIconSpirte;
+        attackBackgroundReloadImage.sprite = axeIconSpirte;
     }
 
     private void Update()

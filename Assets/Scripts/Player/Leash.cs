@@ -7,9 +7,11 @@ public class Leash : MonoBehaviour
     [SerializeField] private float dragDuration = 10f;
     [SerializeField] private float leashCooldownDuration = 45f;
     [SerializeField] private Image leashReloadImage;
+    [SerializeField] private Image leashBackgroundReloadImage;
     [SerializeField] private Sprite leashIconSprite;
     [SerializeField] private GameObject leashStartSFXPrefab;
     [SerializeField] private GameObject leashBreakSFXPrefab;
+    [SerializeField] private Transform ropeStartPoint;
 
     private bool canUseLeash = true;
     private float interactRange = 3f;
@@ -31,9 +33,10 @@ public class Leash : MonoBehaviour
         playerActionManager = GetComponent<PlayerActionManager>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         leashReloadImage.sprite = leashIconSprite;
+        leashBackgroundReloadImage.sprite = leashIconSprite;
     }
 
     private void Update()
@@ -109,8 +112,8 @@ public class Leash : MonoBehaviour
                 Transform player = PlayerManager.Instance.transform;
                 Transform sheep = SheepStateController.Instance.transform;
 
-                lineRenderer.SetPosition(0, player.position + Vector3.up);
-                lineRenderer.SetPosition(1, sheep.position + Vector3.up);
+                lineRenderer.SetPosition(0, ropeStartPoint.position);
+                lineRenderer.SetPosition(1, sheep.position);
 
                 elapsed += Time.deltaTime;
 

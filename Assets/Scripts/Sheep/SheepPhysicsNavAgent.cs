@@ -9,7 +9,7 @@ public class SheepPhysicsNavAgent : MonoBehaviour
     [Header("Navigation")]
     [SerializeField] private float waypointTolerance = 0.2f;
     [SerializeField] private float targetTolerance = 0.2f;
-    [SerializeField] private float repathRate = 1.0f;
+    [SerializeField] private float repathRate = 1f;
 
     private Rigidbody rb;
     private NavMeshPath path;
@@ -19,7 +19,7 @@ public class SheepPhysicsNavAgent : MonoBehaviour
     private Vector3 targetPosition;
     private bool hasTarget = false;
 
-    public float MoveSpeedMultiplier { get; set; } = 1.0f;
+    public float MoveSpeedMultiplier { get; set; } = 1f;
 
     private SheepRagdollController sheepRagdollController;
 

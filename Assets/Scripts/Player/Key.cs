@@ -24,7 +24,7 @@ public class Key : MonoBehaviour
     {
         if (!other.CompareTag("Player")) { return; }
 
-        PlayerManager.Instance.OnPickupKey();
+        PlayerManager.Instance.PickupKey();
 
         Instantiate(pickupSFXPrefab, transform.position, Quaternion.identity);
 

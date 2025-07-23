@@ -73,7 +73,8 @@ public class FoxAgent : MonoBehaviour
         if (fleeTimer > predictedTimeToFleePoint)
         {
             CancelFlee();
-            stateController.GoHome();
+            if (stateController.CanReturnHome()) { stateController.GoHome(); }
+            else { stateController.Wander(); }
         }
     }
 
@@ -130,6 +131,11 @@ public class FoxAgent : MonoBehaviour
         return distance <= tolerance;
     }
 
+    public void CancelDestination()
+    {
+        agent.SetDestination(transform.position);
+    }
+
     public void TryFlee()
     {
         if (PlayerManager.Instance == null) return;
@@ -155,7 +161,6 @@ public class FoxAgent : MonoBehaviour
                 stateController.SetIsFleeing(true);
 
                 predictedTimeToFleePoint = (Vector3.Distance(transform.position, targetPosition) / agent.speed) + TIME_TO_FLEE_POINT_TOLERANCE;
-                Debug.Log(predictedTimeToFleePoint);
 
                 Debug.DrawLine(transform.position, targetPosition, Color.green, 2f);
                 Debug.DrawRay(targetPosition, Vector3.up * 2, Color.green, 2f); 
@@ -170,7 +175,11 @@ public class FoxAgent : MonoBehaviour
         Debug.LogWarning("Failed to find a valid NavMesh point to flee to after multiple attempts.");
         hasFleePoint = false;
         stateController.SetIsFleeing(false);
-        stateController.GoHome();
+        if (stateController.CanReturnHome()) { stateController.GoHome(); }
+        else
+        {
+            stateController.Wander();
+        }
     }
 
     public IEnumerator StopMovement(float duration)
@@ -179,4 +188,6 @@ public class FoxAgent : MonoBehaviour
         yield return new WaitForSeconds(duration);
         agent.speed = startSpeed; 
     }
+
+    public float GetSpeed() { return agent.speed; }
 }

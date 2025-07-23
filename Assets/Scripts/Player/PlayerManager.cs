@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     public bool HasKey { get; private set; }
 
     private Transform sheepTransform;
+
+    public event Action OnPickupKey;
 
     private void Awake()
     {
@@ -34,8 +37,9 @@ public class PlayerManager : MonoBehaviour
         return Vector3.Distance(transform.position, sheepTransform.position);
     }
 
-    public void OnPickupKey()
+    public void PickupKey()
     {
         HasKey = true;
+        OnPickupKey?.Invoke();
     }
 }

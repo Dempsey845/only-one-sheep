@@ -5,7 +5,7 @@ public class FoxHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
     [SerializeField] private GameObject foxHurtSFXPrefab;
-    [SerializeField] private Collider mainCollider;
+    [SerializeField] private GameObject foxDeathPrefab;
 
     private FoxStateController controller;
     private AudioSource audioSource;
@@ -29,11 +29,9 @@ public class FoxHealth : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            controller.Die();
-            mainCollider.enabled = false;
-            audioSource.loop = false;
-            audioSource.Stop();
+            Instantiate(foxDeathPrefab, transform.position, transform.rotation);
             OnDeath?.Invoke();
+            Destroy(gameObject);
         }
     }
 }
