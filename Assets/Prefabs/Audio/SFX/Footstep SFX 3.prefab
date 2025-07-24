@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 482590714409626347}
   - component: {fileID: 8608058333872712372}
   m_Layer: 7
-  m_Name: Axe Swing SFX
+  m_Name: Footstep SFX 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,10 +43,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2359118262675614102, guid: 439783523caf04745b9d2aaf4a509daa, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 91c0794afbddb3d4bafbab4acd1805f6, type: 3}
-  m_Resource: {fileID: 8300000, guid: 91c0794afbddb3d4bafbab4acd1805f6, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3e3e1fe18b814ee4da5708a2e88482ca, type: 3}
+  m_Resource: {fileID: 8300000, guid: 3e3e1fe18b814ee4da5708a2e88482ca, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -54,8 +54,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 5
-  MaxDistance: 100
+  MinDistance: 0.5
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -142,4 +142,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5aec19932addb94ebf0ef0705997063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 2
+  duration: 1

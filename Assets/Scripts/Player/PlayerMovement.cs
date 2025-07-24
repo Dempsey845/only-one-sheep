@@ -78,49 +78,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator JumpDelay()
-    {
-        canJump = false;
-        yield return new WaitForSeconds(jumpDelay);
-        canJump = true;
-    }
-
-    public IEnumerator StartMoveDelay(float delay)
-    {
-        canMove = false;
-        yield return new WaitForSeconds(delay);
-        canMove = true;
-    }
-
-    public void AddJumpForce()
-    {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-    }
-
     private void FixedUpdate()
     {
+        if (!canMove) { return; }
+
         float currentSpeed = moveSpeed;
         if (PlayerInputManager.Instance.SprintPressed && moveDirection.magnitude > 0.1f)
         {
             currentSpeed *= sprintMultiplier;
             IsSprinting = true;
-        } else
+        }
+        else
         {
             IsSprinting = false;
         }
 
         // Physics-based movement
-        if (canMove)
-        {
-            Vector3 targetVelocity = moveDirection * currentSpeed;
-            Vector3 velocityChange = targetVelocity - rb.linearVelocity;
-            velocityChange.y = 0; // Preserve vertical velocity (jump/gravity)
-            rb.AddForce(velocityChange, ForceMode.VelocityChange);
-        }
-        else
-        {
-            rb.linearVelocity = Vector3.zero;
-        }
+        Vector3 targetVelocity = moveDirection * currentSpeed;
+        Vector3 velocityChange = targetVelocity - rb.linearVelocity;
+        velocityChange.y = 0; // Preserve vertical velocity (jump/gravity)
+        rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        
 
         // Rotate character to face move direction
         if (moveDirection.magnitude >= 0.1f)
@@ -135,6 +113,31 @@ public class PlayerMovement : MonoBehaviour
             float multiplier = rb.linearVelocity.y < 0 ? fallGravityMultiplier : gravityMultiplier;
             rb.AddForce(Physics.gravity * (multiplier - 1f), ForceMode.Acceleration);
         }
+    }
+
+    private IEnumerator JumpDelay()
+    {
+        canJump = false;
+        yield return new WaitForSeconds(jumpDelay);
+        canJump = true;
+    }
+
+    public IEnumerator StartMoveDelay(float delay)
+    {
+        canMove = false;
+        rb.linearVelocity = Vector3.zero;
+        yield return new WaitForSeconds(delay);
+        canMove = true;
+    }
+
+    public void StopMovement(float duration)
+    {
+        StartCoroutine(StartMoveDelay(duration));
+    }
+
+    public void AddJumpForce()
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
     public Vector3 GetMoveDirection()

@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Sheep\SheepPhysicsNavAgent.cs" />
+    <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxChaseState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerThirdPersonCameraController.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepEmojiManager.cs" />
@@ -73,6 +74,8 @@
     <Compile Include="Assets\Scripts\Fox\FoxStateBackToHome.cs" />
     <Compile Include="Assets\Scripts\Level\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Menu\MenuInput.cs" />
+    <Compile Include="Assets\Scripts\Menu\AudioUIManager.cs" />
     <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxWanderState.cs" />
     <Compile Include="Assets\Scripts\Sheep\UI\SheepCanvas.cs" />
@@ -88,8 +91,10 @@
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepCuriousState.cs" />
     <Compile Include="Assets\Scripts\Level\FakeObstacle.cs" />
     <Compile Include="Assets\Scripts\Player\PetHand.cs" />
+    <Compile Include="Assets\Scripts\Menu\MenuButton.cs" />
     <Compile Include="Assets\Scripts\Level\LevelTransitionUI.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimationEventHandler.cs" />
+    <Compile Include="Assets\Scripts\Menu\SettingsUIManager.cs" />
     <Compile Include="Assets\Scripts\Interactables\Food.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Other\DestroyAfter.cs" />
@@ -98,8 +103,10 @@
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepGravitateState.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenuUIManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Menu\ControlsUIManager.cs" />
     <Compile Include="Assets\Scripts\Player\Pet.cs" />
     <Compile Include="Assets\Scripts\Player\Leash.cs" />
+    <Compile Include="Assets\Scripts\Managers\TimeManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\SheepHealth.cs" />
     <Compile Include="Assets\Scripts\Player\Whistle.cs" />
     <Compile Include="Assets\Scripts\Terrain\WalkParticleSystem.cs" />
@@ -125,6 +132,7 @@
     <Compile Include="Assets\Scripts\Fox\IFoxState.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxAnimationEventHandler.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateController.cs" />
+    <Compile Include="Assets\Scripts\Menu\MenuManager.cs" />
     <Compile Include="Assets\Scripts\Other\KillSheepOnTrigger.cs" />
     <Compile Include="Assets\Scripts\Player\AxeCollision.cs" />
     <Compile Include="Assets\Scripts\Level\LevelComplete.cs" />

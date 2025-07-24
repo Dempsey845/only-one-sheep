@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 482590714409626347}
   - component: {fileID: 8608058333872712372}
   m_Layer: 7
-  m_Name: Eat SFX
+  m_Name: Potion SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,8 +43,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2359118262675614102, guid: 439783523caf04745b9d2aaf4a509daa, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 2383eae4ee2d0a147b00d9f7a551f38b, type: 3}
-  m_Resource: {fileID: 8300000, guid: 2383eae4ee2d0a147b00d9f7a551f38b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6984b6feeabb5a247b72e81267e89afc, type: 3}
+  m_Resource: {fileID: 8300000, guid: 6984b6feeabb5a247b72e81267e89afc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -55,9 +55,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 5
-  MaxDistance: 100
+  MaxDistance: 40
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

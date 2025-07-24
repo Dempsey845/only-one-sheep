@@ -13,7 +13,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool AttackPressed { get; private set; }
     public bool SecondaryPressed { get; private set; }
     public bool SprintPressed { get; private set; }
-
+    public bool MenuPressed { get; private set; }
 
     private void Awake()
     {
@@ -38,6 +38,8 @@ public class PlayerInputManager : MonoBehaviour
 
         inputActions.Player.Sprint.performed += ctx => SprintPressed = true;
         inputActions.Player.Sprint.canceled += ctx => SprintPressed = false;
+
+        inputActions.Player.Menu.performed += ctx => MenuPressed = true;
     }
 
     private void OnEnable()
@@ -57,5 +59,11 @@ public class PlayerInputManager : MonoBehaviour
         WhistlePressed = false;
         AttackPressed = false;
         SecondaryPressed = false;
+        MenuPressed = false;
+    }
+
+    public void LockLookInput()
+    {
+        LookInput = Vector2.zero;
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 public class PlayButtonDestructable : MonoBehaviour
 {
     [SerializeField] private GameObject playText;
+    [SerializeField] private MeshRenderer[] meshRenderers;
+    [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material hoveredMaterial;
 
     private bool collided = false;
 
@@ -19,5 +22,21 @@ public class PlayButtonDestructable : MonoBehaviour
     {
         yield return new WaitForSeconds(3.5f);
         LevelTransitionManager.Instance.TransitionOutOfScene(1);
+    }
+
+    public void Hover()
+    {
+        foreach (MeshRenderer meshRenderer in meshRenderers)
+        {
+            meshRenderer.material = hoveredMaterial;
+        }
+    }
+
+    public void UnHover()
+    {
+        foreach (MeshRenderer meshRenderer in meshRenderers)
+        {
+            meshRenderer.material = defaultMaterial;
+        }
     }
 }

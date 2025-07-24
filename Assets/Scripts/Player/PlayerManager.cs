@@ -4,8 +4,9 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
-
+    public PlayerMovement PlayerMovement { get; private set; }
     public bool HasKey { get; private set; }
+
 
     private Transform sheepTransform;
 
@@ -14,6 +15,7 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        PlayerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Start()

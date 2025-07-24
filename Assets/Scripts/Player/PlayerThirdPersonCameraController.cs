@@ -36,4 +36,14 @@ public class PlayerThirdPersonCameraController : MonoBehaviour
         // Look at target
         transform.LookAt(target.position + Vector3.up * 1.5f); // Slight height offset for head
     }
+
+    public float GetRotationSpeed()
+    {
+        return rotationSpeed;
+    }
+
+    public void SetRotationSpeed(float rotationSpeed)
+    {
+        this.rotationSpeed = rotationSpeed;
+    }
 }

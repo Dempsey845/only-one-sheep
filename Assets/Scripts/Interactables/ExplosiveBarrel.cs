@@ -22,6 +22,7 @@ public class ExplosiveBarrel : Interactable
 
     private void Explode()
     {
+        bool playerInRange = (transform.position - PlayerManager.Instance.GetPosition()).sqrMagnitude <= explosionRadius * 2;
         Vector3 explosionPosition = transform.position;
 
         Instantiate(explosiveFXPrefab, transform.position, Quaternion.identity);
@@ -34,6 +35,12 @@ public class ExplosiveBarrel : Interactable
             SheepManager.Instance.RagdollController.Collapse(collapseSheepTime);
 
             SheepManager.Instance.EmojiManager.ChangeEmoji(Emoji.Sad);
+        }
+
+        if (playerInRange)
+        {
+            TimeManager.Instance.DoSlowMotion(.2f, 2f);
+            PlayerManager.Instance.PlayerMovement.StopMovement(1f);
         }
 
         foreach (Collider col in colliders)
