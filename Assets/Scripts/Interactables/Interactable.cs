@@ -14,7 +14,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] private float curiousDuration = 5f;
     [SerializeField] private float ignoreTime = 15f; // How long the interactable should be ignored for after sheep loses interes
     [SerializeField] private bool interactEvenWhenNotInterested = false;
-    [SerializeField] private GameObject interactSFXPrefab;
+    [SerializeField] internal GameObject interactSFXPrefab;
 
     [Header("Movement")]
     [SerializeField] private MovementType movementType = MovementType.None;

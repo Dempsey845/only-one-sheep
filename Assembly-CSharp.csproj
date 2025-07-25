@@ -126,6 +126,7 @@
     <Compile Include="Assets\Scripts\Pen\Pen.cs" />
     <Compile Include="Assets\Scripts\Interactables\ExplosiveBarrel.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxIdleState.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Sprinkler.cs" />
     <Compile Include="Assets\Scripts\Other\Shed.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxHealth.cs" />
     <Compile Include="Assets\Scripts\Fox\FoxFleeState.cs" />

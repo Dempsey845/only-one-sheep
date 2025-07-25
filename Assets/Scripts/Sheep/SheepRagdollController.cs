@@ -222,6 +222,11 @@ public class SheepRagdollController : MonoBehaviour
         canFixRotation = true;
     }
 
+    public void ClearVelocity()
+    {
+        rootBody.linearVelocity = Vector3.zero;
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (forwardDirectionTransform != null)
