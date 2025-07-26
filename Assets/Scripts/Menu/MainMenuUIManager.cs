@@ -9,6 +9,7 @@ public class MainMenuUIManager : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void Update()

@@ -103,6 +103,7 @@
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepGravitateState.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenuUIManager.cs" />
     <Compile Include="Assets\Scripts\Sheep\State Machine\SheepStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Sheep\SheepForward.cs" />
     <Compile Include="Assets\Scripts\Menu\ControlsUIManager.cs" />
     <Compile Include="Assets\Scripts\Player\Pet.cs" />
     <Compile Include="Assets\Scripts\Player\Leash.cs" />

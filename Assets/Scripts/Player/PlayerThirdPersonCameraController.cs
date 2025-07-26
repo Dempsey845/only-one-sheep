@@ -29,12 +29,26 @@ public class PlayerThirdPersonCameraController : MonoBehaviour
 
         // Convert yaw/pitch to camera position
         Quaternion rotation = Quaternion.Euler(currentPitch, currentYaw, 0);
-        Vector3 desiredPosition = target.position + rotation * offset;
+        Vector3 desiredCameraPos = target.position + rotation * offset;
 
-        transform.position = desiredPosition;
+        // Check for collisions using a raycast
+        RaycastHit hit;
+        Vector3 direction = (desiredCameraPos - target.position).normalized;
+        float distance = Vector3.Distance(target.position, desiredCameraPos);
 
-        // Look at target
-        transform.LookAt(target.position + Vector3.up * 1.5f); // Slight height offset for head
+        if (Physics.Raycast(target.position + Vector3.up * 1.5f, direction, out hit, distance))
+        {
+            // If we hit something, move the camera to the hit point slightly in front
+            transform.position = hit.point - direction * 0.1f; // offset to prevent clipping into the object
+        }
+        else
+        {
+            // No obstacle, use the desired position
+            transform.position = desiredCameraPos;
+        }
+
+        // Always look at the target
+        transform.LookAt(target.position + Vector3.up * 1.5f);
     }
 
     public float GetRotationSpeed()

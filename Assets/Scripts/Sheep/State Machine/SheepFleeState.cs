@@ -12,7 +12,7 @@ public class SheepFleeState : ISheepState
     private const float FLEE_CHECK_RADIUS = 20f;
     private const float FLEE_DISTANCE = 20f;
     private const float FLEE_RATE = 3f;
-    private const float MOVE_SPEED_MULTIPLIER = 2f;
+    private const float MOVE_SPEED_MULTIPLIER = 1f;
 
     private float timer = 0f;
 

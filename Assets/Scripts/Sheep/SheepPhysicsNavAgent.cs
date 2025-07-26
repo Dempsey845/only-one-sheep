@@ -18,6 +18,7 @@ public class SheepPhysicsNavAgent : MonoBehaviour
 
     private Vector3 targetPosition;
     private bool hasTarget = false;
+    private bool isTargetThePlayer;
 
     public float MoveSpeedMultiplier { get; set; } = 1f;
 
@@ -78,7 +79,7 @@ public class SheepPhysicsNavAgent : MonoBehaviour
 
         Vector3 targetCorner = path.corners[currentCornerIndex];
 
-        sheepRagdollController.SetTarget(targetCorner);
+        sheepRagdollController.SetTarget(targetCorner, isTargetThePlayer);
 
         // Advance to the next waypoint if close enough
         if (Vector3.Distance(transform.position, targetCorner) <= waypointTolerance)
@@ -87,8 +88,10 @@ public class SheepPhysicsNavAgent : MonoBehaviour
         }
     }
 
-    public void SetTargetPosition(Vector3 targetPosition)
+    public void SetTargetPosition(Vector3 targetPosition, bool isTargetThePlayer = false)
     {
+        this.isTargetThePlayer = isTargetThePlayer;
+
         // Snap the target position to the nearest point on the NavMesh
         if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
@@ -108,6 +111,7 @@ public class SheepPhysicsNavAgent : MonoBehaviour
     {
         this.targetPosition = Vector3.zero;
         hasTarget = false;
+        isTargetThePlayer = false;
     }
 
     public bool HasReachedTargetPosition()

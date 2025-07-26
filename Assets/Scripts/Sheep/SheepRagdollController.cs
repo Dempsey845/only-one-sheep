@@ -23,14 +23,21 @@ public class SheepRagdollController : MonoBehaviour
 
     private Rigidbody rootBody;
     private SheepPhysicsNavAgent physicsNavAgent;
+    private SheepForward sheepForward;
 
     private bool canMove = true;
     private bool fixingRotation = false;
     private bool canFixRotation = true;
     private bool isBeingDragged = false;
+    private bool isTargetThePlayer = false;
 
     private Vector3 targetPosition;
     private Quaternion startRotation;
+
+    private void Awake()
+    {
+        sheepForward = FindFirstObjectByType<SheepForward>();
+    }
 
     void Start()
     {
@@ -77,20 +84,20 @@ public class SheepRagdollController : MonoBehaviour
         Quaternion currentRot = rootBody.rotation;
 
         // Stop moving if close enough
-        if (toTarget.sqrMagnitude < stopDistance * 2)
+        if (isTargetThePlayer && toTarget.sqrMagnitude < stopDistance * 2)
         {
             rootBody.linearVelocity = Vector3.zero;
             return;
         }
 
         // The sheep's "real" forward axis
-        Vector3 sheepForward = transform.up;
+        Vector3 sheepRealForward = transform.up;
 
         // Flatten toTarget to horizontal
         Vector3 flatToTarget = toTarget.normalized;
 
         // Build rotation that turns sheepForward to face the target
-        Quaternion targetRot = Quaternion.FromToRotation(sheepForward, flatToTarget) * currentRot;
+        Quaternion targetRot = Quaternion.FromToRotation(sheepRealForward, flatToTarget) * currentRot;
 
         // Ensure quaternion stays normalized
         targetRot = Quaternion.Normalize(targetRot);
@@ -98,7 +105,7 @@ public class SheepRagdollController : MonoBehaviour
         // Rotate with physics
         rootBody.MoveRotation(Quaternion.RotateTowards(currentRot, targetRot, rotateSpeed * Time.fixedDeltaTime));
 
-        rootBody.linearVelocity = flatToTarget * moveSpeed * physicsNavAgent.MoveSpeedMultiplier;
+        rootBody.linearVelocity = moveSpeed * physicsNavAgent.MoveSpeedMultiplier * sheepForward.transform.forward;
     }
 
     public void Collapse(float duration)
@@ -117,8 +124,10 @@ public class SheepRagdollController : MonoBehaviour
         StartCoroutine(StopMovement(5f));
     }
 
-    public void SetTarget(Vector3 targetPosition)
+    public void SetTarget(Vector3 targetPosition, bool isTargetThePlayer = false)
     {
+        this.isTargetThePlayer = isTargetThePlayer;
+        sheepForward.SetTargetPosition(targetPosition);
         this.targetPosition = targetPosition;
     }
 
@@ -184,7 +193,9 @@ public class SheepRagdollController : MonoBehaviour
 
         if (!Physics.Raycast(origin, direction, feetRaycastDistance, uprightCheckMask))
         {
-            StartCoroutine(StopMovement(0.5f));
+            //StartCoroutine(StopMovement(0.5f));
+
+            StartCoroutine(StopFreezeRotation(1.5f));
 
             fixingRotation = true;
             
@@ -193,6 +204,13 @@ public class SheepRagdollController : MonoBehaviour
 
         // If raycast hit something, sheep is likely upright — do nothing
         return false;
+    }
+
+    public IEnumerator StopFreezeRotation(float duration)
+    {
+        rootBody.freezeRotation = false;
+        yield return new WaitForSeconds(duration);
+        rootBody.freezeRotation = true;
     }
 
     public IEnumerator StopMovement(float duration)

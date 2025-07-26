@@ -37,7 +37,7 @@ public class SheepFollowState : ISheepState
 
         if (positionCheckTimer > positionCheckRate)
         {
-            navAgent.SetTargetPosition(PlayerManager.Instance.GetPosition());
+            navAgent.SetTargetPosition(PlayerManager.Instance.GetPosition(), true);
             positionCheckTimer = 0f;
         }
     }

@@ -1603,7 +1603,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5474569905831025599}
   serializedVersion: 5
-  m_Mass: 9
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1637,10 +1637,10 @@ MonoBehaviour:
   moveSpeed: 4
   sprintMultiplier: 2.3
   rotationSpeed: 10
-  jumpForce: 74
+  jumpForce: 50
   jumpDelay: 3
-  gravityMultiplier: 2
-  fallGravityMultiplier: 2.5
+  gravityMultiplier: 3
+  fallGravityMultiplier: 3.5
   cameraTransform: {fileID: 0}
   groundCheck: {fileID: 1535315055080351760}
   groundLayer:

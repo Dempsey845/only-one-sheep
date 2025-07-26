@@ -31,6 +31,6 @@ public class SheepWanderState : ISheepState
 
     public void Exit()
     {
-        wander.CanWander = true;
+        wander.CanWander = false;
     }
 }
